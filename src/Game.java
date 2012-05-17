@@ -12,9 +12,12 @@ import com.sun.opengl.util.Animator;
 public class Game implements GLEventListener, KeyListener {
 
 
-	private float rotateT       = 0.0f;
+	private float pitch         = 0.0f;
+	private float heading       = 0.0f;
+	private float roll          = 0.0f;
 	private float transForwardT = 0.0f;
 	private float transSidewayT = 0.0f;
+	private float transUpwardsT = 0.0f;
 	private Animator animator;
 	private GLU glu;
 
@@ -36,21 +39,27 @@ public class Game implements GLEventListener, KeyListener {
 			
 		//pitch ++
 		case KeyEvent.VK_I:
+			pitch += 0.2f;
 			break;
 		//pitch --
 		case KeyEvent.VK_K:
+			pitch -= 0.2f;
 			break;
 		//heading ++
 		case KeyEvent.VK_L:
+			heading += 0.2f;
 			break;
 		//heading --
 		case KeyEvent.VK_J:
+			heading -= 0.2f;
 			break;
 		//roll ++
 		case KeyEvent.VK_O:
+			roll += 0.2f;
 			break;
 		//roll --
 		case KeyEvent.VK_U:
+			roll -= 0.2f;
 			break;
 			
 		/////////////////	
@@ -94,31 +103,62 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glLoadIdentity();
 		gl.glTranslatef(0.0f, 0.0f, -5.0f);
 	 
-		gl.glRotatef(rotateT, 1.0f, 0.0f, 0.0f);
-		gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
-		gl.glRotatef(rotateT, 0.0f, 0.0f, 1.0f);
-		gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
+		gl.glRotatef(pitch, 1.0f, 0.0f, 0.0f);
+		gl.glRotatef(heading, 0.0f, 1.0f, 0.0f);
+		gl.glRotatef(roll, 0.0f, 0.0f, 1.0f);
+		//gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
 	 
 		gl.glBegin(GL.GL_QUADS);
 
+		//1
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3f(-1.0f, 0.5f, -1.0f);
+		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3f(-1.0f, 0.0f, -1.0f);
+		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3f(-1.0f, 0.0f, 1.0f);
+		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3f(-1.0f, 0.5f, 1.0f);
+		
+		//2
+		gl.glColor3f(0.5f, 1.0f, 0.5f);
+		gl.glVertex3f(-1.0f, 0.0f, 1.0f);
+		
+		gl.glColor3f(0.5f, 1.0f, 0.5f);
+		gl.glVertex3f(-1.0f, 0.5f, 1.0f);
+		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3f(1.0f, 0.5f, 1.0f);
+		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3f(1.0f, 0.0f, 1.0f);
+		
+		//3
+		gl.glColor3f(0.5f, 0.5f, 1.0f);
+		gl.glVertex3f(1.0f, 0.5f, 1.0f);
+		
+		gl.glColor3f(0.5f, 0.5f, 1.0f);
+		gl.glVertex3f(1.0f, 0.0f, 1.0f);
+		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3f(1.0f, 0.0f, -1.0f);
+		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3f(1.0f, 0.5f, -1.0f);
+		
+		//4
+		gl.glColor3f(0.67f, 0.67f, 0.67f);
+		gl.glVertex3f(1.0f, 0.0f, -1.0f);
+		
+		gl.glColor3f(0.67f, 0.67f, 0.67f);
+		gl.glVertex3f(1.0f, 0.5f, -1.0f);
+		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3f(-1.0f, 0.5f, -1.0f);
+		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3f(-1.0f, 0.0f, -1.0f);
 		
@@ -132,9 +172,15 @@ public class Game implements GLEventListener, KeyListener {
 	}
 
 	@Override
-	public void init(GLAutoDrawable arg0) {
-		// TODO Auto-generated method stub
-
+	public void init(GLAutoDrawable gLDrawable) {
+		GL gl = gLDrawable.getGL();
+		gl.glShadeModel(GL.GL_SMOOTH);
+		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		gl.glClearDepth(1.0f);
+		gl.glEnable(GL.GL_DEPTH_TEST);
+		gl.glDepthFunc(GL.GL_LEQUAL);
+		gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
+		gLDrawable.addKeyListener(this);
 	}
 
 	@Override
