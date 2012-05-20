@@ -20,6 +20,15 @@ public class Game implements GLEventListener, KeyListener {
 	private float transUpwardsT = 0.0f;
 	private Animator animator;
 	private GLU glu;
+	private double camPosX = 0.0;
+	private double camPosY = -0.5;
+	private double camPosZ = -1.0;
+	private double targetX = 0.0;
+	private double targetY = -0.5;
+	private double targetZ = 0.0;
+	private double upX = 0.0;
+	private double upY = 1.0;
+	private double upZ = 0.0;
 
 	public Game(Animator animator, GLU glu) {
 		this.animator = animator;
@@ -68,21 +77,27 @@ public class Game implements GLEventListener, KeyListener {
 			
 		//forwards
 		case KeyEvent.VK_W:
+			camPosZ += 0.025f;
 			break;
 		//backwards
 		case KeyEvent.VK_S:
+			camPosZ -= 0.025f;
 			break;
 		//left
 		case KeyEvent.VK_A:
+			camPosX += 0.025f;
 			break;
 		//right
 		case KeyEvent.VK_D:
+			camPosX -= 0.025f;
 			break;
 		//upwards
 		case KeyEvent.VK_E:
+			camPosY -= 0.025f;
 			break;
 		//downwards
 		case KeyEvent.VK_Q:
+			camPosY += 0.025f;
 			break;
 		default:
 			//illegal key was typed
@@ -101,12 +116,12 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		gl.glTranslatef(0.0f, 0.0f, -5.0f);
+		
+		gl.glTranslated(camPosX, camPosY, camPosZ);
 	 
 		gl.glRotatef(pitch, 1.0f, 0.0f, 0.0f);
 		gl.glRotatef(heading, 0.0f, 1.0f, 0.0f);
 		gl.glRotatef(roll, 0.0f, 0.0f, 1.0f);
-		//gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
 	 
 		gl.glBegin(GL.GL_QUADS);
 
@@ -194,6 +209,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glLoadIdentity();
 		glu.gluPerspective(50.0f, h, 1.0, 1000.0);
 		gl.glMatrixMode(GL.GL_MODELVIEW);
+		//glu.gluLookAt(camPosX, camPosY, camPosZ, targetX, targetY, targetZ, upX, upY, upZ);
 		gl.glLoadIdentity();
 	}
 
