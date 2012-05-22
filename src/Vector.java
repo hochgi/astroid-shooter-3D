@@ -32,4 +32,12 @@ public class Vector {
 	public Vector sub(Vector v) {
 		return new Vector(x-v.getX(),y-v.getY(),z-v.getZ());
 	}
+	public void rotateAround(Vector axis, double theta) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void normalize() {
+		// TODO Auto-generated method stub
+		
+	}
 }

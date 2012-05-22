@@ -50,15 +50,24 @@ public class Orientation {
 	}
 
 	public void rotatePitch(double theta) {
-		//yUnit.x = (yUnit.x*)
+		yUnit.rotateAround(xUnit, theta);
+		zUnit.rotateAround(xUnit, theta);
+		yUnit.normalize();
+		zUnit.normalize();
 	}
 
 	public void rotateHeading(double theta) {
-		// TODO Auto-generated method stub
+		xUnit.rotateAround(yUnit, theta);
+		zUnit.rotateAround(yUnit, theta);
+		xUnit.normalize();
+		zUnit.normalize();
 	}
 
 	public void rotateRoll(double theta) {
-		// TODO Auto-generated method stub
+		xUnit.rotateAround(zUnit, theta);
+		yUnit.rotateAround(zUnit, theta);
+		xUnit.normalize();
+		yUnit.normalize();
 	}
 
 }
