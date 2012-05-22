@@ -1,3 +1,6 @@
+import javax.media.opengl.GL;
+import javax.media.opengl.GLAutoDrawable;
+
 
 public class Orientation {
 
@@ -5,6 +8,7 @@ public class Orientation {
 	private Vector xUnit;
 	private Vector yUnit;
 	private Vector zUnit;
+	private GLAutoDrawable gLDrawable;
 
 	public Orientation(Vector position, Vector xUnit, Vector yUnit, Vector zUnit) {
 		this.position = position;
@@ -50,24 +54,43 @@ public class Orientation {
 	}
 
 	public void rotatePitch(double theta) {
-		yUnit.rotateAround(xUnit, theta);
-		zUnit.rotateAround(xUnit, theta);
-		yUnit.normalize();
-		zUnit.normalize();
+
+		//TODO: delete debug printing
+		System.out.println("pitch rotation old:");
+		System.out.println("y: " + yUnit.toString() + "z: " + zUnit.toString());
+		
+		yUnit.rotateAroundAndNormalize(xUnit, theta);
+		zUnit.rotateAroundAndNormalize(xUnit, theta);
+
+		//TODO: delete debug printing
+		System.out.println("pitch rotation new:");
+		System.out.println("y: " + yUnit.toString() + "z: " + zUnit.toString());
+
 	}
 
 	public void rotateHeading(double theta) {
-		xUnit.rotateAround(yUnit, theta);
-		zUnit.rotateAround(yUnit, theta);
-		xUnit.normalize();
-		zUnit.normalize();
+		//TODO: delete debug printing
+		System.out.println("heading rotation old:");
+		System.out.println("x: " + xUnit.toString() + "z: " + zUnit.toString());
+		
+		xUnit.rotateAroundAndNormalize(yUnit, theta);
+		zUnit.rotateAroundAndNormalize(yUnit, theta);
+		
+		//TODO: delete debug printing
+		System.out.println("heading rotation new:");
+		System.out.println("x: " + xUnit.toString() + "z: " + zUnit.toString());
 	}
 
 	public void rotateRoll(double theta) {
-		xUnit.rotateAround(zUnit, theta);
-		yUnit.rotateAround(zUnit, theta);
-		xUnit.normalize();
-		yUnit.normalize();
+		//TODO: delete debug printing
+		System.out.println("roll rotation old:");
+		System.out.println("x: " + xUnit.toString() + "y: " + yUnit.toString());
+		
+		xUnit.rotateAroundAndNormalize(zUnit, theta);
+		yUnit.rotateAroundAndNormalize(zUnit, theta);
+		
+		//TODO: delete debug printing
+		System.out.println("roll rotation old:");
+		System.out.println("x: " + xUnit.toString() + "y: " + yUnit.toString());
 	}
-
 }

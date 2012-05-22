@@ -1,3 +1,5 @@
+import javax.vecmath.*;
+import javax.media.j3d.Transform3D;
 
 public class Vector {
 	double x;
@@ -32,12 +34,27 @@ public class Vector {
 	public Vector sub(Vector v) {
 		return new Vector(x-v.getX(),y-v.getY(),z-v.getZ());
 	}
-	public void rotateAround(Vector axis, double theta) {
-		// TODO Auto-generated method stub
+	public void rotateAroundAndNormalize(Vector axis, double theta) {
+		//oposite as in OpenGL, angle is radians here
+		AxisAngle4d rotateAxisAngle = new AxisAngle4d(theta, axis.getX(), axis.getY(), axis.getZ());
 		
+		Matrix3d m = new Matrix3d();
+		
+		m.set(rotateAxisAngle);
+		
+		Vector3d v = new Vector3d(x, y, z);
+		
+		m.transform(v);
+		
+		v.normalize();
+		
+		x = v.x;
+		y = v.y;
+		z = v.z;
 	}
-	public void normalize() {
-		// TODO Auto-generated method stub
-		
+	
+	@Override
+	public String toString() {
+		return "("+x+","+y+","+z+")";
 	}
 }

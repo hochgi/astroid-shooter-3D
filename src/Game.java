@@ -34,7 +34,7 @@ public class Game implements GLEventListener, KeyListener {
 			  										  new Vector(1.0,0.0,0.0), 
 			  										  new Vector(0.0,1.0,0.0),
 													  new Vector(0.0,0.0,-1.0));
-	private double theta = 0.2;
+	private double theta = Math.toRadians(0.2);
 	private double expansionFactor = 100.0;
 	
 	private double COS(double arg){
@@ -53,6 +53,7 @@ public class Game implements GLEventListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_ESCAPE:
 			Exercise3.exit();
