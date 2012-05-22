@@ -30,7 +30,12 @@ public class Game implements GLEventListener, KeyListener {
 	private double upX = 0.0;
 	private double upY = 1.0;
 	private double upZ = 0.0;
-	
+	private Orientation orientation = new Orientation(new Vector(0.0,0.0,0.0),
+			  										  new Vector(1.0,0.0,0.0), 
+			  										  new Vector(0.0,1.0,0.0),
+													  new Vector(0.0,0.0,-1.0));
+	private double theta = 0.2;
+	private double expansionFactor = 100.0;
 	
 	private double COS(double arg){
 		return Math.cos(Math.toRadians(arg));
@@ -59,27 +64,33 @@ public class Game implements GLEventListener, KeyListener {
 			
 		//pitch ++
 		case KeyEvent.VK_I:
-			pitch += rotationIndex;
+			orientation.rotatePitch(theta);
+			//pitch += rotationIndex;
 			break;
 		//pitch --
 		case KeyEvent.VK_K:
-			pitch -= rotationIndex;
+			orientation.rotatePitch(theta*(-1.0));
+			//pitch -= rotationIndex;
 			break;
 		//heading ++
 		case KeyEvent.VK_L:
-			heading += rotationIndex;
+			orientation.rotateHeading(theta);
+			//heading += rotationIndex;
 			break;
 		//heading --
 		case KeyEvent.VK_J:
-			heading -= rotationIndex;
+			orientation.rotateHeading(theta*(-1.0));
+			//heading -= rotationIndex;
 			break;
 		//roll ++
 		case KeyEvent.VK_O:
-			roll += rotationIndex;
+			orientation.rotateRoll(theta);
+			//roll += rotationIndex;
 			break;
 		//roll --
 		case KeyEvent.VK_U:
-			roll -= rotationIndex;
+			orientation.rotateRoll(theta*(-1.0));
+			//roll -= rotationIndex;
 			break;
 			
 		/////////////////	
@@ -89,37 +100,48 @@ public class Game implements GLEventListener, KeyListener {
 		//forwards
 		case KeyEvent.VK_W:
 			
-			camPosX += transIndex*COS(heading);
+			orientation.translateForward();
+			//camPosX += transIndex*COS(heading);
 			//targetY = camPosY + SIN()
-			camPosZ += transIndex*SIN(heading);
+			//camPosZ += transIndex*SIN(heading);
 			
 			break;
 		//backwards
 		case KeyEvent.VK_S:
-			camPosX -= transIndex*COS(heading);
+			
+			orientation.translateBackward();
+			//camPosX -= transIndex*COS(heading);
 			//targetY = camPosY + SIN()
-			camPosZ -= transIndex*SIN(heading);
+			//camPosZ -= transIndex*SIN(heading);
 
 			break;
 		//left
 		case KeyEvent.VK_A:
-			camPosX -= transIndex*COS(heading+90);
+			
+			orientation.translateLeftward();
+			//camPosX -= transIndex*COS(heading+90);
 			//targetY = camPosY + SIN()
-			camPosZ -= transIndex*SIN(heading+90);
+			//camPosZ -= transIndex*SIN(heading+90);
 			break;
 		//right
 		case KeyEvent.VK_D:
-			camPosX += transIndex*COS(heading+90);
+			
+			orientation.translateRightward();
+			//camPosX += transIndex*COS(heading+90);
 			//targetY = camPosY + SIN()
-			camPosZ += transIndex*SIN(heading+90);
+			//camPosZ += transIndex*SIN(heading+90);
 			break;
 		//upwards
 		case KeyEvent.VK_E:
-			camPosY -= transIndex;
+			
+			orientation.translateUpward();
+			//camPosY -= transIndex;
 			break;
 		//downwards
 		case KeyEvent.VK_Q:
-			camPosY += transIndex;
+			
+			orientation.translateDownward();
+			//camPosY += transIndex;
 			break;
 		default:
 			//illegal key was typed
@@ -144,18 +166,31 @@ public class Game implements GLEventListener, KeyListener {
 		glu.gluPerspective(50.0f, 1, 1.0, 1000.0);
 		
 		
-		targetX = camPosX + COS(heading);
+		//targetX = camPosX + COS(heading);
 		//targetY = camPosY + SIN()
-		targetZ = camPosZ + SIN(heading);
+		//targetZ = camPosZ + SIN(heading);
 		
-		targetY = camPosY + SIN(pitch);
+		//targetY = camPosY + SIN(pitch);
 		//targetZ = camPosZ + COS(pitch);
 		
+		//an idea: (gilad)///////////////////////////////
 		
+		Vector camPos = orientation.getPosition();
+		Vector target = orientation.getTargetLookAtVector();
+		Vector upVect = orientation.getUpVector();
+		
+		gl.glMatrixMode(GL.GL_MODELVIEW);
+		gl.glLoadIdentity();
+		glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
+					  target.getX(), target.getY(), target.getZ(), 
+					  upVect.getX(), upVect.getY(), upVect.getZ());
+		/////////////////////////////////////////////////
+		/*
 		glu.gluLookAt(camPosX, camPosY, camPosZ, targetX, targetY, targetZ, upX, upY, upZ);
 		
 		gl.glMatrixMode(GL.GL_MODELVIEW);
 		gl.glLoadIdentity();
+		*/
 		//gl.glTranslated(camPosX, camPosY, camPosZ);
 	 
 //		gl.glRotatef(pitch, 1.0f, 0.0f, 0.0f);
@@ -166,55 +201,55 @@ public class Game implements GLEventListener, KeyListener {
 
 		//1
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.5f, -1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.0f, -1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.0f, 1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.5f, 1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
 		
 		//2
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.0f, 1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.5f, 1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1.0f, 0.5f, 1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1.0f, 0.0f, 1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		//3
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1.0f, 0.5f, 1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1.0f, 0.0f, 1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1.0f, 0.0f, -1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1.0f, 0.5f, -1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
 		
 		//4
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1.0f, 0.0f, -1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1.0f, 0.5f, -1.0f);
+		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.5f, -1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1.0f, 0.0f, -1.0f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glEnd();
 	}
