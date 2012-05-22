@@ -35,6 +35,7 @@ public class Vector {
 		return new Vector(x-v.getX(),y-v.getY(),z-v.getZ());
 	}
 	public void rotateAroundAndNormalize(Vector axis, double theta) {
+		
 		//oposite as in OpenGL, angle is radians here
 		AxisAngle4d rotateAxisAngle = new AxisAngle4d(theta, axis.getX(), axis.getY(), axis.getZ());
 		
@@ -44,9 +45,15 @@ public class Vector {
 		
 		Vector3d v = new Vector3d(x, y, z);
 		
+		System.out.println("orthogonal before multiplication? dot product is: "+v.dot(new Vector3d(axis.x,axis.y,axis.z)));
+		
 		m.transform(v);
 		
+		System.out.println("orthogonal after multiplication? dot product is: "+v.dot(new Vector3d(axis.x,axis.y,axis.z)));
+		
 		v.normalize();
+		
+		System.out.println("orthogonal after normalization? dot product is: "+v.dot(new Vector3d(axis.x,axis.y,axis.z)));
 		
 		x = v.x;
 		y = v.y;

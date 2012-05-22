@@ -34,7 +34,8 @@ public class Game implements GLEventListener, KeyListener {
 			  										  new Vector(1.0,0.0,0.0), 
 			  										  new Vector(0.0,1.0,0.0),
 													  new Vector(0.0,0.0,-1.0));
-	private double theta = Math.toRadians(0.2);
+	private double pTheta = Math.toRadians(0.2);
+	private double nTheta = (Math.PI * 2) - pTheta;
 	private double expansionFactor = 100.0;
 	
 	private double COS(double arg){
@@ -65,32 +66,32 @@ public class Game implements GLEventListener, KeyListener {
 			
 		//pitch ++
 		case KeyEvent.VK_I:
-			orientation.rotatePitch(theta);
+			orientation.rotatePitch(pTheta);
 			//pitch += rotationIndex;
 			break;
 		//pitch --
 		case KeyEvent.VK_K:
-			orientation.rotatePitch(theta*(-1.0));
+			orientation.rotatePitch(nTheta);
 			//pitch -= rotationIndex;
 			break;
 		//heading ++
 		case KeyEvent.VK_L:
-			orientation.rotateHeading(theta);
+			orientation.rotateHeading(pTheta);
 			//heading += rotationIndex;
 			break;
 		//heading --
 		case KeyEvent.VK_J:
-			orientation.rotateHeading(theta*(-1.0));
+			orientation.rotateHeading(nTheta);
 			//heading -= rotationIndex;
 			break;
 		//roll ++
 		case KeyEvent.VK_O:
-			orientation.rotateRoll(theta);
+			orientation.rotateRoll(pTheta);
 			//roll += rotationIndex;
 			break;
 		//roll --
 		case KeyEvent.VK_U:
-			orientation.rotateRoll(theta*(-1.0));
+			orientation.rotateRoll(nTheta);
 			//roll -= rotationIndex;
 			break;
 			
