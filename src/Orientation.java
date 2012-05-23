@@ -1,14 +1,9 @@
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-
-
 public class Orientation {
 
 	private Vector position;
 	private Vector xUnit;
 	private Vector yUnit;
 	private Vector zUnit;
-	private GLAutoDrawable gLDrawable;
 
 	public Orientation(Vector position, Vector xUnit, Vector yUnit, Vector zUnit) {
 		this.position = position;
@@ -38,11 +33,11 @@ public class Orientation {
 	}
 
 	public void translateLeftward() {
-		position = position.sub(xUnit);
+		position = position.add(xUnit);
 	}
 
 	public void translateRightward() {
-		position = position.add(xUnit);
+		position = position.sub(xUnit);
 	}
 
 	public void translateUpward() {
@@ -54,43 +49,17 @@ public class Orientation {
 	}
 
 	public void rotatePitch(double theta) {
-
-		//TODO: delete debug printing
-		System.out.println("pitch rotation old:");
-		System.out.println("y: " + yUnit.toString() + "z: " + zUnit.toString());
-		
 		yUnit.rotateAroundAndNormalize(xUnit, theta);
 		zUnit.rotateAroundAndNormalize(xUnit, theta);
-
-		//TODO: delete debug printing
-		System.out.println("pitch rotation new:");
-		System.out.println("y: " + yUnit.toString() + "z: " + zUnit.toString());
-
 	}
 
 	public void rotateHeading(double theta) {
-		//TODO: delete debug printing
-		System.out.println("heading rotation old:");
-		System.out.println("x: " + xUnit.toString() + "z: " + zUnit.toString());
-		
 		xUnit.rotateAroundAndNormalize(yUnit, theta);
 		zUnit.rotateAroundAndNormalize(yUnit, theta);
-		
-		//TODO: delete debug printing
-		System.out.println("heading rotation new:");
-		System.out.println("x: " + xUnit.toString() + "z: " + zUnit.toString());
 	}
 
 	public void rotateRoll(double theta) {
-		//TODO: delete debug printing
-		System.out.println("roll rotation old:");
-		System.out.println("x: " + xUnit.toString() + "y: " + yUnit.toString());
-		
 		xUnit.rotateAroundAndNormalize(zUnit, theta);
 		yUnit.rotateAroundAndNormalize(zUnit, theta);
-		
-		//TODO: delete debug printing
-		System.out.println("roll rotation old:");
-		System.out.println("x: " + xUnit.toString() + "y: " + yUnit.toString());
 	}
 }

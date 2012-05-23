@@ -1,5 +1,4 @@
 import javax.vecmath.*;
-import javax.media.j3d.Transform3D;
 
 public class Vector {
 	double x;
@@ -36,28 +35,52 @@ public class Vector {
 	}
 	public void rotateAroundAndNormalize(Vector axis, double theta) {
 		
-		//oposite as in OpenGL, angle is radians here
-		AxisAngle4d rotateAxisAngle = new AxisAngle4d(theta, axis.getX(), axis.getY(), axis.getZ());
+		double[] rotationMatrixValues = Vector.generateRotationArray(axis, theta);
+		Matrix4d m = new Matrix4d(rotationMatrixValues);
+		Point3d p = new Point3d(x,y,z);
+		m.transform(p);
+		x = p.x;
+		y = p.y;
+		z = p.z;
+	}
+	
+	private static double[] generateRotationArray(Vector axis, double theta) {
 		
-		Matrix3d m = new Matrix3d();
+		double[] m = new double[16];
+		double n_x = axis.getX();
+		double n_y = axis.getY();
+		double n_z = axis.getZ();
+		double n2x = n_x * n_x;
+		double n2y = n_y * n_y;
+		double n2z = n_z * n_z;
+		double nxy = n_x * n_y;
+		double nxz = n_x * n_z;
+		double nyz = n_y * n_z;
+		double cos = Math.cos(theta);
+		double sin = Math.sin(theta);
+		double m1c = 1.0 - cos;
 		
-		m.set(rotateAxisAngle);
+		m[0] = n2x * m1c + cos;
+		m[1] = nxy * m1c + n_z * sin;
+		m[2] = nxz * m1c - n_y * sin;
+		m[3] = 0;
 		
-		Vector3d v = new Vector3d(x, y, z);
+		m[4] = nxy * m1c - n_z * sin;
+		m[5] = n2y * m1c + cos;
+		m[6] = nyz * m1c + n_x * sin;
+		m[7] = 0;
 		
-		System.out.println("orthogonal before multiplication? dot product is: "+v.dot(new Vector3d(axis.x,axis.y,axis.z)));
+		m[8] = nxz * m1c + n_y * sin;
+		m[9] = nyz * m1c - n_x * sin;
+		m[10]= n2z * m1c + cos;
+		m[11]= 0;
 		
-		m.transform(v);
+		m[12]= 0;
+		m[13]= 0;
+		m[14]= 0;
+		m[15]= 1;
 		
-		System.out.println("orthogonal after multiplication? dot product is: "+v.dot(new Vector3d(axis.x,axis.y,axis.z)));
-		
-		v.normalize();
-		
-		System.out.println("orthogonal after normalization? dot product is: "+v.dot(new Vector3d(axis.x,axis.y,axis.z)));
-		
-		x = v.x;
-		y = v.y;
-		z = v.z;
+		return m;
 	}
 	
 	@Override
