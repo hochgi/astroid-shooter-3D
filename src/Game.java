@@ -12,11 +12,11 @@ import com.sun.opengl.util.Animator;
 public class Game implements GLEventListener, KeyListener {
 
 	private GLU glu;
-	private Orientation orientation = new Orientation(new Vector(0.0,0.0,0.0),
+	private Orientation orientation = new Orientation(new Vector(0.0,0.5,0.0),
 			  										  new Vector(1.0,0.0,0.0), 
 			  										  new Vector(0.0,1.0,0.0),
 													  new Vector(0.0,0.0,1.0));
-	private double pTheta = Math.toRadians(0.2);
+	private double pTheta = Math.toRadians(0.72);
 	private double nTheta = (Math.PI * 2) - pTheta;
 	private double expansionFactor = 100.0;
 
@@ -124,9 +124,22 @@ public class Game implements GLEventListener, KeyListener {
 	 
 		gl.glBegin(GL.GL_QUADS);
 
+		//0
+		gl.glColor3f(0.5f, 0.25f, 0.25f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		
+		gl.glColor3f(0.25f, 0.5f, 0.25f);
+		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		
+		gl.glColor3f(0.25f, 0.25f, 0.5f);
+		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		
+		gl.glColor3f(0.33f, 0.33f, 0.33f);
+		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		
 		//1
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3d(-1.0*expansionFactor,1.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
@@ -135,24 +148,24 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
 		//2
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		//3
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
@@ -161,20 +174,33 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
 		//4
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3d(1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.5*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		
+		//5
+		gl.glColor3f(0.5f, 0.25f, 0.25f);
+		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
+		
+		gl.glColor3f(0.25f, 0.5f, 0.25f);
+		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		
+		gl.glColor3f(0.25f, 0.25f, 0.5f);
+		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		
+		gl.glColor3f(0.33f, 0.33f, 0.33f);
+		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glEnd();
 	}

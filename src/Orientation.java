@@ -1,15 +1,18 @@
+
 public class Orientation {
 
 	private Vector position;
 	private Vector xUnit;
 	private Vector yUnit;
 	private Vector zUnit;
+	private Rotator rotator;
 
 	public Orientation(Vector position, Vector xUnit, Vector yUnit, Vector zUnit) {
 		this.position = position;
 		this.xUnit = xUnit;
 		this.yUnit = yUnit;
 		this.zUnit = zUnit;
+		rotator = new Rotator();
 	}
 
 	public Vector getPosition() {
