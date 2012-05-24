@@ -1,17 +1,13 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
-import com.sun.opengl.util.Animator;
-
-
 public class Game implements GLEventListener, KeyListener {
 
-	private GLU glu;
+    static GLU glu = new GLU();
 	private Orientation orientation = new Orientation(new Vector(0.0,0.5,0.0),
 			  										  new Vector(1.0,0.0,0.0), 
 			  										  new Vector(0.0,1.0,0.0),
@@ -20,11 +16,7 @@ public class Game implements GLEventListener, KeyListener {
 	private double nTheta = (Math.PI * 2) - pTheta;
 	private double expansionFactor = 100.0;
 
-	
-
-	public Game(Animator animator, GLU glu) {
-		this.glu = glu;
-	}
+	public Game() {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
