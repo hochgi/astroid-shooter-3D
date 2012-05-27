@@ -5,6 +5,7 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
+
 public class Game implements GLEventListener, KeyListener {
 
     static GLU glu = new GLU();
@@ -14,7 +15,8 @@ public class Game implements GLEventListener, KeyListener {
 													  new Vector(0.0,0.0,1.0));
 	private double pTheta = Math.toRadians(0.72);
 	private double nTheta = (Math.PI * 2) - pTheta;
-	private double expansionFactor = 100.0;
+	private double expansionFactor = 150.0;
+	private Cube cube1,cube2,cube3,cube4;
 
 	public Game() {}
 
@@ -194,6 +196,11 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
+		cube1.draw(gLDrawable);
+		cube2.draw(gLDrawable);
+		cube3.draw(gLDrawable);
+		cube4.draw(gLDrawable);
+		
 		gl.glEnd();
 	}
 
@@ -202,6 +209,10 @@ public class Game implements GLEventListener, KeyListener {
 
 	@Override
 	public void init(GLAutoDrawable gLDrawable) {
+		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(-1.0,1.0,1.0), pTheta, 10.0);
+		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0), pTheta, 10.0);
+		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(1.0,1.0,-1.0), pTheta, 10.0);
+		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,-1.0,1.0), pTheta, 10.0);
 		GL gl = gLDrawable.getGL();
 		gl.glShadeModel(GL.GL_SMOOTH);
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

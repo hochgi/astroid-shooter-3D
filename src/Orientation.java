@@ -6,7 +6,25 @@ public class Orientation {
 	private Vector yUnit;
 	private Vector zUnit;
 	private Rotator rotator;
+	private Rotator fixedRotator = null;
+	private double fixedAngle = 0.0;
 
+	public Orientation() {
+		this.position = new Vector(0.0,0.0,0.0);
+		this.xUnit = new Vector(1.0,0.0,0.0);
+		this.yUnit = new Vector(0.0,1.0,0.0);
+		this.zUnit = new Vector(0.0,0.0,1.0);
+		rotator = new Rotator();
+	}
+	
+	public Orientation(Vector position) {
+		this.position = position;
+		this.xUnit = new Vector(1.0,0.0,0.0);
+		this.yUnit = new Vector(0.0,1.0,0.0);
+		this.zUnit = new Vector(0.0,0.0,1.0);
+		rotator = new Rotator();
+	}
+	
 	public Orientation(Vector position, Vector xUnit, Vector yUnit, Vector zUnit) {
 		this.position = position;
 		this.xUnit = xUnit;
@@ -64,5 +82,15 @@ public class Orientation {
 	public void rotateRoll(double theta) {
 		xUnit.rotateAroundAndNormalize(zUnit, theta);
 		yUnit.rotateAroundAndNormalize(zUnit, theta);
+	}
+
+	public void setFixedRotation(Vector axis, double angle) {
+		//fixedAngle  = angle;
+		fixedRotator = new Rotator();
+		fixedRotator.setAxisAndAngle(axis, angle);
+	}
+
+	public void rotateAtPredefinedAxisAndAngle(Vector v) {
+		fixedRotator.rotate(v);
 	}
 }
