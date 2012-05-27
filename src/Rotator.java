@@ -1,10 +1,15 @@
-import javax.vecmath.Matrix4d;
-import javax.vecmath.Point3d;
-
 
 public class Rotator {
 	
-	Matrix4d m = new Matrix4d();
+	private double m00 = 1.0;
+	private double m01 = 0.0;
+	private double m02 = 0.0;
+	private double m10 = 0.0;
+	private double m11 = 1.0;
+	private double m12 = 0.0;
+	private double m20 = 0.0;
+	private double m21 = 0.0;
+	private double m22 = 1.0;
 
 	public void setAxisAndAngle(Vector axis, double theta) {
 		double n_x = axis.getX();
@@ -20,32 +25,23 @@ public class Rotator {
 		double sin = Math.sin(theta);
 		double m1c = 1.0 - cos;
 		
-		m.m00 = n2x * m1c + cos;
-		m.m01 = nxy * m1c + n_z * sin;
-		m.m02 = nxz * m1c - n_y * sin;
-		m.m03 = 0;
+		m00 = n2x * m1c + cos;
+		m01 = nxy * m1c + n_z * sin;
+		m02 = nxz * m1c - n_y * sin;
 		
-		m.m10 = nxy * m1c - n_z * sin;
-		m.m11 = n2y * m1c + cos;
-		m.m12 = nyz * m1c + n_x * sin;
-		m.m13 = 0;
+		m10 = nxy * m1c - n_z * sin;
+		m11 = n2y * m1c + cos;
+		m12 = nyz * m1c + n_x * sin;
 		
-		m.m20 = nxz * m1c + n_y * sin;
-		m.m21 = nyz * m1c - n_x * sin;
-		m.m22 = n2z * m1c + cos;
-		m.m23 = 0;
+		m20 = nxz * m1c + n_y * sin;
+		m21 = nyz * m1c - n_x * sin;
+		m22 = n2z * m1c + cos;
 		
-		m.m30 = 0;
-		m.m31 = 0;
-		m.m32 = 0;
-		m.m33 = 1;
 	}
 
 	public void rotate(Vector v) {
-		Point3d p = new Point3d(v.getX(), v.getY(), v.getZ());
-		m.transform(p);
-		v.setX(p.x);
-		v.setY(p.y);
-		v.setZ(p.z);
+		v.setX(v.x * m00 + v.y * m01 + v.z * m02);
+		v.setY(v.x * m10 + v.y * m11 + v.z * m12);
+		v.setZ(v.x * m20 + v.y * m21 + v.z * m22);
 	}
 }
