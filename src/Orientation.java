@@ -8,6 +8,8 @@ public class Orientation {
 	private Rotator rotator;
 	private Rotator fixedRotator = null;
 	private double fixedAngle = 0.0;
+	private double accumulatedAngle;
+	private Vector fixedAxis;
 
 	public Orientation() {
 		this.position = new Vector(0.0,0.0,0.0);
@@ -85,12 +87,23 @@ public class Orientation {
 	}
 
 	public void setFixedRotation(Vector axis, double angle) {
-		//fixedAngle  = angle;
+		while(angle < 0) {
+			angle += (Math.PI * 2);
+		}
+		while(angle >= (Math.PI * 2)) {
+			angle -= (Math.PI * 2);
+    	}
+		accumulatedAngle = fixedAngle  = angle;
+		fixedAxis = axis;
 		fixedRotator = new Rotator();
 		fixedRotator.setAxisAndAngle(axis, angle);
 	}
 
-	public void rotateAtPredefinedAxisAndAngle(Vector v) {
-		fixedRotator.rotate(v);
+	public void rotateAtPredefinedAxisAndAngle(Vector v, Vector u) {
+		if(accumulatedAngle >= (Math.PI * 2)) {
+			accumulatedAngle -= (Math.PI * 2);
+    	}
+		fixedRotator.oneTimeRotatation(v,u,fixedAxis,accumulatedAngle);
+		accumulatedAngle += fixedAngle;
 	}
 }

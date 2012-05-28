@@ -9,7 +9,11 @@ public class Vector {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.speed = 2.0;
+	}
+	public Vector() {
+		this.x = 0.0;
+		this.y = 0.0;
+		this.z = 0.0;
 	}
 	public double getX() {
 		return x;
@@ -30,14 +34,23 @@ public class Vector {
 		this.z = z;
 	}
 	public Vector add(Vector v) {
-		return new Vector(x+(v.getX()*speed),y+(v.getY()*speed),z+(v.getZ()*speed));
+		return new Vector(x+v.getX(),y+v.getY(),z+v.getZ());
 	}
 	public Vector sub(Vector v) {
-		return new Vector(x-(v.getX()*speed),y-(v.getY()*speed),z-(v.getZ()*speed));
+		return new Vector(x-v.getX(),y-v.getY(),z-v.getZ());
 	}
 	
 	@Override
 	public String toString() {
 		return "("+x+","+y+","+z+")";
+	}
+	public Vector normalize() {
+		double length = Math.sqrt(x*x + y*y + z*z);
+		if(length != 1.0) {
+			x /= length;
+			y /= length;
+			z /= length;
+		}
+		return this;
 	}
 }

@@ -19,10 +19,9 @@ public abstract class Polyhedron {
 			}
 			synchronized(lock) {
 				for (Polyhedron p : polyhedrons) {
-					Vector[] vertices = p.getVertices();
-					Orientation o = p.getOrientation();
-					for(Vector v : vertices) {
-						o.rotateAtPredefinedAxisAndAngle(v);
+					Vector2Tuple[] vertices = p.getVertices();
+					for(Vector2Tuple t : vertices) {
+						p.rotateAtPredefinedAxisAndAngle(t.v, t.u);
 					}	
 				}
 			}
@@ -39,6 +38,10 @@ public abstract class Polyhedron {
 		orientation.setFixedRotation(axis, angle);
 	}
 	
+	protected void rotateAtPredefinedAxisAndAngle(Vector v, Vector u) {
+		orientation.rotateAtPredefinedAxisAndAngle(v, u);
+	}
+
 	protected Polyhedron(Vector position, Vector axis, double angle) {
 		orientation = new Orientation(position);
 		orientation.setFixedRotation(axis, angle);
@@ -60,5 +63,5 @@ public abstract class Polyhedron {
 	
 	protected abstract void synchronizedDraw(GLAutoDrawable gLDrawable);
 	
-	protected abstract Vector[] getVertices();
+	protected abstract Vector2Tuple[] getVertices();
 }

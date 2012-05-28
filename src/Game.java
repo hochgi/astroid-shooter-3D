@@ -1,9 +1,14 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
+import javax.media.opengl.GLException;
 import javax.media.opengl.glu.GLU;
+import com.sun.opengl.util.texture.*;
 
 
 public class Game implements GLEventListener, KeyListener {
@@ -115,84 +120,128 @@ public class Game implements GLEventListener, KeyListener {
 		glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
 					  target.getX(), target.getY(), target.getZ(), 
 					  upVect.getX(), upVect.getY(), upVect.getZ());
-	 
+		
+		
+		Texture bricks=null;
+		//Texture wood=null;
+		try {
+			bricks = TextureIO.newTexture(new File( "textures/brick.gif" ),true);
+			//wood = TextureIO.newTexture(new File( "textures/wood.gif" ),true);
+		} catch (GLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
+        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );
+        
+		bricks.bind();
+		
 		gl.glBegin(GL.GL_QUADS);
 
 		//0
+		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.25f, 0.25f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
+		
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.25f, 0.5f, 0.25f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 10.0f);
 		gl.glColor3f(0.25f, 0.25f, 0.5f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(0.0f, 10.0f);
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		//1
+		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor,1.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
 		//2
+		
+		gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
 		//3
+		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
 		//4
+		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		//5
+		gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glColor3f(0.5f, 0.25f, 0.25f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.25f, 0.5f, 0.25f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.25f, 0.25f, 0.5f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
@@ -209,10 +258,10 @@ public class Game implements GLEventListener, KeyListener {
 
 	@Override
 	public void init(GLAutoDrawable gLDrawable) {
-		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(-1.0,1.0,1.0), pTheta, 10.0);
-		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0), pTheta, 10.0);
-		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(1.0,1.0,-1.0), pTheta, 10.0);
-		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,-1.0,1.0), pTheta, 10.0);
+		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(0.0,0.0,0.0), pTheta, 10.0, "wood.gif");
+		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
+		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
+		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,-1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
 		GL gl = gLDrawable.getGL();
 		gl.glShadeModel(GL.GL_SMOOTH);
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -220,7 +269,9 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL.GL_LEQUAL);
 		gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
+		gl.glEnable(GL.GL_TEXTURE_2D);
 		gLDrawable.addKeyListener(this);
+		
 	}
 
 	@Override
