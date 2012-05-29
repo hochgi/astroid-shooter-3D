@@ -2,8 +2,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.FloatBuffer;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -112,21 +110,15 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glLoadIdentity();	
 		glu.gluPerspective(50.0f, 1, 1.0, 1000.0);
 		
-		
 		float color[] = {1f, 0.f, 0.0f, 0.0f};
 		float ambient[] = {1.0f, 1.0f, 1.0f, 0.5f};
 		float position[] = {0.0f, 10.0f, 0.0f};
 		
-		gl.glLightfv(gl.GL_LIGHT0, gl.GL_AMBIENT, ambient,1); 
-		gl.glLightfv(gl.GL_LIGHT0, gl.GL_DIFFUSE,color , 1); 
-		gl.glLightfv(gl.GL_LIGHT0, gl.GL_SPECULAR, color , 1); 
-		gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, position, 1);
+		gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, ambient,1); 
+		gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE,color , 1); 
+		gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, color , 1); 
+		gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, position, 1);
 		gl.glEnable(GL.GL_LIGHT0);
-
-//		gl.glEnable(gl.GL_NORMALIZE);
-//		gl.glNormal3f(0, -1, 0);
-//		gl.glVertex3f(0, 10, 0);
-		
 		
 		Vector camPos = orientation.getPosition();
 		Vector target = orientation.getTargetLookAtVector();
@@ -138,29 +130,22 @@ public class Game implements GLEventListener, KeyListener {
 					  target.getX(), target.getY(), target.getZ(), 
 					  upVect.getX(), upVect.getY(), upVect.getZ());
 		
-		
-		Texture bricks=null;
-		//Texture wood=null;
+		Texture ground=null;
 		try {
-			bricks = TextureIO.newTexture(new File( "textures/brick.gif" ),true);
-			//wood = TextureIO.newTexture(new File( "textures/wood.gif" ),true);
+			ground = TextureIO.newTexture(new File( "textures/ground.jpg" ),true);
 		} catch (GLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
-        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );
-
+		
+        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
         gl.glEnable(GL.GL_BLEND); 
-
-        
-		bricks.bind();
+		ground.bind();
 		
 		gl.glBegin(GL.GL_QUADS);
-
+		
 		//0
 		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.25f, 0.25f);
@@ -178,6 +163,24 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glTexCoord2f(0.0f, 10.0f);
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		
+		gl.glEnd();
+		
+		Texture bricks=null;
+		try {
+			bricks = TextureIO.newTexture(new File( "textures/brick.gif" ),true);
+		} catch (GLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+        gl.glEnable(GL.GL_BLEND); 
+		bricks.bind();
+		
+		gl.glBegin(GL.GL_QUADS);
 		
 		//1
 		gl.glTexCoord2f(0.0f, 0.0f); 
@@ -294,7 +297,7 @@ public class Game implements GLEventListener, KeyListener {
 		
 		
 		//gl.glEnable(gl.GL_LIGHTING);
-		gl.glEnable(gl.GL_LIGHT0);
+		gl.glEnable(GL.GL_LIGHT0);
 		
 		
 		gLDrawable.addKeyListener(this);

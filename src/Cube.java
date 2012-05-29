@@ -16,7 +16,7 @@ public class Cube extends Polyhedron {
 	
 	public static Cube createCube(Vector position, Vector axis, double angle, double size, String textureSrc) {
 		Cube cube = new Cube(position, axis, angle, size, textureSrc);
-		Polyhedron.registerPolyhedron(cube);
+		Polyhedron.registerObject(cube);
 		return cube;
 	}
 	
@@ -56,31 +56,24 @@ public class Cube extends Polyhedron {
 			texture = TextureIO.newTexture(new File( "textures/" +  textureSrc),true);
 			//wood = TextureIO.newTexture(new File( "textures/wood.gif" ),true);
 		} catch (GLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
+	protected void draw(GLAutoDrawable gLDrawable) {
 		final GL gl = gLDrawable.getGL();
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();
 		double z = orientation.getPosition().getZ();
 		gl.glEnd();
 
-//		
-		
 		//Texture wood=null;
-		
-//		
-//		
+
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
-        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );
-//        
+        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );   
         texture.bind();
 		
 		gl.glBegin(GL.GL_QUADS);
