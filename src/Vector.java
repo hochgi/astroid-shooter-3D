@@ -3,7 +3,6 @@ public class Vector {
 	double x;
 	double y;
 	double z;
-	double speed;
 	
 	public Vector(double x, double y, double z) {
 		this.x = x;

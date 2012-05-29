@@ -5,10 +5,15 @@ import javax.media.opengl.GLAutoDrawable;
 public class Tetrahedron extends Polyhedron {
 
 	private Vector2Tuple[] vertices;
+	private double originalAngle;
+	private int counter = 1;
+	private Object tLock = new Object();
 
 	public Tetrahedron(Vector position, Vector axis, double angle, double size) {
 		super(position, axis, angle);
 		size = Math.abs(size);
+		
+		originalAngle = angle;
 
 		double sqrt_3 = Math.sqrt(3.0);
 		double height = Math.sqrt(6.0) / 1.5;
@@ -91,4 +96,17 @@ public class Tetrahedron extends Polyhedron {
 		return tetra;
 	}
 
+	public void changeSpeed() {
+		counter  = (counter + 1) % 4;
+		synchronized (tLock ) {
+			orientation.setAngle(counter * originalAngle);
+		}
+	}
+
+	@Override
+	protected void update() {
+		synchronized (tLock) {
+			super.update();
+		}
+	};
 }

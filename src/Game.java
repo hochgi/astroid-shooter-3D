@@ -13,7 +13,7 @@ import com.sun.opengl.util.texture.*;
 public class Game implements GLEventListener, KeyListener {
 
     static GLU glu = new GLU();
-	private Orientation orientation = new Orientation(new Vector(0.0,0.5,0.0),
+	private Orientation orientation = new Orientation(new Vector(0.0,1.0,0.0),
 			  										  new Vector(1.0,0.0,0.0), 
 			  										  new Vector(0.0,1.0,0.0),
 													  new Vector(0.0,0.0,1.0));
@@ -96,6 +96,7 @@ public class Game implements GLEventListener, KeyListener {
 		default:
 			//illegal key was typed
 		}
+		Exercise3.miniMap.repaint();
 	}
 
 	@Override
@@ -291,7 +292,7 @@ public class Game implements GLEventListener, KeyListener {
 		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
 		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(-1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
 		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
-		tetra = Tetrahedron.createTetrahedron(new Vector(0.0,1.0*expansionFactor,0.0), new Vector(0.0,1.0,0.0).normalize(), pTheta * 2.0, 10.0);
+		tetra = Tetrahedron.createTetrahedron(new Vector(0.0,1.0*expansionFactor,0.0), new Vector(0.0,1.0,0.0).normalize(), pTheta * 2.0, 25.0);
 		GL gl = gLDrawable.getGL();
 		gl.glShadeModel(GL.GL_SMOOTH);
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -318,4 +319,32 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glLoadIdentity();
 	}
 
+	public void reverseCubesRotation() {
+		cube1.getOrientation().reverseRotation();
+		cube2.getOrientation().reverseRotation();
+		cube3.getOrientation().reverseRotation();
+		cube4.getOrientation().reverseRotation();
+	}
+
+	public void inverseCubesColors() {
+		cube1.reverseColors();
+		cube2.reverseColors();
+		cube3.reverseColors();
+		cube4.reverseColors();
+	}
+
+	public void changeTetrahedronSpeed() {
+		tetra.changeSpeed();
+	}
+
+	public Vector getCamPos() {
+		return orientation.getPosition();
+	}
+
+	public void resetOrientation() {
+		orientation.reset(0.0,1.0,0.0,
+				 		  1.0,0.0,0.0, 
+				 		  0.0,1.0,0.0,
+				 		  0.0,0.0,1.0);
+	}
 }

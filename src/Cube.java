@@ -13,6 +13,9 @@ public class Cube extends Polyhedron {
 	Vector2Tuple[] vertices;
 	//private String textureSrc;
 	Texture texture=null;
+	private float c1 = 0.0f;
+	private float c2 = 0.5f;
+	private float c3 = 1.0f;
 	
 	public static Cube createCube(Vector position, Vector axis, double angle, double size, String textureSrc) {
 		Cube cube = new Cube(position, axis, angle, size, textureSrc);
@@ -79,109 +82,115 @@ public class Cube extends Polyhedron {
 		gl.glBegin(GL.GL_QUADS);
 		//1
 		gl.glTexCoord2f(0.0f, 0.0f);
-		gl.glColor3f(1.0f, 0.5f, 0.0f);
+		gl.glColor3f(c3, c2, c1);
 		gl.glVertex3d(vertices[0].u.getX()+x, vertices[0].u.getY()+y, vertices[0].u.getZ()+z);
 		
 		gl.glTexCoord2f(1.0f, 0.0f); 
-		gl.glColor3f(1.0f, 0.5f, 0.0f);
+		gl.glColor3f(c3, c2, c1);
 		gl.glVertex3d(vertices[1].u.getX()+x, vertices[1].u.getY()+y, vertices[1].u.getZ()+z);
 		
 		gl.glTexCoord2f(1.0f, 1.0f);
-		gl.glColor3f(1.0f, 0.5f, 0.0f);
+		gl.glColor3f(c3, c2, c1);
 		gl.glVertex3d(vertices[2].u.getX()+x, vertices[2].u.getY()+y, vertices[2].u.getZ()+z);
 		
 		gl.glTexCoord2f(0.0f, 1.0f);
-		gl.glColor3f(1.0f, 0.5f, 0.0f);
+		gl.glColor3f(c3, c2, c1);
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
 		
 		//2
 		gl.glTexCoord2f(0.0f, 0.0f);
-		gl.glColor3f(1.0f, 0.0f, 0.5f);
+		gl.glColor3f(c3, c1, c2);
 		gl.glVertex3d(vertices[0].u.getX()+x, vertices[0].u.getY()+y, vertices[0].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 0.0f);
-		gl.glColor3f(1.0f, 0.0f, 0.5f);
+		gl.glColor3f(c3, c1, c2);
 		gl.glVertex3d(vertices[1].u.getX()+x, vertices[1].u.getY()+y, vertices[1].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 1.0f); 
-		gl.glColor3f(1.0f, 0.0f, 0.5f);
+		gl.glColor3f(c3, c1, c2);
 		gl.glVertex3d(vertices[5].u.getX()+x, vertices[5].u.getY()+y, vertices[5].u.getZ()+z);
 		
 		gl.glTexCoord2f(0.0f, 1.0f); 
-		gl.glColor3f(1.0f, 0.0f, 0.5f);
+		gl.glColor3f(c3, c1, c2);
 		gl.glVertex3d(vertices[4].u.getX()+x, vertices[4].u.getY()+y, vertices[4].u.getZ()+z);
 		
 		//3
 		gl.glTexCoord2f(0.0f, 0.0f); 
-		gl.glColor3f(0.5f, 1.0f, 0.0f);
+		gl.glColor3f(c2, c3, c1);
 		gl.glVertex3d(vertices[1].u.getX()+x, vertices[1].u.getY()+y, vertices[1].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 0.0f); 
-		gl.glColor3f(0.5f, 1.0f, 0.0f);
+		gl.glColor3f(c2, c3, c1);
 		gl.glVertex3d(vertices[2].u.getX()+x, vertices[2].u.getY()+y, vertices[2].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 1.0f); 
-		gl.glColor3f(0.5f, 1.0f, 0.0f);
+		gl.glColor3f(c2, c3, c1);
 		gl.glVertex3d(vertices[6].u.getX()+x, vertices[6].u.getY()+y, vertices[6].u.getZ()+z);
 		
 		gl.glTexCoord2f(0.0f, 1.0f); 
-		gl.glColor3f(0.5f, 1.0f, 0.0f);
+		gl.glColor3f(c2, c3, c1);
 		gl.glVertex3d(vertices[5].u.getX()+x, vertices[5].u.getY()+y, vertices[5].u.getZ()+z);
 		
 		//4
 		gl.glTexCoord2f(0.0f, 0.0f);
-		gl.glColor3f(0.5f, 0.0f, 1.0f);
+		gl.glColor3f(c2, c1, c3);
 		gl.glVertex3d(vertices[2].u.getX()+x, vertices[2].u.getY()+y, vertices[2].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 0.0f); 
-		gl.glColor3f(0.5f, 0.0f, 1.0f);
+		gl.glColor3f(c2, c1, c3);
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 1.0f); 
-		gl.glColor3f(0.5f, 0.0f, 1.0f);
+		gl.glColor3f(c2, c1, c3);
 		gl.glVertex3d(vertices[7].u.getX()+x, vertices[7].u.getY()+y, vertices[7].u.getZ()+z);
 		
 		gl.glTexCoord2f(0.0f, 1.0f); 
-		gl.glColor3f(0.5f, 0.0f, 1.0f);
+		gl.glColor3f(c2, c1, c3);
 		gl.glVertex3d(vertices[6].u.getX()+x, vertices[6].u.getY()+y, vertices[6].u.getZ()+z);
 		
 		//5
 		gl.glTexCoord2f(0.0f, 0.0f); 
-		gl.glColor3f(0.0f, 1.0f, 0.5f);
+		gl.glColor3f(c1, c3, c2);
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 0.0f); 
-		gl.glColor3f(0.0f, 1.0f, 0.5f);
+		gl.glColor3f(c1, c3, c2);
 		gl.glVertex3d(vertices[0].u.getX()+x, vertices[0].u.getY()+y, vertices[0].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 1.0f);
-		gl.glColor3f(0.0f, 1.0f, 0.5f);
+		gl.glColor3f(c1, c3, c2);
 		gl.glVertex3d(vertices[4].u.getX()+x, vertices[4].u.getY()+y, vertices[4].u.getZ()+z);
 		
 		gl.glTexCoord2f(0.0f, 1.0f); 
-		gl.glColor3f(0.0f, 1.0f, 0.5f);
+		gl.glColor3f(c1, c3, c2);
 		gl.glVertex3d(vertices[7].u.getX()+x, vertices[7].u.getY()+y, vertices[7].u.getZ()+z);
 		
 		//6
 		gl.glTexCoord2f(0.0f, 0.0f);
-		gl.glColor3f(0.0f, 0.5f, 1.0f);
+		gl.glColor3f(c1, c2, c3);
 		gl.glVertex3d(vertices[4].u.getX()+x, vertices[4].u.getY()+y, vertices[4].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 0.0f); 
-		gl.glColor3f(0.0f, 0.5f, 1.0f);
+		gl.glColor3f(c1, c2, c3);
 		gl.glVertex3d(vertices[5].u.getX()+x, vertices[5].u.getY()+y, vertices[5].u.getZ()+z);
 
 		gl.glTexCoord2f(1.0f, 1.0f); 
-		gl.glColor3f(0.0f, 0.5f, 1.0f);
+		gl.glColor3f(c1, c2, c3);
 		gl.glVertex3d(vertices[6].u.getX()+x, vertices[6].u.getY()+y, vertices[6].u.getZ()+z);
 		
 		gl.glTexCoord2f(0.0f, 1.0f); 
-		gl.glColor3f(0.0f, 0.5f, 1.0f);
+		gl.glColor3f(c1, c2, c3);
 		gl.glVertex3d(vertices[7].u.getX()+x, vertices[7].u.getY()+y, vertices[7].u.getZ()+z);
 	}
 
 	@Override
 	protected Vector2Tuple[] getVertices() {
 		return vertices;
+	}
+
+	public void reverseColors() {
+		c1 = 1f - c1;
+		c2 = 1f - c2;
+		c3 = 1f - c3;
 	}
 }

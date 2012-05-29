@@ -106,4 +106,49 @@ public class Orientation {
 		fixedRotator.oneTimeRotatation(v,u,fixedAxis,accumulatedAngle);
 		accumulatedAngle += fixedAngle;
 	}
+
+	public void reverseRotation() {
+		fixedAngle = (Math.PI * 2) - fixedAngle;
+	}
+
+	public void setAngle(double d) {
+		fixedAngle = d;
+	}
+
+	public Vector getAxis(char c) {
+		Vector rv = null;
+		switch (c) {
+		case 'X':
+			rv = xUnit;
+			break;
+		case 'Y':
+			rv = yUnit;
+			break;
+		case 'Z':
+			rv = zUnit;
+			break;
+		default:
+			//SHOULD'NT GET IN HERE
+			break;
+		}
+		return rv;
+	}
+
+	public void reset(double xPos, double yPos, double zPos,
+					  double xUnx, double yUnx, double zUnx, 
+					  double xUny, double yUny, double zUny, 
+					  double xUnz, double yUnz, double zUnz) {
+		position.x = xPos;
+		position.y = yPos;
+		position.z = zPos;
+		xUnit.x = xUnx;
+		xUnit.y = yUnx;
+		xUnit.z = zUnx;
+		yUnit.x = xUny;
+		yUnit.y = yUny;
+		yUnit.z = zUny;
+		zUnit.x = xUnz;
+		zUnit.y = yUnz;
+		zUnit.z = zUnz;
+	}
 }
