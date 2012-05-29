@@ -21,7 +21,10 @@ public class Game implements GLEventListener, KeyListener {
 	private double nTheta = (Math.PI * 2) - pTheta;
 	private double expansionFactor = 150.0;
 	private Cube cube1,cube2,cube3,cube4;
-
+	Texture ground = null;
+	Texture stars = null;
+	Texture wall = null;
+	
 	public Game() {}
 
 	@Override
@@ -130,15 +133,6 @@ public class Game implements GLEventListener, KeyListener {
 					  target.getX(), target.getY(), target.getZ(), 
 					  upVect.getX(), upVect.getY(), upVect.getZ());
 		
-		Texture ground=null;
-		try {
-			ground = TextureIO.newTexture(new File( "textures/ground.jpg" ),true);
-		} catch (GLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
         gl.glEnable(GL.GL_BLEND); 
@@ -165,20 +159,11 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
 		gl.glEnd();
-		
-		Texture bricks=null;
-		try {
-			bricks = TextureIO.newTexture(new File( "textures/brick.gif" ),true);
-		} catch (GLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
         gl.glEnable(GL.GL_BLEND); 
-		bricks.bind();
+		wall.bind();
 		
 		gl.glBegin(GL.GL_QUADS);
 		
@@ -187,7 +172,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor,1.0*expansionFactor, -1.0*expansionFactor);
 		
-		gl.glTexCoord2f(10.0f, 0.0f); 
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
@@ -195,7 +180,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
-		gl.glTexCoord2f(0.0f, 10.0f); 
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
@@ -205,7 +190,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
-		gl.glTexCoord2f(10.0f, 0.0f); 
+		gl.glTexCoord2f(0.0f, 10.0f); 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
@@ -213,7 +198,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
-		gl.glTexCoord2f(0.0f, 10.0f); 
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
@@ -222,7 +207,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
-		gl.glTexCoord2f(10.0f, 0.0f); 
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
 		
@@ -230,7 +215,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
-		gl.glTexCoord2f(0.0f, 10.0f); 
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
@@ -239,7 +224,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
 		
-		gl.glTexCoord2f(10.0f, 0.0f); 
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
@@ -247,16 +232,25 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
-		gl.glTexCoord2f(0.0f, 10.0f); 
+		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		
+		gl.glEnd();
+		
+        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+        gl.glEnable(GL.GL_BLEND); 
+        stars.bind();
+		
+		gl.glBegin(GL.GL_QUADS);
 		
 		//5
 		gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glColor3f(0.5f, 0.25f, 0.25f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
-		gl.glTexCoord2f(10.0f, 0.0f); 
+		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.25f, 0.5f, 0.25f);
 		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
@@ -264,7 +258,7 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.25f, 0.25f, 0.5f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
 		
-		gl.glTexCoord2f(0.0f, 10.0f); 
+		gl.glTexCoord2f(10.0f, 0.0f);
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
@@ -281,6 +275,16 @@ public class Game implements GLEventListener, KeyListener {
 
 	@Override
 	public void init(GLAutoDrawable gLDrawable) {
+		
+		try {
+			ground = TextureIO.newTexture(new File( "textures/ground.jpg" ),true);
+			stars = TextureIO.newTexture(new File( "textures/stars.jpg" ),true);
+			wall = TextureIO.newTexture(new File( "textures/wall.jpg" ),true);
+		} catch (GLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(0.0,0.0,0.0), pTheta, 10.0, "wood.gif");
 		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
 		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
