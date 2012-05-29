@@ -16,7 +16,7 @@ public class Cube extends Polyhedron {
 	
 	public static Cube createCube(Vector position, Vector axis, double angle, double size, String textureSrc) {
 		Cube cube = new Cube(position, axis, angle, size, textureSrc);
-		Polyhedron.registerObject(cube);
+		Object3D.registerObject(cube);
 		return cube;
 	}
 	

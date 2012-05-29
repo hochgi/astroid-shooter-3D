@@ -24,6 +24,7 @@ public class Game implements GLEventListener, KeyListener {
 	Texture ground = null;
 	Texture stars = null;
 	Texture wall = null;
+	private Tetrahedron tetra;
 	
 	public Game() {}
 
@@ -266,6 +267,7 @@ public class Game implements GLEventListener, KeyListener {
 		cube2.draw(gLDrawable);
 		cube3.draw(gLDrawable);
 		cube4.draw(gLDrawable);
+		tetra.draw(gLDrawable);
 		
 		gl.glEnd();
 	}
@@ -285,10 +287,11 @@ public class Game implements GLEventListener, KeyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(0.0,0.0,0.0), pTheta, 10.0, "wood.gif");
+		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(-1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
 		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
-		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
-		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,-1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
+		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(-1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
+		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
+		tetra = Tetrahedron.createTetrahedron(new Vector(0.0,25,0.0), new Vector(0.0,1.0,0.0).normalize(), pTheta, 10.0);
 		GL gl = gLDrawable.getGL();
 		gl.glShadeModel(GL.GL_SMOOTH);
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -299,13 +302,10 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
 		gl.glEnable(GL.GL_TEXTURE_2D);
 		
-		
 		//gl.glEnable(gl.GL_LIGHTING);
 		gl.glEnable(GL.GL_LIGHT0);
 		
-		
 		gLDrawable.addKeyListener(this);
-		
 	}
 
 	@Override
