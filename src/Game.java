@@ -2,6 +2,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
@@ -111,6 +112,22 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glLoadIdentity();	
 		glu.gluPerspective(50.0f, 1, 1.0, 1000.0);
 		
+		
+		float color[] = {1f, 0.f, 0.0f, 0.0f};
+		float ambient[] = {1.0f, 1.0f, 1.0f, 0.5f};
+		float position[] = {0.0f, 10.0f, 0.0f};
+		
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_AMBIENT, ambient,1); 
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_DIFFUSE,color , 1); 
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_SPECULAR, color , 1); 
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, position, 1);
+		gl.glEnable(GL.GL_LIGHT0);
+
+//		gl.glEnable(gl.GL_NORMALIZE);
+//		gl.glNormal3f(0, -1, 0);
+//		gl.glVertex3f(0, 10, 0);
+		
+		
 		Vector camPos = orientation.getPosition();
 		Vector target = orientation.getTargetLookAtVector();
 		Vector upVect = orientation.getUpVector();
@@ -136,6 +153,9 @@ public class Game implements GLEventListener, KeyListener {
 		}
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );
+
+        gl.glEnable(GL.GL_BLEND); 
+
         
 		bricks.bind();
 		
@@ -267,9 +287,16 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		gl.glClearDepth(1.0f);
 		gl.glEnable(GL.GL_DEPTH_TEST);
+		
 		gl.glDepthFunc(GL.GL_LEQUAL);
 		gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
 		gl.glEnable(GL.GL_TEXTURE_2D);
+		
+		
+		//gl.glEnable(gl.GL_LIGHTING);
+		gl.glEnable(gl.GL_LIGHT0);
+		
+		
 		gLDrawable.addKeyListener(this);
 		
 	}

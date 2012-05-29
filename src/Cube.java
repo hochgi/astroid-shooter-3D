@@ -11,7 +11,8 @@ import com.sun.opengl.util.texture.TextureIO;
 public class Cube extends Polyhedron {
 	
 	Vector2Tuple[] vertices;
-	private String textureSrc;
+	//private String textureSrc;
+	Texture texture=null;
 	
 	public static Cube createCube(Vector position, Vector axis, double angle, double size, String textureSrc) {
 		Cube cube = new Cube(position, axis, angle, size, textureSrc);
@@ -48,7 +49,19 @@ public class Cube extends Polyhedron {
 		vertices[6].u = new Vector();
 		vertices[7].u = new Vector();
 		
-		this.textureSrc = textureSrc;
+		//this.textureSrc = textureSrc;
+	
+	
+		try {
+			texture = TextureIO.newTexture(new File( "textures/" +  textureSrc),true);
+			//wood = TextureIO.newTexture(new File( "textures/wood.gif" ),true);
+		} catch (GLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -57,29 +70,20 @@ public class Cube extends Polyhedron {
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();
 		double z = orientation.getPosition().getZ();
-		
+		gl.glEnd();
 
 //		
-//		Texture texture=null;
-//		//Texture wood=null;
-//		try {
-//			texture = TextureIO.newTexture(new File( "textures/" +  textureSrc),true);
-//			//wood = TextureIO.newTexture(new File( "textures/wood.gif" ),true);
-//		} catch (GLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
-//        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );
-//        
-//        texture.bind();
 		
-		//gl.glBegin(GL.GL_QUADS);
+		//Texture wood=null;
+		
+//		
+//		
+		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
+        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );
+//        
+        texture.bind();
+		
+		gl.glBegin(GL.GL_QUADS);
 		//1
 		gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glColor3f(1.0f, 0.5f, 0.0f);
