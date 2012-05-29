@@ -14,7 +14,7 @@ public class Exercise3 {
 		canvas.addGLEventListener(game);
 		canvas.addKeyListener(game);
 		frame.add(canvas);
-		frame.setSize(640, 480);
+//		frame.setSize(640, 480);
 		frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 //		frame.addWindowListener(new WindowAdapter() {
