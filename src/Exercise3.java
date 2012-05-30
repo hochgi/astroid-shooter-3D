@@ -1,10 +1,14 @@
-import java.awt.Cursor;
 import java.awt.Frame;
 import javax.media.opengl.GLCanvas;
 import javax.swing.JButton;
-
 import com.sun.opengl.util.Animator;
 
+/**
+ * main class.
+ * GUI handling is done here.
+ * @author gilad
+ *
+ */
 public class Exercise3 {
 
     float rotateT = 0.0f;
@@ -16,22 +20,19 @@ public class Exercise3 {
     static JButton tButton = new JButton("CTS");
     static JButton pButton = new JButton("RCO");
     static GPanel  miniMap;
-//    static JPanel rotInfo = new JPanel();
-//    static JPanel posInfo = new JPanel();
-//	static JLabel[] rotInfoLabels;
-//	static JLabel[] posInfoLabels;
     		
 	public static void main(String[] args) {
 		Game game = new Game();
 		
+		//canvas initialization
 		canvas.addGLEventListener(game);
 		canvas.addKeyListener(game);
 		
+		//minimap setup
 		miniMap = new GPanel(game);
 		miniMap.initialize();
 		miniMap.setSize(128, 128);
 		miniMap.setLocation(0, 0);
-		miniMap.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		miniMap.addKeyListener(game);
 		
 		rButton.addActionListener(new GameActionListener(game, ButtonEnum.RCR));
@@ -60,21 +61,21 @@ public class Exercise3 {
 		frame.add(tButton);
 		frame.add(pButton);
 		frame.add(canvas);
-//		frame.setSize(640, 480);
 		frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-//		frame.addWindowListener(new WindowAdapter() {
-//			public void windowClosing(WindowEvent e) {
-//			    exit();
-//			}
-//		});
 		frame.setVisible(true);
+		
 		animator.start();
+		//make sure that the canvas gets the focus
+		//so the keys will be responsive at once.
 		while(!canvas.hasFocus()){
 			canvas.requestFocus();
 		}
 	}
 	
+	/**
+	 * exit
+	 */
 	public static void exit(){
 		animator.stop();
 		frame.dispose();

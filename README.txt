@@ -26,3 +26,5 @@ Extras:
   6. we added a minimap to show where you stand.
      it's responsive, so test it (like leaving the
      area covered by the map or reentering it)
+     
+  7. multiple keys pressed is detected!

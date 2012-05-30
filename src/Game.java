@@ -25,82 +25,192 @@ public class Game implements GLEventListener, KeyListener {
 	Texture stars = null;
 	Texture wall = null;
 	private Tetrahedron tetra;
+	private boolean[] pressedKeys = new boolean[12];
 	
 	public Game() {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_ESCAPE:
+		int code = e.getKeyCode();
+		
+		if(code == KeyEvent.VK_ESCAPE) {
 			Exercise3.exit();
-			break;
-			
+		}
+		
+		registerKeysAction(code);
+		executeKeysAction();
+		Exercise3.miniMap.repaint();
+	}
+
+	private void registerKeysAction(int code) {
+		switch(code){
 		//////////////	
 		//ROTATIONS://
 		//////////////
 			
 		//pitch ++
 		case KeyEvent.VK_I:
-			orientation.rotatePitch(pTheta);
+			pressedKeys[0] = true;
 			break;
 		//pitch --
 		case KeyEvent.VK_K:
-			orientation.rotatePitch(nTheta);
+			pressedKeys[1] = true;
 			break;
 		//heading ++
 		case KeyEvent.VK_L:
-			orientation.rotateHeading(pTheta);
+			pressedKeys[2] = true;
 			break;
 		//heading --
 		case KeyEvent.VK_J:
-			orientation.rotateHeading(nTheta);
+			pressedKeys[3] = true;
 			break;
 		//roll ++
 		case KeyEvent.VK_O:
-			orientation.rotateRoll(nTheta);
+			pressedKeys[4] = true;
 			break;
 		//roll --
 		case KeyEvent.VK_U:
-			orientation.rotateRoll(pTheta);
+			pressedKeys[5] = true;
 			break;
-			
+		
 		/////////////////	
 		//TRANSLATIONS://
 		/////////////////
 			
 		//forwards
 		case KeyEvent.VK_W:
-			orientation.translateForward();
+			pressedKeys[6] = true;
 			break;
 		//backwards
 		case KeyEvent.VK_S:
-			orientation.translateBackward();
+			pressedKeys[7] = true;
 			break;
 		//left
 		case KeyEvent.VK_A:
-			orientation.translateLeftward();
+			pressedKeys[8] = true;
 			break;
 		//right
 		case KeyEvent.VK_D:
-			orientation.translateRightward();
+			pressedKeys[9] = true;
 			break;
 		//upwards
 		case KeyEvent.VK_E:
-			orientation.translateUpward();
+			pressedKeys[10] = true;
 			break;
 		//downwards
 		case KeyEvent.VK_Q:
-			orientation.translateDownward();
+			pressedKeys[11] = true;
 			break;
 		default:
-			//illegal key was typed
+			//nothing
 		}
-		Exercise3.miniMap.repaint();
+	}
+
+	private void executeKeysAction() {
+		if(pressedKeys[0]) {
+			orientation.rotatePitch(pTheta);
+		}
+		if(pressedKeys[1]) {
+			orientation.rotatePitch(nTheta);
+		}
+		if(pressedKeys[2]) {
+			orientation.rotateHeading(pTheta);
+		}
+		if(pressedKeys[3]) {
+			orientation.rotateHeading(nTheta);
+		}
+		if(pressedKeys[4]) {
+			orientation.rotateRoll(nTheta);
+		}
+		if(pressedKeys[5]) {
+			orientation.rotateRoll(pTheta);
+		}
+		if(pressedKeys[6]) {
+			orientation.translateForward();
+		}
+		if(pressedKeys[7]) {
+			orientation.translateBackward();
+		}
+		if(pressedKeys[8]) {
+			orientation.translateLeftward();
+		}
+		if(pressedKeys[9]) {
+			orientation.translateRightward();
+		}
+		if(pressedKeys[10]) {
+			orientation.translateUpward();
+		}
+		if(pressedKeys[11]) {
+			orientation.translateDownward();
+		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		switch(code){
+		//////////////	
+		//ROTATIONS://
+		//////////////
+			
+		//pitch ++
+		case KeyEvent.VK_I:
+			pressedKeys[0] = false;
+			break;
+		//pitch --
+		case KeyEvent.VK_K:
+			pressedKeys[1] = false;
+			break;
+		//heading ++
+		case KeyEvent.VK_L:
+			pressedKeys[2] = false;
+			break;
+		//heading --
+		case KeyEvent.VK_J:
+			pressedKeys[3] = false;
+			break;
+		//roll ++
+		case KeyEvent.VK_O:
+			pressedKeys[4] = false;
+			break;
+		//roll --
+		case KeyEvent.VK_U:
+			pressedKeys[5] = false;
+			break;
+		
+		/////////////////	
+		//TRANSLATIONS://
+		/////////////////
+			
+		//forwards
+		case KeyEvent.VK_W:
+			pressedKeys[6] = false;
+			break;
+		//backwards
+		case KeyEvent.VK_S:
+			pressedKeys[7] = false;
+			break;
+		//left
+		case KeyEvent.VK_A:
+			pressedKeys[8] = false;
+			break;
+		//right
+		case KeyEvent.VK_D:
+			pressedKeys[9] = false;
+			break;
+		//upwards
+		case KeyEvent.VK_E:
+			pressedKeys[10] = false;
+			break;
+		//downwards
+		case KeyEvent.VK_Q:
+			pressedKeys[11] = false;
+			break;
+		default:
+			//nothing
+		}
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
