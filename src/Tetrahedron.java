@@ -1,7 +1,11 @@
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 
-
+/**
+ * a class for the rotating "pyramid"
+ * @author gilad
+ *
+ */
 public class Tetrahedron extends Polyhedron {
 
 	private Vector2Tuple[] vertices;
@@ -9,6 +13,13 @@ public class Tetrahedron extends Polyhedron {
 	private int counter = 1;
 	private Object tLock = new Object();
 
+	/**
+	 * setter constructor
+	 * @param position
+	 * @param axis
+	 * @param angle
+	 * @param size
+	 */
 	public Tetrahedron(Vector position, Vector axis, double angle, double size) {
 		super(position, axis, angle);
 		size = Math.abs(size);
@@ -34,22 +45,36 @@ public class Tetrahedron extends Polyhedron {
 		vertices[3].u = new Vector();
 	}
 
+	/**
+	 * inherited from Polyhedron
+	 */
 	@Override
 	protected Vector2Tuple[] getVertices() {
 		return vertices;
 	}
 
+	/**
+	 * inherited from Object3D.
+	 * deals with the drawing of the tetrahedron
+	 */
 	@Override
-	protected void draw(GLAutoDrawable gLDrawable) {
+	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		final GL gl = gLDrawable.getGL();
-		double x = orientation.getPosition().getX();
-		double y = orientation.getPosition().getY();
-		double z = orientation.getPosition().getZ();
+		double x,y,z;
+		//since other threads touch the orientation,
+		//it is better to synchronize it
+		synchronized (tLock ) {
+			x = orientation.getPosition().getX();
+			y = orientation.getPosition().getY();
+			z = orientation.getPosition().getZ();
+		}
 		gl.glEnd();
 		
 		gl.glBegin(GL.GL_TRIANGLES);
 		
-		//1
+		//start drawing the faces:
+		
+		//face 1
 		gl.glColor3f(1.0f, 1.0f, 0.0f);
 		gl.glVertex3d(vertices[0].u.getX()+x, vertices[0].u.getY()+y, vertices[0].u.getZ()+z);
 		
@@ -59,7 +84,7 @@ public class Tetrahedron extends Polyhedron {
 		gl.glColor3f(1.0f, 1.0f, 0.0f);
 		gl.glVertex3d(vertices[2].u.getX()+x, vertices[2].u.getY()+y, vertices[2].u.getZ()+z);
 		
-		//2
+		//face 2
 		gl.glColor3f(0.0f, 1.0f, 1.0f);
 		gl.glVertex3d(vertices[0].u.getX()+x, vertices[0].u.getY()+y, vertices[0].u.getZ()+z);
 		
@@ -69,7 +94,7 @@ public class Tetrahedron extends Polyhedron {
 		gl.glColor3f(0.0f, 1.0f, 1.0f);
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
 		
-		//3
+		//face 3
 		gl.glColor3f(1.0f, 0.0f, 1.0f);
 		gl.glVertex3d(vertices[0].u.getX()+x, vertices[0].u.getY()+y, vertices[0].u.getZ()+z);
 		
@@ -79,7 +104,7 @@ public class Tetrahedron extends Polyhedron {
 		gl.glColor3f(1.0f, 0.0f, 1.0f);
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
 		
-		//4
+		//face 4
 		gl.glColor3f(0.667f, 0.667f, 1.0f);
 		gl.glVertex3d(vertices[1].u.getX()+x, vertices[1].u.getY()+y, vertices[1].u.getZ()+z);
 		
@@ -90,12 +115,24 @@ public class Tetrahedron extends Polyhedron {
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
 	}
 
+	/**
+	 * factory method. after creation,
+	 * it registers the object to Object3D updates...
+	 * @param position
+	 * @param axis
+	 * @param angle
+	 * @param size
+	 * @return
+	 */
 	public static Tetrahedron createTetrahedron(Vector position, Vector axis, double angle, double size) {
 		Tetrahedron tetra = new Tetrahedron(position,axis,angle,size);
 		Object3D.registerObject(tetra);
 		return tetra;
 	}
 
+	/**
+	 * change the speed of rotation
+	 */
 	public void changeSpeed() {
 		counter  = (counter + 1) % 4;
 		synchronized (tLock ) {
@@ -103,6 +140,10 @@ public class Tetrahedron extends Polyhedron {
 		}
 	}
 
+	/**
+	 * inherited from Object3D.
+	 * invokes super (Polyhedron) method synchronously 
+	 */
 	@Override
 	protected void update() {
 		synchronized (tLock) {

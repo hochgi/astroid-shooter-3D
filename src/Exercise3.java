@@ -30,31 +30,36 @@ public class Exercise3 {
 		
 		//minimap setup
 		miniMap = new GPanel(game);
-		miniMap.initialize();
+		//miniMap.initialize(); //should we initialize it?
 		miniMap.setSize(128, 128);
 		miniMap.setLocation(0, 0);
 		miniMap.addKeyListener(game);
 		
+		//reverse cube rotation button setup
 		rButton.addActionListener(new GameActionListener(game, ButtonEnum.RCR));
 		rButton.setLocation(0, 128);
 		rButton.setSize(64, 64);
 		rButton.setToolTipText("Reverse Cubes Rotation");
 		
+		//inverse cubes color button setup
 		cButton.addActionListener(new GameActionListener(game, ButtonEnum.ICC));
 		cButton.setLocation(64, 128);
 		cButton.setSize(64, 64);
 		cButton.setToolTipText("Inverse Cubes Color");
 
+		//change tetrahedron speed button setup
 		tButton.addActionListener(new GameActionListener(game, ButtonEnum.CTS));
 		tButton.setLocation(0, 192);
 		tButton.setSize(64, 64);
 		tButton.setToolTipText("Change Tetrahedron Speed");
 		
-		pButton.addActionListener(new GameActionListener(game, ButtonEnum.RCP));
+		//reset camera orientation button setup
+		pButton.addActionListener(new GameActionListener(game, ButtonEnum.RCO));
 		pButton.setLocation(64, 192);
 		pButton.setSize(64, 64);
 		pButton.setToolTipText("Reset Camera Orientation");
 
+		//add components to the frame
 		frame.add(miniMap);
 		frame.add(rButton);
 		frame.add(cButton);
@@ -74,7 +79,7 @@ public class Exercise3 {
 	}
 	
 	/**
-	 * exit
+	 * exit (duh...!)
 	 */
 	public static void exit(){
 		animator.stop();

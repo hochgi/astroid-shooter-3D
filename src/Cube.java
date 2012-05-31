@@ -83,8 +83,11 @@ public class Cube extends Polyhedron {
 		}
 	}
 
+	/**
+	 * cube drawing implementation
+	 */
 	@Override
-	protected void draw(GLAutoDrawable gLDrawable) {
+	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		final GL gl = gLDrawable.getGL();
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();

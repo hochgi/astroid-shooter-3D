@@ -1,6 +1,14 @@
 
+/**
+ * when given a vector and an axis of rotation (and an angle theta)
+ * this class handles the mathematics behind the rotation. i.e. in
+ * order to rotate about an arbitrary axis, you may use this class.
+ * @author gilad
+ *
+ */
 public class Rotator {
 	
+	//"matrix" variables (default initialization - unit matrix)
 	private double m00 = 1.0;
 	private double m01 = 0.0;
 	private double m02 = 0.0;
@@ -11,6 +19,11 @@ public class Rotator {
 	private double m21 = 0.0;
 	private double m22 = 1.0;
 
+	/**
+	 * set axis and angle for rotation
+	 * @param axis
+	 * @param theta
+	 */
 	public void setAxisAndAngle(Vector axis, double theta) {
 		double n_x = axis.getX();
 		double n_y = axis.getY();
@@ -39,6 +52,10 @@ public class Rotator {
 		
 	}
 
+	/**
+	 * rotate about the predefined axis the vector v.
+	 * @param v
+	 */
 	public void rotate(Vector v) {
 		double x = v.x * m00 + v.y * m01 + v.z * m02;
 		double y = v.x * m10 + v.y * m11 + v.z * m12;
@@ -49,13 +66,13 @@ public class Rotator {
 	}
 
 	/**
-	 * 
+	 * static method for rotation
 	 * @param v - origin
 	 * @param u - to put result of the rotated origin in
 	 * @param axis - axis to rotate about
 	 * @param angle - the angle of rotation
 	 */
-	public void oneTimeRotatation(Vector v, Vector u, Vector axis, double angle) {
+	public static void oneTimeRotatation(Vector v, Vector u, Vector axis, double angle) {
 		double n_x = axis.getX();
 		double n_y = axis.getY();
 		double n_z = axis.getZ();

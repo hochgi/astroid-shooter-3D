@@ -5,5 +5,5 @@
  *
  */
 public enum ButtonEnum {
-	RCR, ICC, CTS, RCP
+	RCR, ICC, CTS, RCO
 }
