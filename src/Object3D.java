@@ -74,9 +74,8 @@ public abstract class Object3D {
 	 * @param axis
 	 * @param angle
 	 */
-	public Object3D(Vector axis, double angle) {
+	public Object3D() {
 		orientation = new Orientation();
-		orientation.setFixedRotation(axis, angle);
 	}
 
 	/**
@@ -85,9 +84,8 @@ public abstract class Object3D {
 	 * @param axis
 	 * @param angle
 	 */
-	public Object3D(Vector position, Vector axis, double angle) {
+	public Object3D(Vector position) {
 		orientation = new Orientation(position);
-		orientation.setFixedRotation(axis, angle);
 	}
 
 	/**

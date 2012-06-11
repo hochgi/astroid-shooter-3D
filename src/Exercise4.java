@@ -9,7 +9,7 @@ import com.sun.opengl.util.Animator;
  * @author gilad
  *
  */
-public class Exercise3 {
+public class Exercise4 {
 
     float rotateT = 0.0f;
     static GLCanvas canvas = new GLCanvas();

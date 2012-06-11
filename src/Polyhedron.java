@@ -7,14 +7,9 @@
  */
 public abstract class Polyhedron extends Object3D {
 	
-	/**
-	 * setter constructor
-	 * @param axis
-	 * @param angle
-	 */
-	protected Polyhedron(Vector axis, double angle) {
-		super(axis, angle);
-	}
+	private Vector fixedAxis;
+	private double fixedAngle = 0.0;
+	private double accumulatedAngle;
 
 	/**
 	 * yet another setter constructor
@@ -23,9 +18,20 @@ public abstract class Polyhedron extends Object3D {
 	 * @param angle
 	 */
 	protected Polyhedron(Vector position, Vector axis, double angle) {
-		super(position,axis,angle);
+		super(position);
 		orientation = new Orientation(position);
-		orientation.setFixedRotation(axis, angle);
+		setFixedRotation(axis, angle);
+	}
+	
+	private void setFixedRotation(Vector axis, double angle) {
+		while(angle < 0) {
+			angle += (Math.PI * 2);
+		}
+		while(angle >= (Math.PI * 2)) {
+			angle -= (Math.PI * 2);
+    	}
+		accumulatedAngle = fixedAngle  = angle;
+		fixedAxis = axis;
 	}
 	
 	/**
@@ -36,9 +42,40 @@ public abstract class Polyhedron extends Object3D {
 	protected void update() {
 		Vector2Tuple[] vertices = getVertices();
 		for (Vector2Tuple t : vertices) {
-			orientation.rotateAtPredefinedAxisAndAngle(t.v,t.u);
+			rotateAtPredefinedAxisAndAngle(t.v,t.u);
 		}
-	};
+	}
+	
+	/**
+	 * reverse rotation
+	 */
+	//TODO: also don't belong here
+	public void reverseRotation() {
+		fixedAngle = (Math.PI * 2) - fixedAngle;
+	}
+	
+	/**
+	 * simple setter (fixed angle for fixed rotation)
+	 * @param d - angle
+	 */
+	//TODO: same as above.
+	public void setAngle(double d) {
+		fixedAngle = d;
+	}
+	
+	/**
+	 * an updater method. rotates a vector.
+	 * @param v - original vector
+	 * @param u - vector to store results in
+	 */
+	//TODO: same as above, this logic does not belong here
+	public void rotateAtPredefinedAxisAndAngle(Vector v, Vector u) {
+		if(accumulatedAngle >= (Math.PI * 2)) {
+			accumulatedAngle -= (Math.PI * 2);
+    	}
+		Rotator.oneTimeRotatation(v,u,fixedAxis,accumulatedAngle);
+		accumulatedAngle += fixedAngle;
+	}
 	
 	/**
 	 * a polyhedron is composed of polygons,

@@ -41,11 +41,11 @@ public class GameActionListener implements ActionListener {
 		case RCO:
 			game.resetOrientation();
 			//after orientation were reset, we want to update the map =)
-			Exercise3.miniMap.repaint();
+			Exercise4.miniMap.repaint();
 			break;
 		default:
 			break;
 		}
-		Exercise3.canvas.requestFocus();		
+		Exercise4.canvas.requestFocus();		
 	}
 }

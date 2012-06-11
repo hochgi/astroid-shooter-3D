@@ -55,16 +55,16 @@ public class Vector {
 	 * @param v - vector
 	 * @return
 	 */
-	public Vector add(Vector v) {
-		return new Vector(x+v.getX(),y+v.getY(),z+v.getZ());
+	public Vector add(Vector v, double step) {
+		return new Vector(x+v.getX()*step,y+v.getY()*step,z+v.getZ()*step);
 	}
 	/**
 	 * substruct a vector from self
 	 * @param v - vector
 	 * @return
 	 */
-	public Vector sub(Vector v) {
-		return new Vector(x-v.getX(),y-v.getY(),z-v.getZ());
+	public Vector sub(Vector v, double step) {
+		return new Vector(x-v.getX()*step,y-v.getY()*step,z-v.getZ()*step);
 	}
 	
 	/**

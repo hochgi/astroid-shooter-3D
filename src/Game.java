@@ -64,7 +64,7 @@ public class Game implements GLEventListener, KeyListener {
 		int code = e.getKeyCode();
 		
 		if(code == KeyEvent.VK_ESCAPE) {
-			Exercise3.exit();
+			Exercise4.exit();
 		}
 		
 		//add key code to the actions to perform
@@ -72,8 +72,8 @@ public class Game implements GLEventListener, KeyListener {
 		//perform the action that was set by the keys
 		executeKeysAction();
 		//update the minimap
-		Exercise3.miniMap.repaint();
-		Exercise3.canvas.requestFocus();
+		Exercise4.miniMap.repaint();
+		Exercise4.canvas.requestFocus();
 	}
 
 	/**
@@ -169,22 +169,22 @@ public class Game implements GLEventListener, KeyListener {
 			orientation.rotateRoll(pTheta);
 		}
 		if(pressedKeys[6]) {
-			orientation.translateForward();
+			orientation.translateForward(1.0);
 		}
 		if(pressedKeys[7]) {
-			orientation.translateBackward();
+			orientation.translateBackward(1.0);
 		}
 		if(pressedKeys[8]) {
-			orientation.translateLeftward();
+			orientation.translateLeftward(1.0);
 		}
 		if(pressedKeys[9]) {
-			orientation.translateRightward();
+			orientation.translateRightward(1.0);
 		}
 		if(pressedKeys[10]) {
-			orientation.translateUpward();
+			orientation.translateUpward(1.0);
 		}
 		if(pressedKeys[11]) {
-			orientation.translateDownward();
+			orientation.translateDownward(1.0);
 		}
 	}
 
@@ -513,10 +513,10 @@ public class Game implements GLEventListener, KeyListener {
 	 * direction of rotation of the cubes
 	 */
 	public void reverseCubesRotation() {
-		cube1.getOrientation().reverseRotation();
-		cube2.getOrientation().reverseRotation();
-		cube3.getOrientation().reverseRotation();
-		cube4.getOrientation().reverseRotation();
+		cube1.reverseRotation();
+		cube2.reverseRotation();
+		cube3.reverseRotation();
+		cube4.reverseRotation();
 	}
 
 	/**

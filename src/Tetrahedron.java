@@ -136,7 +136,7 @@ public class Tetrahedron extends Polyhedron {
 	public void changeSpeed() {
 		counter  = (counter + 1) % 4;
 		synchronized (tLock ) {
-			orientation.setAngle(counter * originalAngle);
+			setAngle(counter * originalAngle);
 		}
 	}
 

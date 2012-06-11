@@ -18,10 +18,7 @@ public class Orientation {
 	private Vector xUnit;
 	private Vector yUnit;
 	private Vector zUnit;
-	private Rotator rotator;			// TO MOVE
-	private Vector fixedAxis;			// TO MOVE
-	private double fixedAngle = 0.0;	// TO MOVE
-	private double accumulatedAngle;	// TO MOVE
+	private Rotator rotator;
 
 	/**
 	 * constructor (default)
@@ -74,7 +71,7 @@ public class Orientation {
 	 * @return
 	 */
 	public Vector getTargetLookAtVector() {
-		return position.add(zUnit);
+		return position.add(zUnit, 1.0);
 	}
 
 	/**
@@ -88,43 +85,43 @@ public class Orientation {
 	/**
 	 * position <- position + zValue
 	 */
-	public void translateForward() {
-		position = position.add(zUnit);
+	public void translateForward(double step) {
+		position = position.add(zUnit, step);
 	}
 
 	/**
 	 * position <- position - zValue
 	 */
-	public void translateBackward() {
-		position = position.sub(zUnit);
+	public void translateBackward(double step) {
+		position = position.sub(zUnit, step);
 	}
 
 	/**
 	 * position <- position + xValue
 	 */
-	public void translateLeftward() {
-		position = position.add(xUnit);
+	public void translateLeftward(double step) {
+		position = position.add(xUnit, step);
 	}
 
 	/**
 	 * position <- position - xValue
 	 */
-	public void translateRightward() {
-		position = position.sub(xUnit);
+	public void translateRightward(double step) {
+		position = position.sub(xUnit, step);
 	}
 
 	/**
 	 * position <- position + yValue
 	 */
-	public void translateUpward() {
-		position = position.add(yUnit);
+	public void translateUpward(double step) {
+		position = position.add(yUnit, step);
 	}
 
 	/**
 	 * position <- position - yValue
 	 */
-	public void translateDownward() {
-		position = position.sub(yUnit);
+	public void translateDownward(double step) {
+		position = position.sub(yUnit, step);
 	}
 
 	/**
@@ -153,65 +150,6 @@ public class Orientation {
 		xUnit.rotateAroundAndNormalize(zUnit, theta);
 		yUnit.rotateAroundAndNormalize(zUnit, theta);
 	}
-
-	///////////////////////////
-	//METHODS TO MOVE - START//
-	///////////////////////////
-	
-	/**
-	 * some awkward setter...
-	 * @param axis
-	 * @param angle
-	 */
-	//TODO: this logic should be part of Object3D,
-	//		or whatever class that uses the orientation.
-	//		if there are some code repetition, maybe it's
-	//		best to write a wrapper, or extend orientation
-	public void setFixedRotation(Vector axis, double angle) {
-		while(angle < 0) {
-			angle += (Math.PI * 2);
-		}
-		while(angle >= (Math.PI * 2)) {
-			angle -= (Math.PI * 2);
-    	}
-		accumulatedAngle = fixedAngle  = angle;
-		fixedAxis = axis;
-	}
-
-	/**
-	 * an updater method. rotates a vector.
-	 * @param v - original vector
-	 * @param u - vector to store results in
-	 */
-	//TODO: same as above, this logic does not belong here
-	public void rotateAtPredefinedAxisAndAngle(Vector v, Vector u) {
-		if(accumulatedAngle >= (Math.PI * 2)) {
-			accumulatedAngle -= (Math.PI * 2);
-    	}
-		Rotator.oneTimeRotatation(v,u,fixedAxis,accumulatedAngle);
-		accumulatedAngle += fixedAngle;
-	}
-
-	/**
-	 * reverse rotation
-	 */
-	//TODO: also don't belong here
-	public void reverseRotation() {
-		fixedAngle = (Math.PI * 2) - fixedAngle;
-	}
-
-	/**
-	 * simple setter (fixed angle for fixed rotation)
-	 * @param d - angle
-	 */
-	//TODO: same as above.
-	public void setAngle(double d) {
-		fixedAngle = d;
-	}
-	
-	/////////////////////////
-	//METHODS TO MOVE - END//
-	/////////////////////////
 
 	public Vector getAxis(char c) {
 		Vector rv = null;

@@ -3,13 +3,13 @@ import javax.media.opengl.GLAutoDrawable;
 
 public class Model3D extends Object3D {
 
-	public Model3D(Vector axis, double angle, String objFile) {
-		super(axis, angle);
+	public Model3D(String objFile) {
+		super();
 		generateModelFromFile(objFile);
 	}
 
-	public Model3D(Vector position, Vector axis, double angle, String objFile) {
-		super(position, axis, angle);
+	public Model3D(Vector position, String objFile) {
+		super(position);
 		generateModelFromFile(objFile);
 	}
 
