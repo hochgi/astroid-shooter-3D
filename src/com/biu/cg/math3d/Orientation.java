@@ -1,3 +1,4 @@
+package com.biu.cg.math3d;
 
 /**
  * this class handles the position,
@@ -5,13 +6,6 @@
  * @author gilad
  *
  */
-//TODO: this could be done more elegantly...
-//		rotators should not be included here
-//		it's better to have a rotator method
-//		that takes on orientation object,and
-//		changes it.the rotators should be in
-//		an objects directly, and not through
-//		orientation objects.
 public class Orientation {
 
 	private Vector position;
@@ -129,8 +123,9 @@ public class Orientation {
 	 * @param theta - angle to rotate
 	 */
 	public void rotatePitch(double theta) {
-		yUnit.rotateAroundAndNormalize(xUnit, theta);
-		zUnit.rotateAroundAndNormalize(xUnit, theta);
+		rotator.setAxisAndAngle(xUnit, theta);
+		rotator.rotate(yUnit);
+		rotator.rotate(zUnit);
 	}
 
 	/**
@@ -138,8 +133,9 @@ public class Orientation {
 	 * @param theta - angle to rotate
 	 */
 	public void rotateHeading(double theta) {
-		xUnit.rotateAroundAndNormalize(yUnit, theta);
-		zUnit.rotateAroundAndNormalize(yUnit, theta);
+		rotator.setAxisAndAngle(yUnit, theta);
+		rotator.rotate(xUnit);
+		rotator.rotate(zUnit);
 	}
 
 	/**
@@ -147,8 +143,9 @@ public class Orientation {
 	 * @param theta - angle to rotate
 	 */
 	public void rotateRoll(double theta) {
-		xUnit.rotateAroundAndNormalize(zUnit, theta);
-		yUnit.rotateAroundAndNormalize(zUnit, theta);
+		rotator.setAxisAndAngle(zUnit, theta);
+		rotator.rotate(xUnit);
+		rotator.rotate(yUnit);
 	}
 
 	public Vector getAxis(char c) {
@@ -204,5 +201,37 @@ public class Orientation {
 		zUnit.x = xUnz;
 		zUnit.y = yUnz;
 		zUnit.z = zUnz;
+	}
+
+	public Vector[] getOrthogonalQuadAtPosition(Vector pos, double size) {
+
+		Vector[] quad = new Vector[4];
+		Vector a = null, b = null;
+		Vector pltp = perpendicularLineToPlane(pos); 
+
+		//if camera faces directly to the plane:
+		if(pltp.dot(yUnit) == 0.0) {
+			a = yUnit;
+		}
+		else {
+			a = yUnit.projectionOnPlane(pltp.normalize());
+		}
+		a = a.normalize();
+		b = Vector.cross(pltp.normalize(), a);
+		
+		quad[0] = a.add(b, 1).mul(size);
+		quad[1] = b.sub(a, 1).mul(size);
+		quad[2] = a.neg().sub(b, 1).mul(size);
+		quad[3] = a.sub(b, 1).mul(size);
+
+		return quad;
+	}
+
+	public Vector perpendicularLineToPlane(Vector pos) {
+		return pos.sub(position, 1);
+	}
+
+	public void setPosition(Vector position) {
+		this.position = position;
 	}
 }

@@ -1,0 +1,18 @@
+-----------
+|TODO LIST|
+-----------
+
+* splash screens: choose M-Model or G-Model battle craft.
+
+* implement obj/3ds file loader in Model3D class
+
+* implement particles engine, and use shooting with particles (random spray factor?)
+
+* think about michael's idea. to have a ground (city? several buildings?) we need to protect.
+  asteroids will only come from above. 
+  
+* convert all double calculations to float for efficiency.
+
+* Spark: all attributes vary a bit. alpha, size, velocity, direction (very small change delta)
+
+* add comments!

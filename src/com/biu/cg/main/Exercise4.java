@@ -1,6 +1,12 @@
+package com.biu.cg.main;
+
 import java.awt.Frame;
 import javax.media.opengl.GLCanvas;
+import javax.media.opengl.GLCapabilities;
 import javax.swing.JButton;
+import com.biu.cg.gui.ButtonEnum;
+import com.biu.cg.gui.GPanel;
+import com.biu.cg.gui.GameActionListener;
 import com.sun.opengl.util.Animator;
 
 /**
@@ -11,15 +17,15 @@ import com.sun.opengl.util.Animator;
  */
 public class Exercise4 {
 
-    float rotateT = 0.0f;
-    static GLCanvas canvas = new GLCanvas();
-    static Frame frame = new Frame("Exercise 3 - room navigation");
+    public static GLCanvas canvas = new GLCanvas(getCapabilities());
+    static Frame frame = new Frame("Astroid Shooter - 0.1 Beta");
     static Animator animator = new Animator(canvas); 
     static JButton rButton = new JButton("RCR");
     static JButton cButton = new JButton("ICC");
     static JButton tButton = new JButton("CTS");
     static JButton pButton = new JButton("RCO");
-    static GPanel  miniMap;
+    static JButton eButton = new JButton("EXP");
+    public static GPanel  miniMap;
     		
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -58,6 +64,12 @@ public class Exercise4 {
 		pButton.setLocation(64, 192);
 		pButton.setSize(64, 64);
 		pButton.setToolTipText("Reset Camera Orientation");
+		
+		//test explosion effect
+		eButton.addActionListener(new GameActionListener(game, ButtonEnum.EXP));
+		eButton.setLocation(0, 256);
+		eButton.setSize(128, 64);
+		eButton.setToolTipText("Test Explosion Effect");
 
 		//add components to the frame
 		frame.add(miniMap);
@@ -65,6 +77,7 @@ public class Exercise4 {
 		frame.add(cButton);
 		frame.add(tButton);
 		frame.add(pButton);
+		frame.add(eButton);
 		frame.add(canvas);
 		frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -77,6 +90,13 @@ public class Exercise4 {
 			canvas.requestFocus();
 		}
 	}
+	
+    private static GLCapabilities getCapabilities() {
+        GLCapabilities caps = new GLCapabilities();
+        caps.setDoubleBuffered(true);
+        caps.setHardwareAccelerated(true);
+        return caps;
+    }
 	
 	/**
 	 * exit (duh...!)

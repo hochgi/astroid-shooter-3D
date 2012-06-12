@@ -1,3 +1,9 @@
+package com.biu.cg.objects3d;
+
+import com.biu.cg.math3d.Orientation;
+import com.biu.cg.math3d.Rotator;
+import com.biu.cg.math3d.Vector;
+import com.biu.cg.math3d.Vector2Tuple;
 
 /**
  * class to serve as base class for polyhedrons
@@ -37,7 +43,6 @@ public abstract class Polyhedron extends Object3D {
 	/**
 	 * inherited from Object3D - updates the vertices
 	 */
-	//TODO: method should change a bit once we change orientation class
 	@Override
 	protected void update() {
 		Vector2Tuple[] vertices = getVertices();
@@ -49,7 +54,6 @@ public abstract class Polyhedron extends Object3D {
 	/**
 	 * reverse rotation
 	 */
-	//TODO: also don't belong here
 	public void reverseRotation() {
 		fixedAngle = (Math.PI * 2) - fixedAngle;
 	}
@@ -58,7 +62,6 @@ public abstract class Polyhedron extends Object3D {
 	 * simple setter (fixed angle for fixed rotation)
 	 * @param d - angle
 	 */
-	//TODO: same as above.
 	public void setAngle(double d) {
 		fixedAngle = d;
 	}
@@ -68,7 +71,6 @@ public abstract class Polyhedron extends Object3D {
 	 * @param v - original vector
 	 * @param u - vector to store results in
 	 */
-	//TODO: same as above, this logic does not belong here
 	public void rotateAtPredefinedAxisAndAngle(Vector v, Vector u) {
 		if(accumulatedAngle >= (Math.PI * 2)) {
 			accumulatedAngle -= (Math.PI * 2);

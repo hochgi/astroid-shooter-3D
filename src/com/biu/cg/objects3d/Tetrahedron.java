@@ -1,5 +1,10 @@
+package com.biu.cg.objects3d;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+
+import com.biu.cg.math3d.Vector;
+import com.biu.cg.math3d.Vector2Tuple;
 
 /**
  * a class for the rotating "pyramid"
@@ -68,7 +73,6 @@ public class Tetrahedron extends Polyhedron {
 			y = orientation.getPosition().getY();
 			z = orientation.getPosition().getZ();
 		}
-		gl.glEnd();
 		
 		gl.glBegin(GL.GL_TRIANGLES);
 		
@@ -113,6 +117,8 @@ public class Tetrahedron extends Polyhedron {
 		
 		gl.glColor3f(1.0f, 0.667f, 0.667f);
 		gl.glVertex3d(vertices[3].u.getX()+x, vertices[3].u.getY()+y, vertices[3].u.getZ()+z);
+		
+		gl.glEnd();
 	}
 
 	/**

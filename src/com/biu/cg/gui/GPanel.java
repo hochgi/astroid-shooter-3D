@@ -1,7 +1,10 @@
+package com.biu.cg.gui;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
-//import java.awt.FlowLayout;
+import com.biu.cg.main.Game;
+import com.biu.cg.math3d.Vector;
 
 /**
  * this class is for the minimap.

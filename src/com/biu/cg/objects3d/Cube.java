@@ -1,8 +1,13 @@
+package com.biu.cg.objects3d;
+
 import java.io.File;
 import java.io.IOException;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLException;
+
+import com.biu.cg.math3d.Vector;
+import com.biu.cg.math3d.Vector2Tuple;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -92,7 +97,6 @@ public class Cube extends Polyhedron {
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();
 		double z = orientation.getPosition().getZ();
-		gl.glEnd();
 
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );   
@@ -201,6 +205,8 @@ public class Cube extends Polyhedron {
 		gl.glTexCoord2f(0.0f, 1.0f); 
 		gl.glColor3f(c1, c2, c3);
 		gl.glVertex3d(vertices[7].u.getX()+x, vertices[7].u.getY()+y, vertices[7].u.getZ()+z);
+		
+		gl.glEnd();
 	}
 
 	@Override

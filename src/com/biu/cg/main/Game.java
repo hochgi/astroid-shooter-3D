@@ -1,5 +1,6 @@
+package com.biu.cg.main;
+
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import javax.media.opengl.GL;
@@ -7,6 +8,13 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLException;
 import javax.media.opengl.glu.GLU;
+import com.biu.cg.gui.MultiKeysAdapter;
+import com.biu.cg.math3d.Orientation;
+import com.biu.cg.math3d.Vector;
+import com.biu.cg.objects3d.Cube;
+import com.biu.cg.objects3d.Tetrahedron;
+import com.biu.cg.objects3d.particles.sprites.Shot;
+import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
 import com.sun.opengl.util.texture.*;
 
 /**
@@ -15,7 +23,7 @@ import com.sun.opengl.util.texture.*;
  * @author gilad
  *
  */
-public class Game implements GLEventListener, KeyListener {
+public class Game extends MultiKeysAdapter implements GLEventListener {
 
     static GLU glu = new GLU();
     //define the camera orientation in the position (0,1,0),and 
@@ -39,226 +47,93 @@ public class Game implements GLEventListener, KeyListener {
 	Texture wall = null;
 	//a tetrahedron that will be hanging from the ceiling
 	private Tetrahedron tetra;
-	//array to store which keys are currently pressed
-	private boolean[] pressedKeys = new boolean[12];
-	
-	//TODO: Consider making an abstract class: MultipleKeysAdapter
-	//		that would implement keyPressed & keyReleased (also an
-	//		empty implementation of keyTyped) and abstract methods
-	//		registerKeysAction & executeKeysAction for the user to
-	//		implement (a.k.a. class Game). consider using KeyEvent
-	//		static fields as enum (e.g. KeyEvent.VK_ESCAPE, etc').
-	//		methods to move from here to class MultipleKeysAdapter
-	//			1. public void keyPressed(KeyEvent e);
-	//			2. public void keyReleased(KeyEvent e);
-	//			3. public void keyTyped(KeyEvent e);
-	//			4. private void registerKeysAction(int code);
-	//			5. private void executeKeysAction();
-	
+	private int fire;
+
+	/**
+	 * constructor.
+	 * make MultiKeysAdapter timer to execute every 40 ms
+	 */
+	public Game() {
+		super(40);
+	}
+
+
 	/**
 	 * implementation of key listener interface
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
-		int code = e.getKeyCode();
-		
-		if(code == KeyEvent.VK_ESCAPE) {
+		super.keyPressed(e);
+
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			Exercise4.exit();
 		}
-		
-		//add key code to the actions to perform
-		registerKeysAction(code);
-		//perform the action that was set by the keys
-		executeKeysAction();
+
 		//update the minimap
 		Exercise4.miniMap.repaint();
 		Exercise4.canvas.requestFocus();
 	}
-
-	/**
-	 * whenever a key was pressed,
-	 * register it on the suitable location in the array,
-	 * would cause executeKeysAction to consider it pressed.
-	 * @param code
-	 */
-	private void registerKeysAction(int code) {
-		switch(code){
-		//////////////	
-		//ROTATIONS://
-		//////////////
-			
-		//pitch ++
-		case KeyEvent.VK_I:
-			pressedKeys[0] = true;
-			break;
-		//pitch --
-		case KeyEvent.VK_K:
-			pressedKeys[1] = true;
-			break;
-		//heading ++
-		case KeyEvent.VK_L:
-			pressedKeys[2] = true;
-			break;
-		//heading --
-		case KeyEvent.VK_J:
-			pressedKeys[3] = true;
-			break;
-		//roll ++
-		case KeyEvent.VK_O:
-			pressedKeys[4] = true;
-			break;
-		//roll --
-		case KeyEvent.VK_U:
-			pressedKeys[5] = true;
-			break;
-		
-		/////////////////	
-		//TRANSLATIONS://
-		/////////////////
-			
-		//forwards
-		case KeyEvent.VK_W:
-			pressedKeys[6] = true;
-			break;
-		//backwards
-		case KeyEvent.VK_S:
-			pressedKeys[7] = true;
-			break;
-		//left
-		case KeyEvent.VK_A:
-			pressedKeys[8] = true;
-			break;
-		//right
-		case KeyEvent.VK_D:
-			pressedKeys[9] = true;
-			break;
-		//upwards
-		case KeyEvent.VK_E:
-			pressedKeys[10] = true;
-			break;
-		//downwards
-		case KeyEvent.VK_Q:
-			pressedKeys[11] = true;
-			break;
-		default:
-			//nothing
-		}
+	
+	@Override
+	public void keyReleased(KeyEvent e){
+		super.keyReleased(e);
+		fire = 0;
 	}
 
 	/**
 	 * execute the action that were set in the pressedKeys array
 	 */
-	private void executeKeysAction() {
-		if(pressedKeys[0]) {
+	@Override
+	public void executeKeysAction() {
+		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
 			orientation.rotatePitch(pTheta);
 		}
-		if(pressedKeys[1]) {
+		if(isKeyPressed(MultiKeysAdapter.LOOK_DOWN)) {
 			orientation.rotatePitch(nTheta);
 		}
-		if(pressedKeys[2]) {
+		if(isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)) {
 			orientation.rotateHeading(pTheta);
 		}
-		if(pressedKeys[3]) {
+		if(isKeyPressed(MultiKeysAdapter.LOOK_LEFT)) {
 			orientation.rotateHeading(nTheta);
 		}
-		if(pressedKeys[4]) {
+		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
 			orientation.rotateRoll(nTheta);
 		}
-		if(pressedKeys[5]) {
+		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CCW)) {
 			orientation.rotateRoll(pTheta);
 		}
-		if(pressedKeys[6]) {
+		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
 			orientation.translateForward(1.0);
 		}
-		if(pressedKeys[7]) {
+		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
 			orientation.translateBackward(1.0);
 		}
-		if(pressedKeys[8]) {
+		if(isKeyPressed(MultiKeysAdapter.MOVE_LEFT)) {
 			orientation.translateLeftward(1.0);
 		}
-		if(pressedKeys[9]) {
+		if(isKeyPressed(MultiKeysAdapter.MOVE_RIGHT)) {
 			orientation.translateRightward(1.0);
 		}
-		if(pressedKeys[10]) {
+		if(isKeyPressed(MultiKeysAdapter.MOVE_UP)) {
 			orientation.translateUpward(1.0);
 		}
-		if(pressedKeys[11]) {
+		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
 			orientation.translateDownward(1.0);
 		}
-	}
-
-	/**
-	 * unregister keys that was released from the actions to perform.
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
-		int code = e.getKeyCode();
-		switch(code){
-		//////////////	
-		//ROTATIONS://
-		//////////////
-			
-		//pitch ++
-		case KeyEvent.VK_I:
-			pressedKeys[0] = false;
-			break;
-		//pitch --
-		case KeyEvent.VK_K:
-			pressedKeys[1] = false;
-			break;
-		//heading ++
-		case KeyEvent.VK_L:
-			pressedKeys[2] = false;
-			break;
-		//heading --
-		case KeyEvent.VK_J:
-			pressedKeys[3] = false;
-			break;
-		//roll ++
-		case KeyEvent.VK_O:
-			pressedKeys[4] = false;
-			break;
-		//roll --
-		case KeyEvent.VK_U:
-			pressedKeys[5] = false;
-			break;
-		
-		/////////////////	
-		//TRANSLATIONS://
-		/////////////////
-			
-		//forwards
-		case KeyEvent.VK_W:
-			pressedKeys[6] = false;
-			break;
-		//backwards
-		case KeyEvent.VK_S:
-			pressedKeys[7] = false;
-			break;
-		//left
-		case KeyEvent.VK_A:
-			pressedKeys[8] = false;
-			break;
-		//right
-		case KeyEvent.VK_D:
-			pressedKeys[9] = false;
-			break;
-		//upwards
-		case KeyEvent.VK_E:
-			pressedKeys[10] = false;
-			break;
-		//downwards
-		case KeyEvent.VK_Q:
-			pressedKeys[11] = false;
-			break;
-		default:
-			//nothing
+		if(isKeyPressed(MultiKeysAdapter.FIRE)) {
+			shoot();
 		}
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {/*NOT USED!*/}
+	
+	private void shoot() {
+		fire = (fire + 1) % 5;
+		if(fire == 1) {
+			new Shot(orientation, new Vector(orientation.getAxis('z')), 2);
+		}
+	}
+
 
 	/**
 	 * display method inherited from GLEventListener.
@@ -287,6 +162,7 @@ public class Game implements GLEventListener, KeyListener {
 		glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
 					  target.getX(), target.getY(), target.getZ(), 
 					  upVect.getX(), upVect.getY(), upVect.getZ());
+	
 		
 		//applying ground texture
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
@@ -419,6 +295,8 @@ public class Game implements GLEventListener, KeyListener {
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
 		
+		gl.glEnd();
+		
 		//drawing the elements (polyhedrons):
 		cube1.draw(gLDrawable);
 		cube2.draw(gLDrawable);
@@ -426,7 +304,8 @@ public class Game implements GLEventListener, KeyListener {
 		cube4.draw(gLDrawable);
 		tetra.draw(gLDrawable);
 		
-		gl.glEnd();
+		SpriteEmitter.updateSprites();
+		SpriteEmitter.renderSprites(gLDrawable);
 	}
 
 	@Override
@@ -438,6 +317,9 @@ public class Game implements GLEventListener, KeyListener {
 	 */
 	@Override
 	public void init(GLAutoDrawable gLDrawable) {
+		
+		Explosion.init();
+		Shot.init();
 		//loading textures
 		try {
 			ground = TextureIO.newTexture(new File( "textures/ground.jpg" ),true);
@@ -455,15 +337,29 @@ public class Game implements GLEventListener, KeyListener {
 		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
 		tetra = Tetrahedron.createTetrahedron(new Vector(0.0,1.0*expansionFactor,0.0), new Vector(0.0,1.0,0.0).normalize(), pTheta * 2.0, 25.0);
 		GL gl = gLDrawable.getGL();
-		gl.glShadeModel(GL.GL_SMOOTH);
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		gl.glClearDepth(1.0f);
+		
+		
+        gl.glShadeModel(GL.GL_SMOOTH);
+        // Set the background / clear color.
+        gl.glClearColor(0f, 0f, 0f, 1f);
+        // Clear the depth
+        gl.glClearDepth(1.0);
+        // Disable depth testing.
+        //gl.glDisable(GL.GL_DEPTH_TEST);        
+        // Get nice perspective calculations. 
+        gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
+        // Nice point smoothing.
+        gl.glHint(GL.GL_POINT_SMOOTH_HINT, GL.GL_NICEST);
+        // Enable texture mapping.
+        gl.glEnable(GL.GL_TEXTURE_2D);
+
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		
-		gl.glDepthFunc(GL.GL_LEQUAL);
-		gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
-		gl.glEnable(GL.GL_TEXTURE_2D);
+		//gl.glDepthFunc(GL.GL_LEQUAL);
+		//gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
+		//gl.glEnable(GL.GL_TEXTURE_2D);
 		
+		//TODO:
 		//UNCOMMENT THE FOLLOWING LINE OF CODE
 		//FOR REALISTIC COLORS. NOTE THAT ICC
 		//BUTTON WON'T CHANGE THE COLORS ANYMORE.
@@ -492,6 +388,8 @@ public class Game implements GLEventListener, KeyListener {
 		
 		gl.glEnable(GL.GL_LIGHT0);
 		gl.glEnable(GL.GL_LIGHT1);
+		
+		start();
 	}
 
 	/**
@@ -560,5 +458,10 @@ public class Game implements GLEventListener, KeyListener {
 				 		  1.0,0.0,0.0, 
 				 		  0.0,1.0,0.0,
 				 		  0.0,0.0,1.0);
+	}
+
+
+	public void testExplosionEffect() {
+		new Explosion(new Vector(0.0,0.2,0.0),orientation);
 	}
 }

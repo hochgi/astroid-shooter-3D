@@ -1,3 +1,4 @@
+package com.biu.cg.math3d;
 
 /**
  * simple tuple of 2 vectors.
@@ -5,6 +6,6 @@
  * @author gilad
  */
 public class Vector2Tuple {
-	Vector v;
-	Vector u;
+	public Vector v;
+	public Vector u;
 }

@@ -1,7 +1,12 @@
+package com.biu.cg.objects3d;
+
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.media.opengl.GLAutoDrawable;
+
+import com.biu.cg.math3d.Orientation;
+import com.biu.cg.math3d.Vector;
 
 /**
  * this abstract class should be the root class
@@ -13,7 +18,6 @@ import javax.media.opengl.GLAutoDrawable;
  */
 //TODO: unregister objects:
 //		in case we would want to dispose stuff...
-//TODO:	make a subclass "Model" like "Polyhedron"
 public abstract class Object3D {
 	//static fields:
 	private static Timer timer;
@@ -49,7 +53,9 @@ public abstract class Object3D {
 	 * @param obj
 	 */
 	public static void registerObject(Object3D obj) {
-		objects.add(obj);
+		synchronized (lock) {
+			objects.add(obj);
+		}
 	}
 	
 	//////////////////////////////////////
@@ -69,6 +75,10 @@ public abstract class Object3D {
 		return orientation;
 	}
 	
+	public Vector getPosition() {
+		return orientation.getPosition();
+	}
+	
 	/**
 	 * constructor
 	 * @param axis
@@ -86,6 +96,10 @@ public abstract class Object3D {
 	 */
 	public Object3D(Vector position) {
 		orientation = new Orientation(position);
+	}
+	
+	public void setPosition(Vector position){
+		orientation.setPosition(position);
 	}
 
 	/**
@@ -118,5 +132,4 @@ public abstract class Object3D {
 	 * every 40 ms.
 	 */
 	protected abstract void update();
-
 }

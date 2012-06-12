@@ -1,4 +1,8 @@
+package com.biu.cg.objects3d;
+
 import javax.media.opengl.GLAutoDrawable;
+
+import com.biu.cg.math3d.Vector;
 
 
 public class Model3D extends Object3D {

@@ -1,5 +1,9 @@
+package com.biu.cg.gui;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.biu.cg.main.Exercise4;
+import com.biu.cg.main.Game;
 
 /**
  * instead off making a different listener for every button,
@@ -42,6 +46,9 @@ public class GameActionListener implements ActionListener {
 			game.resetOrientation();
 			//after orientation were reset, we want to update the map =)
 			Exercise4.miniMap.repaint();
+			break;
+		case EXP:
+			game.testExplosionEffect();
 			break;
 		default:
 			break;
