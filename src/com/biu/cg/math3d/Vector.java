@@ -120,10 +120,10 @@ public class Vector {
 		return new Vector(-x,-y,-z);
 	}
 	
-	public Vector noise(double d) {
-		x += Math.random()*d;
-		y += Math.random()*d;
-		z += Math.random()*d;
+	public Vector noise(float noise) {
+		x += Math.random()*noise;
+		y += Math.random()*noise;
+		z += Math.random()*noise;
 		return this;
 	}
 }

@@ -47,7 +47,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	Texture wall = null;
 	//a tetrahedron that will be hanging from the ceiling
 	private Tetrahedron tetra;
-	private int fire;
 
 	/**
 	 * constructor.
@@ -65,8 +64,18 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	public void keyPressed(KeyEvent e) {
 		super.keyPressed(e);
 
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_ESCAPE:
 			Exercise4.exit();
+			break;
+		case KeyEvent.VK_SPACE:
+			shoot();
+			break;
+		case KeyEvent.VK_F1:
+			help();
+			break;
+		default:
+				//do nothing
 		}
 
 		//update the minimap
@@ -74,10 +83,16 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Exercise4.canvas.requestFocus();
 	}
 	
+	private void help() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	@Override
 	public void keyReleased(KeyEvent e){
 		super.keyReleased(e);
-		fire = 0;
+		//fire = 0;
 	}
 
 	/**
@@ -120,18 +135,15 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
 			orientation.translateDownward(1.0);
-		}
+		}/*
 		if(isKeyPressed(MultiKeysAdapter.FIRE)) {
 			shoot();
-		}
+		}*/
 	}
 
 	
 	private void shoot() {
-		fire = (fire + 1) % 5;
-		if(fire == 1) {
-			new Shot(orientation, new Vector(orientation.getAxis('z')), 2);
-		}
+		SpriteEmitter.registerObject(new Shot(orientation, new Vector(orientation.getAxis('z')), 2.5f));
 	}
 
 

@@ -121,12 +121,14 @@ public abstract class MultiKeysAdapter implements KeyListener {
 		case KeyEvent.VK_Q:
 			pressedKeys[MOVE_DOWN] = value;
 			break;
+			/*
 		case KeyEvent.VK_SPACE:
 			pressedKeys[FIRE] = value;
 			break;
 		case KeyEvent.VK_F1:
 			pressedKeys[HELP] = value;
 			break;
+			*/
 		default:
 			//nothing
 		}

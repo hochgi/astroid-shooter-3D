@@ -219,10 +219,10 @@ public class Orientation {
 		a = a.normalize();
 		b = Vector.cross(pltp.normalize(), a);
 		
-		quad[0] = a.add(b, 1).mul(size);
-		quad[1] = b.sub(a, 1).mul(size);
-		quad[2] = a.neg().sub(b, 1).mul(size);
-		quad[3] = a.sub(b, 1).mul(size);
+		quad[0] = pos.add(a.add(b, 1), size);
+		quad[1] = pos.add(b.sub(a, 1),size);
+		quad[2] = pos.add(a.neg().sub(b, 1),size);
+		quad[3] = pos.add(a.sub(b, 1),size);
 
 		return quad;
 	}
