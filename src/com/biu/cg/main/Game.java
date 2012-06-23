@@ -14,6 +14,7 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Cube;
 import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
+import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
 import com.sun.opengl.util.texture.*;
 
@@ -135,13 +136,14 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
 			orientation.translateDownward(1.0);
-		}/*
-		if(isKeyPressed(MultiKeysAdapter.FIRE)) {
-			shoot();
-		}*/
+		}
 	}
 
-	
+	//TODO: cooloff. don't let high rate firing... 
+	//		add a timer that sets cooledOff to true
+	//		every once in a while (1-2 seconds?),
+	//		and before firing, check cooledOff, if
+	//		true, set to false and shoot! =)
 	private void shoot() {
 		SpriteEmitter.registerObject(new Shot(orientation, new Vector(orientation.getAxis('z')), 2.5f));
 	}
@@ -316,8 +318,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		cube4.draw(gLDrawable);
 		tetra.draw(gLDrawable);
 		
-		SpriteEmitter.updateSprites();
-		SpriteEmitter.renderSprites(gLDrawable);
+		SpriteEmitter.updateSpriteEmitters();
+		Sprite.updateSprites();
+		Sprite.renderSprites(gLDrawable);
 	}
 
 	@Override

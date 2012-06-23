@@ -11,18 +11,16 @@ public class Flash extends Sprite {
 
 	private double size;
 	private Phase stage;
-	private Orientation cam;
 	private double angle;
 	private double accumulatedAngle;
 	private Vector[] bb;
 	private Texture texture;
 
 	public Flash(Texture tex, Vector position, Orientation camera) {
-		super(position);
+		super(position, camera);
 		texture = tex;
 		size = 0.1;
 		stage = Phase.First;
-		cam = camera;
 		angle = 0.2*Math.random();
 		accumulatedAngle = 0;
 		bb = new Vector[4]; //bb stands for billboards
@@ -69,12 +67,12 @@ public class Flash extends Sprite {
 	@Override
 	protected Vector[] getQuadBillboard() {
 		Vector pos = getPosition();
-		Vector[] q = cam.getOrthogonalQuadAtPosition(pos, size);
+		Vector[] q = getCam().getOrthogonalQuadAtPosition(pos, size);
 		accumulatedAngle += angle;
 		if(accumulatedAngle >= (Math.PI * 2)) {
 			accumulatedAngle -= (Math.PI * 2);
     	}
-		Vector pltp = cam.perpendicularLineToPlane(getPosition()).normalize();
+		Vector pltp = getCam().perpendicularLineToPlane(getPosition()).normalize();
 		Rotator.oneTimeRotatation(q[0], bb[0], pltp, accumulatedAngle);
 		Rotator.oneTimeRotatation(q[1], bb[1], pltp, accumulatedAngle);
 		Rotator.oneTimeRotatation(q[2], bb[2], pltp, accumulatedAngle);

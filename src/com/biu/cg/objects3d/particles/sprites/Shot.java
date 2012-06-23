@@ -8,7 +8,6 @@ import com.biu.cg.math3d.Vector;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
-
 public class Shot extends SpriteEmitter {
 
 	private static Texture particleTex;
@@ -26,11 +25,10 @@ public class Shot extends SpriteEmitter {
 		hasCollide = false;
 		age = 1000;
 	}
-
-
+	
 	public static void init() {
 		try {
-			particleTex = TextureIO.newTexture(new File( "textures/particle_128X128.png" ),false);
+			particleTex = TextureIO.newTexture(new File( "textures/round_particle_16X16.png" ),false);
 		} catch (GLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -38,12 +36,10 @@ public class Shot extends SpriteEmitter {
 		}
 	}
 
-
 	@Override
 	public boolean isDead() {
 		return hasCollide || age <= 0;
 	}
-
 
 	public void collisionDetected() {
 		hasCollide = true;
@@ -53,8 +49,8 @@ public class Shot extends SpriteEmitter {
 	protected void update() {
 		age--;
 		setPosition(getPosition().add(dir, vel));
-		for (int i = 0; i < 10; i++) {
-			SpriteEmitter.registerObjectForNextIteration(new Spark(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.5f + 0.5f), new Vector(dir).noise(0.05f), cam));
+		for (int i = 0; i < 4; i++) {
+			Sprite.registerObject(new Spark(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.45f + 0.45f), new Vector(dir).noise(0.015f), cam));
 		}
 	}
 }

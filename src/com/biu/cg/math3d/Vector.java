@@ -126,4 +126,10 @@ public class Vector {
 		z += Math.random()*noise;
 		return this;
 	}
+	
+	public double sqrDistanceTo(Vector v) {
+		return (v.x-x)*(v.x-x) +
+			   (v.y-y)*(v.y-y) +
+			   (v.z-z)*(v.z-z);
+	}
 }

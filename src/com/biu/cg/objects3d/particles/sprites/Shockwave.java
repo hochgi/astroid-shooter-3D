@@ -13,10 +13,15 @@ public class Shockwave extends Sprite{
 	static final double growth = 1.06;
 
 	public Shockwave(Texture shockwaveTex, Vector pos) {
-		super(pos);
+		super(pos, null);
 		texture = shockwaveTex;
 		age = 1.0;
 		size = 1.0;
+	}
+	
+	@Override
+	public int compareTo(Sprite o) {
+		return -1;
 	}
 
 	@Override
