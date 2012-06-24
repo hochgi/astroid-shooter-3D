@@ -180,7 +180,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		//applying ground texture
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-        gl.glEnable(GL.GL_BLEND); 
 		ground.bind();
 		
 		//starting to draw the room
@@ -203,13 +202,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
-		gl.glDisable(GL.GL_BLEND);
 		gl.glEnd();
 
 		//applying wall texture
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-        gl.glEnable(GL.GL_BLEND); 
 		wall.bind();
 		
 		gl.glBegin(GL.GL_QUADS);
@@ -282,13 +279,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
 		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
-		gl.glDisable(GL.GL_BLEND);
 		gl.glEnd();
 		
 		//applying stars texture
         gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
 		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-        gl.glEnable(GL.GL_BLEND); 
         stars.bind();
 		
 		gl.glBegin(GL.GL_QUADS);
@@ -310,7 +305,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
 		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
 		
-		gl.glDisable(GL.GL_BLEND);
 		gl.glEnd();
 		
 		//drawing the elements (polyhedrons):
