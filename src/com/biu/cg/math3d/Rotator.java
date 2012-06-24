@@ -10,34 +10,34 @@ package com.biu.cg.math3d;
 public class Rotator {
 	
 	//"matrix" variables (default initialization - unit matrix)
-	private double m00 = 1.0;
-	private double m01 = 0.0;
-	private double m02 = 0.0;
-	private double m10 = 0.0;
-	private double m11 = 1.0;
-	private double m12 = 0.0;
-	private double m20 = 0.0;
-	private double m21 = 0.0;
-	private double m22 = 1.0;
+	private float m00 = 1f;
+	private float m01 = 0f;
+	private float m02 = 0f;
+	private float m10 = 0f;
+	private float m11 = 1f;
+	private float m12 = 0f;
+	private float m20 = 0f;
+	private float m21 = 0f;
+	private float m22 = 1f;
 
 	/**
 	 * set axis and angle for rotation
 	 * @param axis
 	 * @param theta
 	 */
-	public void setAxisAndAngle(Vector axis, double theta) {
-		double n_x = axis.getX();
-		double n_y = axis.getY();
-		double n_z = axis.getZ();
-		double n2x = n_x * n_x;
-		double n2y = n_y * n_y;
-		double n2z = n_z * n_z;
-		double nxy = n_x * n_y;
-		double nxz = n_x * n_z;
-		double nyz = n_y * n_z;
-		double cos = Math.cos(theta);
-		double sin = Math.sin(theta);
-		double m1c = 1.0 - cos;
+	public void setAxisAndAngle(Vector axis, float theta) {
+		float n_x = axis.getX();
+		float n_y = axis.getY();
+		float n_z = axis.getZ();
+		float n2x = n_x * n_x;
+		float n2y = n_y * n_y;
+		float n2z = n_z * n_z;
+		float nxy = n_x * n_y;
+		float nxz = n_x * n_z;
+		float nyz = n_y * n_z;
+		float cos = (float)Math.cos(theta);
+		float sin = (float)Math.sin(theta);
+		float m1c = 1f - cos;
 		
 		m00 = n2x * m1c + cos;
 		m01 = nxy * m1c + n_z * sin;
@@ -58,9 +58,9 @@ public class Rotator {
 	 * @param v
 	 */
 	public void rotate(Vector v) {
-		double x = v.x * m00 + v.y * m01 + v.z * m02;
-		double y = v.x * m10 + v.y * m11 + v.z * m12;
-		double z = v.x * m20 + v.y * m21 + v.z * m22;
+		float x = v.x * m00 + v.y * m01 + v.z * m02;
+		float y = v.x * m10 + v.y * m11 + v.z * m12;
+		float z = v.x * m20 + v.y * m21 + v.z * m22;
 		v.setX(x);
 		v.setY(y);
 		v.setZ(z);
@@ -73,28 +73,28 @@ public class Rotator {
 	 * @param axis - axis to rotate about
 	 * @param angle - the angle of rotation
 	 */
-	public static void oneTimeRotatation(Vector v, Vector u, Vector axis, double angle) {
-		double n_x = axis.getX();
-		double n_y = axis.getY();
-		double n_z = axis.getZ();
-		double n2x = n_x * n_x;
-		double n2y = n_y * n_y;
-		double n2z = n_z * n_z;
-		double nxy = n_x * n_y;
-		double nxz = n_x * n_z;
-		double nyz = n_y * n_z;
-		double cos = Math.cos(angle);
-		double sin = Math.sin(angle);
-		double m1c = 1.0 - cos;
-		double m00 = n2x * m1c + cos;
-		double m01 = nxy * m1c + n_z * sin;
-		double m02 = nxz * m1c - n_y * sin;
-		double m10 = nxy * m1c - n_z * sin;
-		double m11 = n2y * m1c + cos;
-		double m12 = nyz * m1c + n_x * sin;
-		double m20 = nxz * m1c + n_y * sin;
-		double m21 = nyz * m1c - n_x * sin;
-		double m22 = n2z * m1c + cos;
+	public static void oneTimeRotatation(Vector v, Vector u, Vector axis, float angle) {
+		float n_x = axis.getX();
+		float n_y = axis.getY();
+		float n_z = axis.getZ();
+		float n2x = n_x * n_x;
+		float n2y = n_y * n_y;
+		float n2z = n_z * n_z;
+		float nxy = n_x * n_y;
+		float nxz = n_x * n_z;
+		float nyz = n_y * n_z;
+		float cos = (float)Math.cos(angle);
+		float sin = (float)Math.sin(angle);
+		float m1c = 1f - cos;
+		float m00 = n2x * m1c + cos;
+		float m01 = nxy * m1c + n_z * sin;
+		float m02 = nxz * m1c - n_y * sin;
+		float m10 = nxy * m1c - n_z * sin;
+		float m11 = n2y * m1c + cos;
+		float m12 = nyz * m1c + n_x * sin;
+		float m20 = nxz * m1c + n_y * sin;
+		float m21 = nyz * m1c - n_x * sin;
+		float m22 = n2z * m1c + cos;
 		u.setX(v.x * m00 + v.y * m01 + v.z * m02);
 		u.setY(v.x * m10 + v.y * m11 + v.z * m12);
 		u.setZ(v.x * m20 + v.y * m21 + v.z * m22);

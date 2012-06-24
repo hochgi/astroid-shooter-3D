@@ -14,8 +14,8 @@ import com.biu.cg.math3d.Vector2Tuple;
 public abstract class Polyhedron extends Object3D {
 	
 	private Vector fixedAxis;
-	private double fixedAngle = 0.0;
-	private double accumulatedAngle;
+	private float fixedAngle = 0f;
+	private float accumulatedAngle;
 
 	/**
 	 * yet another setter constructor
@@ -23,18 +23,18 @@ public abstract class Polyhedron extends Object3D {
 	 * @param axis
 	 * @param angle
 	 */
-	protected Polyhedron(Vector position, Vector axis, double angle) {
+	protected Polyhedron(Vector position, Vector axis, float angle) {
 		super(position);
 		orientation = new Orientation(position);
 		setFixedRotation(axis, angle);
 	}
 	
-	private void setFixedRotation(Vector axis, double angle) {
+	private void setFixedRotation(Vector axis, float angle) {
 		while(angle < 0) {
-			angle += (Math.PI * 2);
+			angle += ((float)Math.PI * 2);
 		}
-		while(angle >= (Math.PI * 2)) {
-			angle -= (Math.PI * 2);
+		while(angle >= ((float)Math.PI * 2)) {
+			angle -= ((float)Math.PI * 2);
     	}
 		accumulatedAngle = fixedAngle  = angle;
 		fixedAxis = axis;
@@ -55,14 +55,14 @@ public abstract class Polyhedron extends Object3D {
 	 * reverse rotation
 	 */
 	public void reverseRotation() {
-		fixedAngle = (Math.PI * 2) - fixedAngle;
+		fixedAngle = ((float)Math.PI * 2f) - fixedAngle;
 	}
 	
 	/**
 	 * simple setter (fixed angle for fixed rotation)
 	 * @param d - angle
 	 */
-	public void setAngle(double d) {
+	public void setAngle(float d) {
 		fixedAngle = d;
 	}
 	
@@ -72,8 +72,8 @@ public abstract class Polyhedron extends Object3D {
 	 * @param u - vector to store results in
 	 */
 	public void rotateAtPredefinedAxisAndAngle(Vector v, Vector u) {
-		if(accumulatedAngle >= (Math.PI * 2)) {
-			accumulatedAngle -= (Math.PI * 2);
+		if(accumulatedAngle >= ((float)Math.PI * 2f)) {
+			accumulatedAngle -= ((float)Math.PI * 2f);
     	}
 		Rotator.oneTimeRotatation(v,u,fixedAxis,accumulatedAngle);
 		accumulatedAngle += fixedAngle;

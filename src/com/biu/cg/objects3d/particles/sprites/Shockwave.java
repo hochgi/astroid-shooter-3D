@@ -4,19 +4,23 @@ import com.biu.cg.math3d.Vector;
 import com.sun.opengl.util.texture.Texture;
 
 
-public class Shockwave extends Sprite{
+public class Shockwave extends Sprite {
 
 	private Texture texture;
-	private double age;
-	private double size;
-	static final double decay = 0.95;
-	static final double growth = 1.06;
+	private float size;
+	private float[] rgba;
+	static final float decay = 0.96f;
+	static final float growth = 1.05f;
 
 	public Shockwave(Texture shockwaveTex, Vector pos) {
 		super(pos, null);
 		texture = shockwaveTex;
-		age = 1.0;
-		size = 1.0;
+		size = 1f;
+		rgba = new float[4];
+		rgba[0] = 1f;
+		rgba[1] = 1f;
+		rgba[2] = 1f;
+		rgba[3] = 1f;
 	}
 	
 	@Override
@@ -25,13 +29,18 @@ public class Shockwave extends Sprite{
 	}
 
 	@Override
+	protected float[] getRGBA() {
+		return rgba;
+	}
+	
+	@Override
 	protected void update() {
 		size *= growth;
-		age *= decay;
+		rgba[3] *= decay;
 	}
 	
 	public boolean isDead() {
-		return age < 0.1;
+		return rgba[3] < 0.1f;
 	}
 
 	@Override

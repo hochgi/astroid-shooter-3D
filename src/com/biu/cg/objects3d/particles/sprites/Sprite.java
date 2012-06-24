@@ -12,11 +12,11 @@ import com.sun.opengl.util.texture.Texture;
 
 public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
-	private static LinkedList<Sprite> newlyBorn = new LinkedList<Sprite>();
 	private static LinkedList<Sprite> particles = new LinkedList<Sprite>();
 	private static LinkedList<Sprite> graveyard = new LinkedList<Sprite>();
 	private static Object pLock = new Object();
 	private static final float[] rgba = {1f,1f,1f,1f};
+	
 	private Orientation cam;
 
 	/**
@@ -26,7 +26,7 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	 */
 	public static void registerObject(Sprite sprite){
 		synchronized(pLock) {
-			particles.addLast(sprite);
+			particles.add(sprite);
 		}
 	}
 	
@@ -63,10 +63,6 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		}
 	}
 	
-	public static void registerObjectForNextIteration(Sprite sprite) {
-		newlyBorn.addFirst(sprite);
-	}
-	
 	public Sprite(Vector position, Orientation camera) {
 		super(position);
 		this.cam = camera;
@@ -74,7 +70,7 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	
 	@Override
 	public int compareTo(Sprite o) {
-		double diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
+		float diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
 		int rv = (int)diff;
 		if(rv != 0){
 			return rv;
@@ -100,6 +96,8 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
+		changeBlendingFunc(gLDrawable);
+		
 		Vector[] bb = getQuadBillboard();
 		GL gl = gLDrawable.getGL();
 		
@@ -113,8 +111,18 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	    gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3d(bb[2].x, bb[2].y, bb[2].z);
 	    gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3d(bb[3].x, bb[3].y, bb[3].z);
 	    gl.glEnd();
+
 	}
 	
+	/**
+	 * you may override the following method for different blending.
+	 * @return
+	 */
+	protected void changeBlendingFunc(GLAutoDrawable gLDrawable) {
+		GL gl = gLDrawable.getGL();
+		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);	
+	}
+
 	/**
 	 * you may override the following method for different rendering.
 	 * @return

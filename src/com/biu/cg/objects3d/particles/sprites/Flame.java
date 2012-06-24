@@ -9,84 +9,42 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.particles.Phase;
 import com.sun.opengl.util.texture.Texture;
 
-
-public class Flash extends Sprite {
-
+public class Flame extends Sprite {
+	
 	private float size;
-	private Phase stage;
 	private float angle;
 	private float accumulatedAngle;
+	private Phase stage;
 	private Vector[] bb;
 	private Texture texture;
 	private float[] rgba;
+	private float inflateFactor;
+	private Vector expander;
 
-	public Flash(Texture tex, Vector position, Orientation camera) {
+	public Flame(Texture tex, Vector position, Orientation camera) {
 		super(position, camera);
 		texture = tex;
-		size = 0.25f;
-		stage = Phase.First;
-		angle = 0.1f*(float)Math.random()+0.1f;
+		size = 0.5f;
+		angle = 0.01f*(float)Math.random()+0.01f;
 		accumulatedAngle = 0;
+		stage = Phase.First;
+		inflateFactor = 1.075f;
 		bb = new Vector[4]; //bb stands for billboards
 		bb[0] = new Vector();
 		bb[1] = new Vector();
 		bb[2] = new Vector();
 		bb[3] = new Vector();
 		rgba = new float[4];
-		rgba[0] = 1f;
-		rgba[1] = 0.65f;
-		rgba[2] = 0.3f;
-		rgba[3] = 0.5f;
-	}
-
-	@Override
-	public boolean isDead() {
-		return stage == Phase.Dead;
-	}
-
-	@Override
-	protected void update() {
-		switch(stage){
-		case First:
-			brighten();
-			inflate();
-			break;
-		case Second:
-			darken();
-			shrink();
-			break;
-		case Dead:
-		default:
-			//do nothing
-		}
-	}
-
-	private void inflate() {
-		size *= 1.1f;
-		if(size > 10f){
-			stage = Phase.Second;
-			rgba[1] -= 0.05;  
-			rgba[2] -= 0.1;  
-		}
+		rgba[0] = 0.8f;
+		rgba[1] = 0.4f;
+		rgba[2] = 0.005f;
+		rgba[3] = 0f;
+		expander = new Vector((float)Math.random()*0.25f-0.125f,(float)Math.random()*0.25f,(float)Math.random()*0.25f-0.125f);
 	}
 	
-	private void brighten() {
-		rgba[1] *= 1.01;  
-		rgba[2] *= 1.01;  
-		rgba[3] *= 1.01;  
-	}
-
-	private void shrink() {
-		size *= 0.9f;
-		if(size < 0.1f){
-			stage = Phase.Dead;
-		}
-	}
-
-	private void darken() {
-		rgba[1] *= 0.9;  
-		rgba[2] *= 0.8;  
-		rgba[3] *= 0.7;
+	protected void changeBlendingFunc(GLAutoDrawable gLDrawable) {
+		GL gl = gLDrawable.getGL();
+		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE);	
 	}
 
 	@Override
@@ -123,14 +81,44 @@ public class Flash extends Sprite {
 		return bb;
 	}
 
-	protected void changeBlendingFunc(GLAutoDrawable gLDrawable) {
-		GL gl = gLDrawable.getGL();
-		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE);	
-	}
-	
 	@Override
 	protected Texture getTexture() {
 		return texture;
+	}
+
+	@Override
+	public boolean isDead() {
+		return stage == Phase.Second && rgba[3] < 0.025f;
+	}
+
+	@Override
+	protected void update() {
+		getPosition().addMutate(expander, 1);
+		inflate();
+		switch(stage){
+		case First:
+			rgba[0] += 0.00625f;
+			rgba[1] += 0.005f;
+			rgba[2] += 0.0045f;
+			rgba[3] += 0.025f;
+			if(rgba[3] >= 0.95){
+				stage = Phase.Second;
+				inflateFactor = 1.0375f;
+			}
+			break;
+		case Second:
+			rgba[0] -= 0.03f;
+			rgba[1] -= 0.02f;
+			rgba[2] -= 0.0075f;
+			rgba[3] -= 0.025f;
+			break;
+		default:
+			//do nothing
+		}
+	}
+
+	private void inflate() {
+		size *= inflateFactor;
 	}
 
 }

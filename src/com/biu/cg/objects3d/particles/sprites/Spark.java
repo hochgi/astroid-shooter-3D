@@ -30,7 +30,7 @@ public class Spark extends Sprite {
 
 	@Override
 	public boolean isDead() {
-		return rgba[3] <= 0.05;
+		return rgba[3] <= 0.05f;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class Spark extends Sprite {
 	@Override
 	protected Vector[] getQuadBillboard() {
 		Vector pos = getPosition();
-		double size = this.size + (Math.random() * 0.4) - 0.2;
+		float size = this.size + ((float)Math.random() * 0.4f) - 0.2f;
 		return getCam().getOrthogonalQuadAtPosition(pos, size);
 	}
 

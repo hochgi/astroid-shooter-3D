@@ -1,6 +1,6 @@
 package com.biu.cg.math3d;
 
-import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 
 /**
  * a simple Vector class
@@ -8,9 +8,9 @@ import javax.vecmath.Vector3d;
  *
  */
 public class Vector {
-	public double x;
-	public double y;
-	public double z;
+	public float x;
+	public float y;
+	public float z;
 	
 	/**
 	 * setter constructor
@@ -18,7 +18,7 @@ public class Vector {
 	 * @param y
 	 * @param z
 	 */
-	public Vector(double x, double y, double z) {
+	public Vector(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -33,29 +33,29 @@ public class Vector {
 	 * default constructor
 	 */
 	public Vector() {
-		this.x = 0.0;
-		this.y = 0.0;
-		this.z = 0.0;
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
 	}
 	
 	//getters & setters:
 	
-	public double getX() {
+	public float getX() {
 		return x;
 	}
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 	}
-	public double getY() {
+	public float getY() {
 		return y;
 	}
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 	}
-	public double getZ() {
+	public float getZ() {
 		return z;
 	}
-	public void setZ(double z) {
+	public void setZ(float z) {
 		this.z = z;
 	}
 	
@@ -64,19 +64,37 @@ public class Vector {
 	 * @param v - vector
 	 * @return
 	 */
-	public Vector add(Vector v, double step) {
+	public Vector add(Vector v, float step) {
 		return new Vector(x+v.getX()*step,y+v.getY()*step,z+v.getZ()*step);
 	}
+	
+	/**
+	 * add a vector to self
+	 * @param v - vector
+	 * @return
+	 */
+	public void addMutate(Vector v, float step) {
+		x+=v.getX()*step;
+		y+=v.getY()*step;
+		z+=v.getZ()*step;
+	}
+	
 	/**
 	 * substruct a vector from self
 	 * @param v - vector
 	 * @return
 	 */
-	public Vector sub(Vector v, double step) {
+	public Vector sub(Vector v, float step) {
 		return new Vector(x-v.getX()*step,y-v.getY()*step,z-v.getZ()*step);
 	}
 	
-	public Vector mul(double c) {
+	public void subMutate(Vector v, float step) {
+		x-=v.getX()*step;
+		y-=v.getY()*step;
+		z-=v.getZ()*step;
+	}
+	
+	public Vector mul(float c) {
 		return new Vector(c*x,c*y,c*z);
 	}
 	
@@ -101,7 +119,8 @@ public class Vector {
 		}
 		return this;
 	}
-	public double dot(Vector u) {
+	
+	public float dot(Vector u) {
 		return x*u.x + y*u.y + z*u.z;
 	}
 	
@@ -111,8 +130,8 @@ public class Vector {
 	
 	public static Vector cross(Vector u, Vector v) {
 		//TODO: implement own version
-		Vector3d w = new Vector3d();
-		w.cross(new Vector3d(u.x, u.y, u.z), new Vector3d(v.x, v.y, v.z));
+		Vector3f w = new Vector3f();
+		w.cross(new Vector3f(u.x, u.y, u.z), new Vector3f(v.x, v.y, v.z));
 		return new Vector(w.x,w.y,w.z).normalize();
 	}
 	
@@ -127,7 +146,7 @@ public class Vector {
 		return this;
 	}
 	
-	public double sqrDistanceTo(Vector v) {
+	public float sqrDistanceTo(Vector v) {
 		return (v.x-x)*(v.x-x) +
 			   (v.y-y)*(v.y-y) +
 			   (v.z-z)*(v.z-z);

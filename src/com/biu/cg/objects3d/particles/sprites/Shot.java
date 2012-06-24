@@ -12,14 +12,12 @@ public class Shot extends SpriteEmitter {
 
 	private static Texture particleTex;
 	private boolean hasCollide;
-	private Orientation cam;
 	private Vector dir;
 	private float vel;
 	private int age;
 
 	public Shot(Orientation camera, Vector direction, float velocity) {
-		super(new Vector(camera.getPosition()));
-		cam = camera;
+		super(new Vector(camera.getPosition()), camera);
 		dir = direction.normalize();
 		vel = velocity;
 		hasCollide = false;
@@ -50,7 +48,7 @@ public class Shot extends SpriteEmitter {
 		age--;
 		setPosition(getPosition().add(dir, vel));
 		for (int i = 0; i < 4; i++) {
-			Sprite.registerObject(new Spark(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.45f + 0.45f), new Vector(dir).noise(0.015f), cam));
+			Sprite.registerObject(new Spark(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.45f + 0.45f), new Vector(dir).noise(0.015f), getCamera()));
 		}
 	}
 }

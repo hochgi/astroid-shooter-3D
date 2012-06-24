@@ -30,16 +30,16 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
     //define the camera orientation in the position (0,1,0),and 
     //camera orthogonal base vectors as (1,0,0),(0,1,0),(0,0,1)
     //i.e. the unit vectors.
-	private Orientation orientation = new Orientation(new Vector(0.0,1.0,0.0),
-			  										  new Vector(1.0,0.0,0.0), 
-			  										  new Vector(0.0,1.0,0.0),
-													  new Vector(0.0,0.0,1.0));
+	private Orientation orientation = new Orientation(new Vector(0,1,0),
+			  										  new Vector(1,0,0), 
+			  										  new Vector(0,1,0),
+													  new Vector(0,0,1));
 	//positive angle (in radians)
-	private double pTheta = Math.toRadians(0.72);
+	private float pTheta = (float)Math.toRadians(0.72);
 	//negative angle (in radians)
-	private double nTheta = (Math.PI * 2) - pTheta;
+	private float nTheta = ((float)Math.PI * 2f) - pTheta;
 	//expansionFactor defines the size of the room
-	private double expansionFactor = 150.0;
+	private float expansionFactor = 150f;
 	//all the cubes i'll be using
 	private Cube cube1,cube2,cube3,cube4;
 	//textures...
@@ -93,7 +93,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	@Override
 	public void keyReleased(KeyEvent e){
 		super.keyReleased(e);
-		//fire = 0;
 	}
 
 	/**
@@ -120,22 +119,22 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			orientation.rotateRoll(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
-			orientation.translateForward(1.0);
+			orientation.translateForward(1f);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
-			orientation.translateBackward(1.0);
+			orientation.translateBackward(1f);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_LEFT)) {
-			orientation.translateLeftward(1.0);
+			orientation.translateLeftward(1f);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_RIGHT)) {
-			orientation.translateRightward(1.0);
+			orientation.translateRightward(1f);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_UP)) {
-			orientation.translateUpward(1.0);
+			orientation.translateUpward(1f);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
-			orientation.translateDownward(1.0);
+			orientation.translateDownward(1f);
 		}
 	}
 
@@ -190,20 +189,21 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		//floor
 		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.25f, 0.25f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.25f, 0.5f, 0.25f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 10.0f);
 		gl.glColor3f(0.25f, 0.25f, 0.5f);
-		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(0.0f, 10.0f);
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
-		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
+		gl.glDisable(GL.GL_BLEND);
 		gl.glEnd();
 
 		//applying wall texture
@@ -217,71 +217,72 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		//wall 1
 		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor,1.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor,1f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
 		
 		//wall 2
 		gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(0.0f, 10.0f); 		
 		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
 		
 		//wall 3
 		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
 		
 		//wall 4
 		gl.glTexCoord2f(0.0f, 0.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3d(1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 0.0f); 
 		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3d(-1.0*expansionFactor, 0.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
 		
+		gl.glDisable(GL.GL_BLEND);
 		gl.glEnd();
 		
 		//applying stars texture
@@ -295,20 +296,21 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		//ceiling
 		gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glColor3f(0.5f, 0.25f, 0.25f);
-		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
 		
 		gl.glTexCoord2f(0.0f, 10.0f); 
 		gl.glColor3f(0.25f, 0.5f, 0.25f);
-		gl.glVertex3d(-1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 10.0f); 
 		gl.glColor3f(0.25f, 0.25f, 0.5f);
-		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, 1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
 		
 		gl.glTexCoord2f(10.0f, 0.0f);
 		gl.glColor3f(0.33f, 0.33f, 0.33f);
-		gl.glVertex3d(1.0*expansionFactor, 1.0*expansionFactor, -1.0*expansionFactor);
+		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
 		
+		gl.glDisable(GL.GL_BLEND);
 		gl.glEnd();
 		
 		//drawing the elements (polyhedrons):
@@ -346,11 +348,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			e.printStackTrace();
 		}
 		//polyhedrons construction from factory methods
-		cube1 = Cube.createCube(new Vector(0.0,17.5,50.0), new Vector(-1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
-		cube2 = Cube.createCube(new Vector(0.0,17.5,-50.0), new Vector(1.0,1.0,1.0).normalize(), pTheta, 10.0, "wood.gif");
-		cube3 = Cube.createCube(new Vector(50.0,17.5,0.0), new Vector(-1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
-		cube4 = Cube.createCube(new Vector(-50.0,17.5,0.0), new Vector(1.0,1.0,-1.0).normalize(), pTheta, 10.0, "wood.gif");
-		tetra = Tetrahedron.createTetrahedron(new Vector(0.0,1.0*expansionFactor,0.0), new Vector(0.0,1.0,0.0).normalize(), pTheta * 2.0, 25.0);
+		cube1 = Cube.createCube(new Vector(0f,17.5f,50f), new Vector(-1f,1f,1f).normalize(), pTheta, 10f, "wood.gif");
+		cube2 = Cube.createCube(new Vector(0f,17.5f,-50f), new Vector(1f,1f,1f).normalize(), pTheta, 10f, "wood.gif");
+		cube3 = Cube.createCube(new Vector(50f,17.5f,0f), new Vector(-1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
+		cube4 = Cube.createCube(new Vector(-50f,17.5f,0f), new Vector(1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
+		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
 		GL gl = gLDrawable.getGL();
 		
 		
@@ -469,14 +471,14 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 * this button might save your arse...
 	 */
 	public void resetOrientation() {
-		orientation.reset(0.0,1.0,0.0,
-				 		  1.0,0.0,0.0, 
-				 		  0.0,1.0,0.0,
-				 		  0.0,0.0,1.0);
+		orientation.reset(0f,1f,0f,
+				 		  1f,0f,0f, 
+				 		  0f,1f,0f,
+				 		  0f,0f,1f);
 	}
 
 
 	public void testExplosionEffect() {
-		new Explosion(new Vector(0.0,0.2,0.0),orientation);
+		new Explosion(new Vector(0f,0.2f,0f),orientation);
 	}
 }

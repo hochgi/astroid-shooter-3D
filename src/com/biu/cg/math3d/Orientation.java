@@ -18,10 +18,10 @@ public class Orientation {
 	 * constructor (default)
 	 */
 	public Orientation() {
-		this.position = new Vector(0.0,0.0,0.0);
-		this.xUnit = new Vector(1.0,0.0,0.0);
-		this.yUnit = new Vector(0.0,1.0,0.0);
-		this.zUnit = new Vector(0.0,0.0,1.0);
+		this.position = new Vector(0f,0f,0f);
+		this.xUnit = new Vector(1f,0f,0f);
+		this.yUnit = new Vector(0f,1f,0f);
+		this.zUnit = new Vector(0f,0f,1f);
 		rotator = new Rotator();
 	}
 	
@@ -31,9 +31,9 @@ public class Orientation {
 	 */
 	public Orientation(Vector position) {
 		this.position = position;
-		this.xUnit = new Vector(1.0,0.0,0.0);
-		this.yUnit = new Vector(0.0,1.0,0.0);
-		this.zUnit = new Vector(0.0,0.0,1.0);
+		this.xUnit = new Vector(1f,0f,0f);
+		this.yUnit = new Vector(0f,1f,0f);
+		this.zUnit = new Vector(0f,0f,1f);
 		rotator = new Rotator();
 	}
 	
@@ -65,7 +65,7 @@ public class Orientation {
 	 * @return
 	 */
 	public Vector getTargetLookAtVector() {
-		return position.add(zUnit, 1.0);
+		return position.add(zUnit, 1f);
 	}
 
 	/**
@@ -79,42 +79,42 @@ public class Orientation {
 	/**
 	 * position <- position + zValue
 	 */
-	public void translateForward(double step) {
+	public void translateForward(float step) {
 		position = position.add(zUnit, step);
 	}
 
 	/**
 	 * position <- position - zValue
 	 */
-	public void translateBackward(double step) {
+	public void translateBackward(float step) {
 		position = position.sub(zUnit, step);
 	}
 
 	/**
 	 * position <- position + xValue
 	 */
-	public void translateLeftward(double step) {
+	public void translateLeftward(float step) {
 		position = position.add(xUnit, step);
 	}
 
 	/**
 	 * position <- position - xValue
 	 */
-	public void translateRightward(double step) {
+	public void translateRightward(float step) {
 		position = position.sub(xUnit, step);
 	}
 
 	/**
 	 * position <- position + yValue
 	 */
-	public void translateUpward(double step) {
+	public void translateUpward(float step) {
 		position = position.add(yUnit, step);
 	}
 
 	/**
 	 * position <- position - yValue
 	 */
-	public void translateDownward(double step) {
+	public void translateDownward(float step) {
 		position = position.sub(yUnit, step);
 	}
 
@@ -122,7 +122,7 @@ public class Orientation {
 	 * pitch rotation
 	 * @param theta - angle to rotate
 	 */
-	public void rotatePitch(double theta) {
+	public void rotatePitch(float theta) {
 		rotator.setAxisAndAngle(xUnit, theta);
 		rotator.rotate(yUnit);
 		rotator.rotate(zUnit);
@@ -132,7 +132,7 @@ public class Orientation {
 	 * heading rotation
 	 * @param theta - angle to rotate
 	 */
-	public void rotateHeading(double theta) {
+	public void rotateHeading(float theta) {
 		rotator.setAxisAndAngle(yUnit, theta);
 		rotator.rotate(xUnit);
 		rotator.rotate(zUnit);
@@ -142,7 +142,7 @@ public class Orientation {
 	 * roll rotation
 	 * @param theta - angle to rotate
 	 */
-	public void rotateRoll(double theta) {
+	public void rotateRoll(float theta) {
 		rotator.setAxisAndAngle(zUnit, theta);
 		rotator.rotate(xUnit);
 		rotator.rotate(yUnit);
@@ -185,10 +185,10 @@ public class Orientation {
 	 * @param yUnz - y coordinate of the 'Z' axis
 	 * @param zUnz - z coordinate of the 'Z' axis
 	 */
-	public void reset(double xPos, double yPos, double zPos,
-					  double xUnx, double yUnx, double zUnx, 
-					  double xUny, double yUny, double zUny, 
-					  double xUnz, double yUnz, double zUnz) {
+	public void reset(float xPos, float yPos, float zPos,
+					  float xUnx, float yUnx, float zUnx, 
+					  float xUny, float yUny, float zUny, 
+					  float xUnz, float yUnz, float zUnz) {
 		position.x = xPos;
 		position.y = yPos;
 		position.z = zPos;
@@ -203,14 +203,14 @@ public class Orientation {
 		zUnit.z = zUnz;
 	}
 
-	public Vector[] getOrthogonalQuadAtPosition(Vector pos, double size) {
+	public Vector[] getOrthogonalQuadAtPosition(Vector pos, float size) {
 
 		Vector[] quad = new Vector[4];
 		Vector a = null, b = null;
 		Vector pltp = perpendicularLineToPlane(pos); 
 
 		//if camera faces directly to the plane:
-		if(pltp.dot(yUnit) == 0.0) {
+		if(pltp.dot(yUnit) == 0f) {
 			a = yUnit;
 		}
 		else {
