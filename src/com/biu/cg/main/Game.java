@@ -308,11 +308,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glEnd();
 		
 		//drawing the elements (polyhedrons):
-		cube1.draw(gLDrawable);
-		cube2.draw(gLDrawable);
-		cube3.draw(gLDrawable);
-		cube4.draw(gLDrawable);
-		tetra.draw(gLDrawable);
+//		cube1.draw(gLDrawable);
+//		cube2.draw(gLDrawable);
+//		cube3.draw(gLDrawable);
+//		cube4.draw(gLDrawable);
+//		tetra.draw(gLDrawable);
 		
 		SpriteEmitter.updateSpriteEmitters();
 		Sprite.updateSprites();

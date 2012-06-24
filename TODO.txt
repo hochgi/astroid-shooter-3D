@@ -2,17 +2,41 @@
 |TODO LIST|
 -----------
 
+* implement cross product, instead of using javax.vecmath's
+
 * splash screens: choose M-Model or G-Model battle craft.
 
-* implement obj/3ds file loader in Model3D class
+* implement obj/3ds file loader in Model3D class.
 
-* implement particles engine, and use shooting with particles (random spray factor?)
+* model and texture of the ships & the asteroids.
+
+-DONE!- implement particles engine, and use shooting with particles (random spray factor?)
 
 * think about michael's idea. to have a ground (city? several buildings?) we need to protect.
   asteroids will only come from above. 
   
-* convert all double calculations to float for efficiency.
+-DONE!- convert all double calculations to float for efficiency.
 
-* Spark: all attributes vary a bit. alpha, size, velocity, direction (very small change delta)
+-DONE!- Spark: all attributes vary a bit. alpha, size, velocity, direction (very small change delta)
 
 * add comments!
+
+* update of renderable elements should take place on a different thread, with timertask scheduling
+  since render loop slows down a lot when there's many heavy stuff to draw...
+
+* finish with explosion effect (flying sparks, smoke trails, round sparks)
+
+* implement a secondary weapon. the one we already made should be the "heavy artillery", 
+  and the old particle_32X32.png should be a light weapon (a single shot = single particle)
+  so it won't be heavy on the render...
+
+* implement "cool off" for weapons. we don't want high rate off firing that would burden the game.
+
+* implement Collidable interface for whatever objects we want (including Shot)
+
+* build the scene
+
+* implement help splash screen on F1 hits
+
+* build a nice looking status bar. minimap should show asteroid movement from top view, 
+  turning red as they getting near the ground.
