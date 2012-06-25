@@ -328,7 +328,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 */
 	@Override
 	public void init(GLAutoDrawable gLDrawable) {
-		
+
 		Explosion.init();
 		Shot.init();
 		//loading textures

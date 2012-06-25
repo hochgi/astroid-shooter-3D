@@ -98,6 +98,12 @@ public class Vector {
 		return new Vector(c*x,c*y,c*z);
 	}
 	
+	public void mulMutate(float c) {
+		x *= c;
+		y *= c;
+		z *= c;
+	}
+	
 	/**
 	 * toString...
 	 */
@@ -140,9 +146,9 @@ public class Vector {
 	}
 	
 	public Vector noise(float noise) {
-		x += Math.random()*noise;
-		y += Math.random()*noise;
-		z += Math.random()*noise;
+		x += Math.random()*noise - noise/2f;
+		y += Math.random()*noise - noise/2f;
+		z += Math.random()*noise - noise/2f;
 		return this;
 	}
 	
@@ -150,5 +156,28 @@ public class Vector {
 		return (v.x-x)*(v.x-x) +
 			   (v.y-y)*(v.y-y) +
 			   (v.z-z)*(v.z-z);
+	}
+
+	public float len() {
+		return (float)Math.sqrt(x*x+y*y+z*z);
+	}
+
+	public void neg(char c) {
+		switch(c){
+		case 'x':
+		case 'X':
+			x = -x;
+			break;
+		case 'y':
+		case 'Y':
+			y = -y;
+			break;
+		case 'z':
+		case 'Z':
+			z = -z;
+			break;
+		default:
+				//do nothing
+		}
 	}
 }

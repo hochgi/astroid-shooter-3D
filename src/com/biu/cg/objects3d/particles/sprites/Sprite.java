@@ -48,12 +48,14 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	
 	public static void renderSprites(GLAutoDrawable gLDrawable) {
 		synchronized(pLock) {
+			//sort particles by square distance from camera
+			//further away should be in the head of the list
 			Collections.sort(particles);
 			
 			GL gl = gLDrawable.getGL();
-	        // Enable blending and specify blending function.
-			gl.glEnable(GL.GL_BLEND);
-			gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);			
+	        // Enable blending
+			//blending function will be invoked differently for every sprite
+			gl.glEnable(GL.GL_BLEND);		
 			
 			for (Sprite s : particles) {
 				s.draw(gLDrawable);
@@ -131,6 +133,14 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		return rgba ;
 	}
 
+	/**
+	 * order of the points is very important:
+	 * v[0] will be the texture coordinate of (0,0)
+	 * v[1] will be the texture coordinate of (1,0)
+	 * v[2] will be the texture coordinate of (1,1)
+	 * v[3] will be the texture coordinate of (0,1)
+	 * @return
+	 */
 	protected abstract Vector[] getQuadBillboard();
 
 	protected abstract Texture getTexture();
