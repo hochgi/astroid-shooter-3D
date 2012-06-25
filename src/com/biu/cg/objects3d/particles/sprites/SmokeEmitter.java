@@ -17,15 +17,15 @@ public class SmokeEmitter extends SpriteEmitter {
 	public SmokeEmitter(Vector position, Orientation camera, int trails) {
 		super(position, camera);
 		Vector direction = null;
-		for (int i = 0; i < trails; i++) {
-			/* uncomment if always orthogonal to ground
+		for (int i = 0; i < trails; i++) {			
 			direction = new Vector(position).noise(2);
+			/* uncomment if always orthogonal to ground (XZ plane)
 			if(direction.getY() < 0) {
 				direction.neg('y');
 			}
 			*/
 			Sprite.registerObject(new SmokeTrail(smokeTrailTex[random.nextInt(4)],
-								  direction, new Vector(position), camera));
+					new Vector(position), direction, camera));
 		}
 	}
 

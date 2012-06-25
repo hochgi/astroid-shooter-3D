@@ -42,9 +42,7 @@ public class SmokeTrail extends LineSprite {
 	@Override
 	protected void update() {
 		getPosition().addMutate(dir, vel + 0.25f);
-//		rgba[0] -= 0.015f;
-//		rgba[1] -= 0.01f;
-//		rgba[2] -= 0.0005f;
+		//moveTail(dir.mul(vel/8)); //BETTER WITH OR WITHOUT?
 		rgba[3] *= 0.97f;
 		vel *= 0.96;
 	}

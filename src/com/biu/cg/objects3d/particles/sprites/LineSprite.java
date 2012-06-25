@@ -25,7 +25,7 @@ public abstract class LineSprite extends Sprite {
 		}
 	}
 
-	public void setPosition2(Vector tail) {
+	public void moveTail(Vector tail) {
 		pos2.addMutate(tail, 1);
 	}
 	

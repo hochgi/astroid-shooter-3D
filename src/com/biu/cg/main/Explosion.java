@@ -9,7 +9,9 @@ import com.biu.cg.objects3d.particles.sprites.FlameEmitter;
 import com.biu.cg.objects3d.particles.sprites.FlashEmitter;
 import com.biu.cg.objects3d.particles.sprites.Shockwave;
 import com.biu.cg.objects3d.particles.sprites.SmokeEmitter;
+import com.biu.cg.objects3d.particles.sprites.SparkEmitter;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
+import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -31,6 +33,7 @@ public class Explosion {
 		FlashEmitter.init();
 		FlameEmitter.init();
 		SmokeEmitter.init();
+		SparkEmitter.init();
 		try {
 			shockwaveTex = TextureIO.newTexture(new File( "textures/shockwave_128X128.png" ),false);
 		} catch (GLException e) {

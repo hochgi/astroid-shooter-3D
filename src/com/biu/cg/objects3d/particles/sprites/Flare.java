@@ -5,7 +5,7 @@ import com.biu.cg.math3d.Vector;
 import com.sun.opengl.util.texture.Texture;
 
 
-public class Spark extends Sprite {
+public class Flare extends Sprite {
 
 	private float vel;
 	private Vector dir;
@@ -14,7 +14,7 @@ public class Spark extends Sprite {
 	private float[] rgba;
 	private Texture tex;
 
-	public Spark(Texture texture, Vector position, float velocity, Vector direction, Orientation camera) {
+	public Flare(Texture texture, Vector position, float velocity, Vector direction, Orientation camera) {
 		super(position, camera);
 		this.tex = texture;
 		this.vel = velocity;
