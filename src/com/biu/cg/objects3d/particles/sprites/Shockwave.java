@@ -25,7 +25,7 @@ public class Shockwave extends Sprite {
 	
 	@Override
 	public int compareTo(Sprite o) {
-		return -1;
+		return 1;
 	}
 
 	@Override

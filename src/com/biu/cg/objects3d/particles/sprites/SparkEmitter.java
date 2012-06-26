@@ -23,7 +23,7 @@ public class SparkEmitter extends SpriteEmitter {
 			if(direction.getY() < 0) {
 				direction.neg('y');
 			}*/
-			//Sprite.registerObject(new Spark(sparkTex, new Vector(position), direction, camera));
+			Sprite.registerObject(new Spark(sparkTex, new Vector(position), direction, camera));
 		}
 	}
 

@@ -30,6 +30,10 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		}
 	}
 	
+	public boolean isPerpendicularToCamera() {
+		return true;
+	}
+	
 	public static void updateSprites() {
 		synchronized(pLock) {
 			particles.removeAll(graveyard);
@@ -76,6 +80,12 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		int rv = (int)diff;
 		if(rv != 0){
 			return rv;
+		}
+		else if(isPerpendicularToCamera() && !o.isPerpendicularToCamera()) {
+			return 1;
+		}
+		else if(!isPerpendicularToCamera() && o.isPerpendicularToCamera()) {
+			return -1;
 		}
 		else if(diff > 0) {
 			return 1;

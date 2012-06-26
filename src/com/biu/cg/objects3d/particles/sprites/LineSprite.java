@@ -25,6 +25,10 @@ public abstract class LineSprite extends Sprite {
 		}
 	}
 
+	public boolean isPerpendicularToCamera() {
+		return false;
+	}
+	
 	public void moveTail(Vector tail) {
 		pos2.addMutate(tail, 1);
 	}
