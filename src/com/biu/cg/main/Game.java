@@ -18,6 +18,7 @@ import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
+import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
 import com.biu.cg.objects3d.ships.Ship2;
 import com.sun.opengl.util.texture.*;
@@ -40,16 +41,17 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 //													  new Vector(0,0,1));
     private Orientation orientation;
 	//positive angle (in radians)
-	private float pTheta = (float)Math.toRadians(0.72);
+	private float pTheta = (float)Math.toRadians(1.5);
 	//negative angle (in radians)
 	private float nTheta = ((float)Math.PI * 2f) - pTheta;
-	private float step = 2f;
+	private float step = 4f;
 	//expansionFactor defines the size of the room
 	private float expansionFactor = 0f;
 	//all the cubes i'll be using
 	private Cube cube1,cube2,cube3,cube4;
 	private Ship1 ship1;
 	private Ship2 ship2;
+	private MotherShip motherShip;
 	private Space space;
 	private Model3D earth;
 	//textures...
@@ -339,6 +341,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 //		tetra.draw(gLDrawable);
 		ship1.draw(gLDrawable);
 		ship2.draw(gLDrawable);
+		motherShip.draw(gLDrawable);
+		motherShip.setScale(5);
 		space.draw(gLDrawable);
 		earth.draw(gLDrawable);
 //		SpriteEmitter.updateSpriteEmitters();
@@ -374,11 +378,13 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		cube3 = Cube.createCube(new Vector(50f,17.5f,0f), new Vector(-1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
 		cube4 = Cube.createCube(new Vector(-50f,17.5f,0f), new Vector(1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
 		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
-		ship1 = new Ship1(new Vector(0, 10 , 0));
-		ship2 = new Ship2(new Vector(50, 10 , 0));
+		ship1 = new Ship1(new Vector(0, 10 , 0), orientation);
+		ship2 = new Ship2(new Vector(50, 0 , 80));
+		motherShip = new MotherShip(new Vector(0, -38 , 40));
 		space = new Space("models/space/space.wng" , "models/space/space.jpg");
-		space.setScale(900);
-		earth = new Model3D("models/earth/earth.wng" , "models/earth/earth.jpg");
+		space.setScale(4000);
+		earth = new Model3D(new Vector(3, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg");
+		earth.setScale(1000);
 		orientation = ship1.getOrientation();
 		GL gl = gLDrawable.getGL();
 		
