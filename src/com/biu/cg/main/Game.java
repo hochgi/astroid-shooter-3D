@@ -112,51 +112,51 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	public void executeKeysAction() {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
 			orientation.rotatePitch(pTheta);
-			space.getRotationOrientation().rotatePitch(pTheta);
+			space.getOrientation().rotatePitch(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_DOWN)) {
 			orientation.rotatePitch(nTheta);
-			space.getRotationOrientation().rotatePitch(nTheta);
+			space.getOrientation().rotatePitch(nTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)) {
 			orientation.rotateHeading(pTheta);
-			space.getRotationOrientation().rotateHeading(pTheta);
+			space.getOrientation().rotateHeading(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_LEFT)) {
 			orientation.rotateHeading(nTheta);
-			space.getRotationOrientation().rotateHeading(nTheta);
+			space.getOrientation().rotateHeading(nTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
 			orientation.rotateRoll(nTheta);
-			space.getRotationOrientation().rotateRoll(nTheta);
+			space.getOrientation().rotateRoll(nTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CCW)) {
 			orientation.rotateRoll(pTheta);
-			space.getRotationOrientation().rotateRoll(pTheta);
+			space.getOrientation().rotateRoll(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
 			orientation.translateForward(step);
-			space.getOrientation().translateForward(step/space.getScale());
+			space.getOrientation().translateForward(step);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
 			orientation.translateBackward(step);
-			space.getOrientation().translateBackward(step/space.getScale());
+			space.getOrientation().translateBackward(step);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_LEFT)) {
 			orientation.translateLeftward(step);
-			space.getOrientation().translateLeftward(step/space.getScale());
+			space.getOrientation().translateLeftward(step);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_RIGHT)) {
 			orientation.translateRightward(step);
-			space.getOrientation().translateRightward(step/space.getScale());
+			space.getOrientation().translateRightward(step);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_UP)) {
 			orientation.translateUpward(step);
-			space.getOrientation().translateUpward(step/space.getScale());
+			space.getOrientation().translateUpward(step);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
 			orientation.translateDownward(step);
-			space.getOrientation().translateDownward(step/space.getScale());
+			space.getOrientation().translateDownward(step);
 		}
 	}
 
