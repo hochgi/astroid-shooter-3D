@@ -13,6 +13,7 @@ import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Cube;
 import com.biu.cg.objects3d.Model3D;
+import com.biu.cg.objects3d.Space;
 import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -42,13 +43,15 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private float pTheta = (float)Math.toRadians(0.72);
 	//negative angle (in radians)
 	private float nTheta = ((float)Math.PI * 2f) - pTheta;
+	private float step = 2f;
 	//expansionFactor defines the size of the room
-	private float expansionFactor = 150f;
+	private float expansionFactor = 0f;
 	//all the cubes i'll be using
 	private Cube cube1,cube2,cube3,cube4;
 	private Ship1 ship1;
 	private Ship2 ship2;
-	private Model3D space, earth;
+	private Space space;
+	private Model3D earth;
 	//textures...
 	Texture ground = null;
 	Texture stars = null;
@@ -109,39 +112,51 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	public void executeKeysAction() {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
 			orientation.rotatePitch(pTheta);
+			space.getRotationOrientation().rotatePitch(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_DOWN)) {
 			orientation.rotatePitch(nTheta);
+			space.getRotationOrientation().rotatePitch(nTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)) {
 			orientation.rotateHeading(pTheta);
+			space.getRotationOrientation().rotateHeading(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_LEFT)) {
 			orientation.rotateHeading(nTheta);
+			space.getRotationOrientation().rotateHeading(nTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
 			orientation.rotateRoll(nTheta);
+			space.getRotationOrientation().rotateRoll(nTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CCW)) {
 			orientation.rotateRoll(pTheta);
+			space.getRotationOrientation().rotateRoll(pTheta);
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
-			orientation.translateForward(1f);
+			orientation.translateForward(step);
+			space.getOrientation().translateForward(step/space.getScale());
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
-			orientation.translateBackward(1f);
+			orientation.translateBackward(step);
+			space.getOrientation().translateBackward(step/space.getScale());
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_LEFT)) {
-			orientation.translateLeftward(1f);
+			orientation.translateLeftward(step);
+			space.getOrientation().translateLeftward(step/space.getScale());
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_RIGHT)) {
-			orientation.translateRightward(1f);
+			orientation.translateRightward(step);
+			space.getOrientation().translateRightward(step/space.getScale());
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_UP)) {
-			orientation.translateUpward(1f);
+			orientation.translateUpward(step);
+			space.getOrientation().translateUpward(step/space.getScale());
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
-			orientation.translateDownward(1f);
+			orientation.translateDownward(step);
+			space.getOrientation().translateDownward(step/space.getScale());
 		}
 	}
 
@@ -361,7 +376,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
 		ship1 = new Ship1(new Vector(0, 10 , 0));
 		ship2 = new Ship2(new Vector(50, 10 , 0));
-		space = new Model3D("models/space/space.wng" , "models/space/space.jpg");
+		space = new Space("models/space/space.wng" , "models/space/space.jpg");
 		space.setScale(900);
 		earth = new Model3D("models/earth/earth.wng" , "models/earth/earth.jpg");
 		orientation = ship1.getOrientation();

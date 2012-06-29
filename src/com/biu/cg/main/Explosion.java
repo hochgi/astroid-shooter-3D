@@ -20,13 +20,13 @@ public class Explosion {
 	private static Texture shockwaveTex;
 
 	public Explosion(Vector pos, Orientation camera) {
-		Sprite shockwave = new Shockwave(shockwaveTex, pos);
-		Sprite.registerObject(shockwave);
-		new FlashEmitter(pos, camera, 4);
-		new FlameEmitter(pos, camera, 8);
-		new SmokeEmitter(pos, camera, 20);
-		new SparkEmitter(pos, camera, 40);
-		new GlintEmitter(pos, camera, 15); //round sparks
+//		Sprite shockwave = new Shockwave(shockwaveTex, pos);
+//		Sprite.registerObject(shockwave);
+		new FlashEmitter(pos, camera, 200);
+		new FlameEmitter(pos, camera, 400);
+		new SmokeEmitter(pos, camera, 1000);
+		new SparkEmitter(pos, camera, 2000);
+		new GlintEmitter(pos, camera, 750); //round sparks
 	}
 
 	public static void init() {

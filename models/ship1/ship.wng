@@ -1,5 +1,5 @@
 # Exported from Wings 3D 1.4.1
-mtllib ship.wng.mtl
+mtllib ship.mtl
 o SpaceFight
 #73 vertices, 142 faces
 v 4.53257429 -17.15022935 51.89358296
