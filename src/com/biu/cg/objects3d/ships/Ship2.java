@@ -11,7 +11,7 @@ public class Ship2 extends Model3D  {
 	}
 
 	public Ship2(Vector position) {
-		super(position, "models/ship2/ship.obj" , "models/ship2/F03_512.jpg");
+		super(position, "models/ship2/ship.wng" , "models/ship2/F03_512.jpg");
 		// TODO Auto-generated constructor stub
 		
 	}

@@ -21,7 +21,7 @@ public class Ship1 extends Model3D {
 	}
 	
 	public Ship1(Vector position, Orientation camera) {
-		super(position, "models/ship1/ship.obj" , "models/ship1/F02_512.jpg");
+		super(position, "models/ship1/ship.wng" , "models/ship1/F02_512.jpg");
 		this.cam = camera;
 		
 	}
