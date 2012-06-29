@@ -17,6 +17,7 @@ import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
 import com.biu.cg.objects3d.ships.Ship1;
+import com.biu.cg.objects3d.ships.Ship2;
 import com.sun.opengl.util.texture.*;
 
 /**
@@ -44,6 +45,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	//all the cubes i'll be using
 	private Cube cube1,cube2,cube3,cube4;
 	private Ship1 ship1;
+	private Ship2 ship2;
 	//textures...
 	Texture ground = null;
 	Texture stars = null;
@@ -316,6 +318,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 //		cube4.draw(gLDrawable);
 //		tetra.draw(gLDrawable);
 		ship1.draw(gLDrawable);
+		ship2.draw(gLDrawable);
 		SpriteEmitter.updateSpriteEmitters();
 		Sprite.updateSprites();
 		Sprite.renderSprites(gLDrawable);
@@ -350,6 +353,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		cube4 = Cube.createCube(new Vector(-50f,17.5f,0f), new Vector(1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
 		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
 		ship1 = new Ship1(new Vector(0, 10 , 0));
+		ship2 = new Ship2(new Vector(50, 10 , 0));
 		GL gl = gLDrawable.getGL();
 		
 		
