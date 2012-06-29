@@ -12,6 +12,7 @@ import com.biu.cg.gui.MultiKeysAdapter;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Cube;
+import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -28,14 +29,15 @@ import com.sun.opengl.util.texture.*;
  */
 public class Game extends MultiKeysAdapter implements GLEventListener {
 
-    static GLU glu = new GLU();
+    public static GLU glu = new GLU();
     //define the camera orientation in the position (0,1,0),and 
     //camera orthogonal base vectors as (1,0,0),(0,1,0),(0,0,1)
     //i.e. the unit vectors.
-	private Orientation orientation = new Orientation(new Vector(0,1,0),
-			  										  new Vector(1,0,0), 
-			  										  new Vector(0,1,0),
-													  new Vector(0,0,1));
+//	private Orientation orientation = new Orientation(new Vector(0,1,0),
+//			  										  new Vector(1,0,0), 
+//			  										  new Vector(0,1,0),
+//													  new Vector(0,0,1));
+    private Orientation orientation;
 	//positive angle (in radians)
 	private float pTheta = (float)Math.toRadians(0.72);
 	//negative angle (in radians)
@@ -46,6 +48,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private Cube cube1,cube2,cube3,cube4;
 	private Ship1 ship1;
 	private Ship2 ship2;
+	private Model3D space, earth;
 	//textures...
 	Texture ground = null;
 	Texture stars = null;
@@ -168,17 +171,19 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 		gl.glMatrixMode(GL.GL_PROJECTION);
 		gl.glLoadIdentity();	
-		glu.gluPerspective(50.0f, 1, 1.0, 1000.0);
+//		glu.gluPerspective(50.0f, 1, 1.0, 1000.0);
+//		
+//		Vector camPos = orientation.getPosition();
+//		Vector target = orientation.getTargetLookAtVector();
+//		Vector upVect = orientation.getUpVector();
+//		
+//		gl.glMatrixMode(GL.GL_MODELVIEW);
+//		gl.glLoadIdentity();
+//		glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
+//					  target.getX(), target.getY(), target.getZ(), 
+//					  upVect.getX(), upVect.getY(), upVect.getZ());
 		
-		Vector camPos = orientation.getPosition();
-		Vector target = orientation.getTargetLookAtVector();
-		Vector upVect = orientation.getUpVector();
-		
-		gl.glMatrixMode(GL.GL_MODELVIEW);
-		gl.glLoadIdentity();
-		glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
-					  target.getX(), target.getY(), target.getZ(), 
-					  upVect.getX(), upVect.getY(), upVect.getZ());
+		ship1.lookAtCamera1(gLDrawable);
 	
 		
 		//applying ground texture
@@ -319,6 +324,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 //		tetra.draw(gLDrawable);
 		ship1.draw(gLDrawable);
 		ship2.draw(gLDrawable);
+		space.draw(gLDrawable);
+		earth.draw(gLDrawable);
 //		SpriteEmitter.updateSpriteEmitters();
 //		Sprite.updateSprites();
 		Sprite.renderSprites(gLDrawable);
@@ -354,6 +361,10 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
 		ship1 = new Ship1(new Vector(0, 10 , 0));
 		ship2 = new Ship2(new Vector(50, 10 , 0));
+		space = new Model3D("models/space/space.wng" , "models/space/space.jpg");
+		space.setScale(900);
+		earth = new Model3D("models/earth/earth.wng" , "models/earth/earth.jpg");
+		orientation = ship1.getOrientation();
 		GL gl = gLDrawable.getGL();
 		
 		
