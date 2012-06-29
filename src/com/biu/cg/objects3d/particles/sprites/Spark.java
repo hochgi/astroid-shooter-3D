@@ -17,8 +17,8 @@ public class Spark extends LineSprite {
 		tex = texture;
 		dir = position.sub(position2, 1).normalize();
 		dir.mulMutate(0.25f);
-		vel = 8;
-		mul = 0.96f;
+		vel = 16;
+		mul = 0.88f;
 		rgba = new float[4];
 		rgba[0] = 0.9f;
 		rgba[1] = 0.9f;

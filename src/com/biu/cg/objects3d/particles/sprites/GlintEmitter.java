@@ -29,7 +29,7 @@ public class GlintEmitter extends SpriteEmitter {
 
 	public static void init() {
 		try {
-			glintTex = TextureIO.newTexture(new File( "textures/flame_smoke_1_128X128.png" ),false);
+			glintTex = TextureIO.newTexture(new File( "textures/round_sparks_128X128.png" ),false);
 		} catch (GLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

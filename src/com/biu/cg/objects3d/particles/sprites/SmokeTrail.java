@@ -16,7 +16,7 @@ public class SmokeTrail extends LineSprite {
 		tex = texture;
 		dir = position.sub(position2, 1).normalize();
 		dir.mulMutate(0.25f);
-		vel = 4;
+		vel = 10;
 		rgba = new float[4];
 		rgba[0] = 0.9f;
 		rgba[1] = 0.75f;
@@ -41,10 +41,10 @@ public class SmokeTrail extends LineSprite {
 
 	@Override
 	protected void update() {
-		getPosition().addMutate(dir, vel + 0.25f);
+		getPosition().addMutate(dir, vel + 2f);
 		//moveTail(dir.mul(vel/8)); //BETTER WITH OR WITHOUT?
-		rgba[3] *= 0.97f;
-		vel *= 0.96;
+		rgba[3] *= 0.85f;
+		vel *= 0.975;
 	}
 
 }

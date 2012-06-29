@@ -28,7 +28,7 @@ public class Flame extends Sprite {
 		angle = 0.01f*(float)Math.random()+0.01f;
 		accumulatedAngle = 0;
 		stage = Phase.First;
-		inflateFactor = 1.075f;
+		inflateFactor = 1.3f;
 		bb = new Vector[4]; //bb stands for billboards
 		bb[0] = new Vector();
 		bb[1] = new Vector();
@@ -93,24 +93,24 @@ public class Flame extends Sprite {
 
 	@Override
 	protected void update() {
-		getPosition().addMutate(expander, 1);
+		getPosition().addMutate(expander, 4);
 		inflate();
 		switch(stage){
 		case First:
-			rgba[0] += 0.00625f;
-			rgba[1] += 0.005f;
-			rgba[2] += 0.0045f;
-			rgba[3] += 0.025f;
+			rgba[0] += 0.01625f;
+			rgba[1] += 0.015f;
+			rgba[2] += 0.015f;
+			rgba[3] += 0.075f;
 			if(rgba[3] >= 0.95){
 				stage = Phase.Second;
-				inflateFactor = 1.0375f;
+				inflateFactor = 1.075f;
 			}
 			break;
 		case Second:
-			rgba[0] -= 0.03f;
-			rgba[1] -= 0.02f;
-			rgba[2] -= 0.0075f;
-			rgba[3] -= 0.025f;
+			rgba[0] -= 0.12f;
+			rgba[1] -= 0.08f;
+			rgba[2] -= 0.03f;
+			rgba[3] -= 0.1f;
 			break;
 		default:
 			//do nothing

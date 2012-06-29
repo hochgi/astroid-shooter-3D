@@ -12,9 +12,9 @@ import com.sun.opengl.util.texture.Texture;
 
 public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
-	private static LinkedList<Sprite> particles = new LinkedList<Sprite>();
+	private static LinkedList<Sprite> sprites = new LinkedList<Sprite>();
 	private static LinkedList<Sprite> graveyard = new LinkedList<Sprite>();
-	private static Object pLock = new Object();
+	private static Object sLock = new Object();
 	private static final float[] rgba = {1f,1f,1f,1f};
 	
 	private Orientation cam;
@@ -25,8 +25,9 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	 * @param particle
 	 */
 	public static void registerObject(Sprite sprite){
-		synchronized(pLock) {
-			particles.add(sprite);
+		Particle.registerObject(sprite);
+		synchronized(sLock) {
+			sprites.add(sprite);
 		}
 	}
 	
@@ -34,35 +35,43 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		return true;
 	}
 	
-	public static void updateSprites() {
-		synchronized(pLock) {
-			particles.removeAll(graveyard);
-			graveyard.clear();
-			
-			for (Sprite s : particles) {
-				if(s.isDead()){
-					graveyard.add(s);
-				}
-				else {
-					s.update();
-				}
-			}
-		}
-	}
+//	public static void updateSprites() {
+//		synchronized(sLock) {
+//			particles.removeAll(graveyard);
+//			graveyard.clear();
+//			
+//			for (Sprite s : particles) {
+//				if(s.isDead()){
+//					graveyard.add(s);
+//				}
+//				else {
+//					s.update();
+//				}
+//			}
+//		}
+//	}
 	
 	public static void renderSprites(GLAutoDrawable gLDrawable) {
-		synchronized(pLock) {
+		synchronized(sLock) {
+			sprites.removeAll(graveyard);
+			graveyard.clear();
+			
 			//sort particles by square distance from camera
 			//further away should be in the head of the list
-			Collections.sort(particles);
+			Collections.sort(sprites);
 			
 			GL gl = gLDrawable.getGL();
 	        // Enable blending
 			//blending function will be invoked differently for every sprite
 			gl.glEnable(GL.GL_BLEND);		
 			
-			for (Sprite s : particles) {
-				s.draw(gLDrawable);
+			for (Sprite s : sprites) {
+				if(s.isDead()){
+					graveyard.add(s);
+				}
+				else {
+					s.draw(gLDrawable);
+				}
 			}
 	
 			gl.glDisable(GL.GL_BLEND);

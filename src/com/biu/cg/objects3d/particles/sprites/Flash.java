@@ -25,7 +25,7 @@ public class Flash extends Sprite {
 		texture = tex;
 		size = 0.25f;
 		stage = Phase.First;
-		angle = 0.1f*(float)Math.random()+0.1f;
+		angle = 0.01f*(float)Math.random()+0.01f;
 		accumulatedAngle = 0;
 		bb = new Vector[4]; //bb stands for billboards
 		bb[0] = new Vector();
@@ -62,8 +62,8 @@ public class Flash extends Sprite {
 	}
 
 	private void inflate() {
-		size *= 1.1f;
-		if(size > 10f){
+		size *= 1.6f;
+		if(size > 12f){
 			stage = Phase.Second;
 			rgba[1] -= 0.05;  
 			rgba[2] -= 0.1;  
@@ -84,9 +84,9 @@ public class Flash extends Sprite {
 	}
 
 	private void darken() {
-		rgba[1] *= 0.9;  
-		rgba[2] *= 0.8;  
-		rgba[3] *= 0.7;
+		rgba[1] *= 0.8;  
+		rgba[2] *= 0.7;  
+		rgba[3] *= 0.6;
 	}
 
 	@Override

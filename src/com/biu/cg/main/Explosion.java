@@ -22,11 +22,11 @@ public class Explosion {
 	public Explosion(Vector pos, Orientation camera) {
 		Sprite shockwave = new Shockwave(shockwaveTex, pos);
 		Sprite.registerObject(shockwave);
-		new FlashEmitter(pos, camera, 60);
-		new FlameEmitter(pos, camera, 60);
-		new SmokeEmitter(pos, camera, 200);
-		new SparkEmitter(pos, camera, 400);
-		//new GlintEmitter(pos, camera, 3); //round sparks
+		new FlashEmitter(pos, camera, 4);
+		new FlameEmitter(pos, camera, 8);
+		new SmokeEmitter(pos, camera, 20);
+		new SparkEmitter(pos, camera, 40);
+		new GlintEmitter(pos, camera, 15); //round sparks
 	}
 
 	public static void init() {

@@ -9,8 +9,8 @@ public class Shockwave extends Sprite {
 	private Texture texture;
 	private float size;
 	private float[] rgba;
-	static final float decay = 0.96f;
-	static final float growth = 1.05f;
+	static final float decay = 0.85f;
+	static final float growth = 1.25f;
 
 	public Shockwave(Texture shockwaveTex, Vector pos) {
 		super(pos, null);
@@ -25,7 +25,7 @@ public class Shockwave extends Sprite {
 	
 	@Override
 	public int compareTo(Sprite o) {
-		return 1;
+		return Integer.MIN_VALUE;
 	}
 
 	@Override
