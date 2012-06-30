@@ -11,20 +11,16 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
 import com.owens.oobjloader.builder.Face;
 
-public class Ship1 extends Model3D {
-
-	private Orientation cam;
+public class Ship1 extends Ship {
 	
 	
-	public Ship1(Orientation camera) {
+	public Ship1() {
 		
 		super("models/ship1/ship.obj" , "models/ship1/F02_512.jpg");
-		this.cam = camera;	
 	}
 	
-	public Ship1(Vector position, Orientation camera) {
+	public Ship1(Vector position) {
 		super(position, "models/ship1/ship.wng" , "models/ship1/F02_512.jpg");
-		this.cam = camera;
 		
 	}
 	

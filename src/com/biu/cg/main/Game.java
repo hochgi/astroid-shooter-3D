@@ -52,7 +52,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private Ship1 ship1;
 	private Ship2 ship2;
 	private MotherShip motherShip;
-	private Space space;
+	
 	private Model3D earth;
 	//textures...
 	Texture ground = null;
@@ -113,52 +113,54 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	@Override
 	public void executeKeysAction() {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
-			orientation.rotatePitch(pTheta);
-			space.getOrientation().rotatePitch(pTheta);
+			//orientation.rotatePitch(pTheta);
+			ship1.pitchUp();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_DOWN)) {
-			orientation.rotatePitch(nTheta);
-			space.getOrientation().rotatePitch(nTheta);
+			//orientation.rotatePitch(nTheta);
+			ship1.pitchDown();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)) {
-			orientation.rotateHeading(pTheta);
-			space.getOrientation().rotateHeading(pTheta);
+			//orientation.rotateHeading(pTheta);
+			ship1.turnRight();
+			
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_LEFT)) {
-			orientation.rotateHeading(nTheta);
-			space.getOrientation().rotateHeading(nTheta);
+			//orientation.rotateHeading(nTheta);
+			ship1.turnLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
-			orientation.rotateRoll(nTheta);
-			space.getOrientation().rotateRoll(nTheta);
+			//orientation.rotateRoll(nTheta);
+			ship1.rollRight();
+			
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CCW)) {
-			orientation.rotateRoll(pTheta);
-			space.getOrientation().rotateRoll(pTheta);
+			//orientation.rotateRoll(pTheta);
+			ship1.rollLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
-			orientation.translateForward(step);
-			space.getOrientation().translateForward(step);
+			//orientation.translateForward(step);
+			ship1.moveForward();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
-			orientation.translateBackward(step);
-			space.getOrientation().translateBackward(step);
+			//orientation.translateBackward(step);
+			ship1.moveBackward();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_LEFT)) {
-			orientation.translateLeftward(step);
-			space.getOrientation().translateLeftward(step);
+			//orientation.translateLeftward(step);
+			ship1.moveLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_RIGHT)) {
-			orientation.translateRightward(step);
-			space.getOrientation().translateRightward(step);
+			//orientation.translateRightward(step);
+			ship1.moveRight();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_UP)) {
-			orientation.translateUpward(step);
-			space.getOrientation().translateUpward(step);
+			//orientation.translateUpward(step);
+			ship1.moveUp();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
-			orientation.translateDownward(step);
-			space.getOrientation().translateDownward(step);
+			//orientation.translateDownward(step);
+			ship1.moveDown();
 		}
 	}
 
@@ -342,8 +344,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		ship1.draw(gLDrawable);
 		ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
-		motherShip.setScale(5);
-		space.draw(gLDrawable);
+		
 		earth.draw(gLDrawable);
 //		SpriteEmitter.updateSpriteEmitters();
 //		Sprite.updateSprites();
@@ -378,11 +379,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		cube3 = Cube.createCube(new Vector(50f,17.5f,0f), new Vector(-1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
 		cube4 = Cube.createCube(new Vector(-50f,17.5f,0f), new Vector(1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
 		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
-		ship1 = new Ship1(new Vector(0, 10 , 0), orientation);
+		ship1 = new Ship1(new Vector(0, 10 , 0));
 		ship2 = new Ship2(new Vector(50, 0 , 80));
 		motherShip = new MotherShip(new Vector(0, -38 , 40));
-		space = new Space("models/space/space.wng" , "models/space/space.jpg");
-		space.setScale(4000);
+		motherShip.setScale(5);
+		
 		earth = new Model3D(new Vector(3, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg");
 		earth.setScale(1000);
 		orientation = ship1.getOrientation();
