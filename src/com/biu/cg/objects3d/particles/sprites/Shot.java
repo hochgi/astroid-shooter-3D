@@ -47,8 +47,8 @@ public class Shot extends SpriteEmitter {
 	protected void update() {
 		age--;
 		setPosition(getPosition().add(dir, vel));
-		for (int i = 0; i < 6; i++) {
-			Sprite.registerObject(new Flare(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.45f + 0.45f), new Vector(dir).noise(0.015f), getCamera()));
+		for (int i = 0; i < 8; i++) {
+			Sprite.registerObject(new Flare(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.45f + 0.45f), new Vector(dir).noise(0.005f), getCamera()));
 		}
 	}
 }

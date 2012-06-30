@@ -1,11 +1,7 @@
 package com.biu.cg.objects3d;
 
-import java.util.Random;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
-
-import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.owens.oobjloader.builder.Face;
 
@@ -37,7 +33,7 @@ public class Space extends Model3D  {
 		texture.bind();
 
 		for(Face f : builder.faces){
-			Random rand = new Random();
+			//Random rand = new Random();
 			switch(f.vertices.size()){
 			case 4:
 			{

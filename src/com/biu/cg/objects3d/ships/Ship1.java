@@ -1,16 +1,9 @@
 package com.biu.cg.objects3d.ships;
 
-import java.util.Random;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
-
 import com.biu.cg.main.Game;
-import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.objects3d.Model3D;
-import com.owens.oobjloader.builder.Face;
-
 public class Ship1 extends Ship {
 	
 	

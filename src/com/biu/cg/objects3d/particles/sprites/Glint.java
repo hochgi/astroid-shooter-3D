@@ -12,7 +12,6 @@ public class Glint extends Sprite {
 
 	private float size;
 	private Phase stage;
-	private Vector[] bb;
 	private Texture tex;
 	private float[] rgba;
 	private float inflateFactor;

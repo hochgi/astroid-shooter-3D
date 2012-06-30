@@ -5,8 +5,7 @@ package com.owens.oobjloader.parser;
 // impossible to release software to the public domain, you are also free
 // to use this code under any version of the GPL, LPGL, Apache, or BSD
 // licenses, or contact me for use of another license.
-import java.util.*;
-import java.text.*;
+
 import java.io.*;
 import java.io.IOException;
 

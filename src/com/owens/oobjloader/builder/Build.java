@@ -6,7 +6,6 @@ package com.owens.oobjloader.builder;
 // to use this code under any version of the GPL, LPGL, Apache, or BSD
 // licenses, or contact me for use of another license.
 import com.owens.oobjloader.parser.BuilderInterface;
-
 import java.util.*;
 
 public class Build implements BuilderInterface {
@@ -36,7 +35,7 @@ public class Build implements BuilderInterface {
     public HashMap<String, Material> materialLib = new HashMap<String, Material>();
     private Material currentMaterialBeingParsed = null;
     public HashMap<String, Material> mapLib = new HashMap<String, Material>();
-    private Material currentMapBeingParsed = null;
+    //private Material currentMapBeingParsed = null;
     public int faceTriCount = 0;
     public int faceQuadCount = 0;
     public int facePolyCount = 0;

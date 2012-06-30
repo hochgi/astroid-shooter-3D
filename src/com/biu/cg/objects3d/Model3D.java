@@ -3,11 +3,8 @@ package com.biu.cg.objects3d;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Random;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
-
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.owens.oobjloader.builder.Build;
@@ -57,9 +54,9 @@ public class Model3D extends Object3D {
 		texture.bind();
 		
 		Orientation o = orientation;
-		int counter=0;
+		//int counter=0;
 		for(Face f : builder.faces){
-			Random rand = new Random();
+			//Random rand = new Random();
 			switch(f.vertices.size()){
 			case 4:
 			{

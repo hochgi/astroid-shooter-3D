@@ -1,8 +1,6 @@
 package com.biu.cg.objects3d.ships;
 
 import javax.media.opengl.GLAutoDrawable;
-
-import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Space;

@@ -19,9 +19,11 @@ import com.sun.opengl.util.texture.TextureIO;
 public class Explosion {
 	private static Texture shockwaveTex;
 
-	public Explosion(Vector pos, Orientation camera) {
-//		Sprite shockwave = new Shockwave(shockwaveTex, pos);
-//		Sprite.registerObject(shockwave);
+	public Explosion(Vector pos, Orientation camera, boolean withShockwave) {
+		if(withShockwave){
+			Sprite shockwave = new Shockwave(shockwaveTex, pos);
+			Sprite.registerObject(shockwave);
+		}
 		new FlashEmitter(pos, camera, 2);
 		new FlameEmitter(pos, camera, 4);
 		new SmokeEmitter(pos, camera, 10);

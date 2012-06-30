@@ -6,10 +6,6 @@ package com.owens.oobjloader.builder;
 // to use this code under any version of the GPL, LPGL, Apache, or BSD
 // licenses, or contact me for use of another license.
 
-import java.util.*;
-import java.text.*;
-import java.io.*;
-import java.io.IOException;
 
 public class ReflectivityTransmiss {
 
@@ -19,6 +15,5 @@ public class ReflectivityTransmiss {
     public double gy;
     public double bz;
 
-    public ReflectivityTransmiss() {
-    }
+    public ReflectivityTransmiss() {}
 }

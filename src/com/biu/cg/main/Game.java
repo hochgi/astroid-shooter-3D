@@ -13,7 +13,6 @@ import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Cube;
 import com.biu.cg.objects3d.Model3D;
-import com.biu.cg.objects3d.Space;
 import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -43,8 +42,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	//positive angle (in radians)
 	private float pTheta = (float)Math.toRadians(1.5);
 	//negative angle (in radians)
-	private float nTheta = ((float)Math.PI * 2f) - pTheta;
-	private float step = 4f;
+	//private float nTheta = ((float)Math.PI * 2f) - pTheta;
+	//private float step = 4f;
 	//expansionFactor defines the size of the room
 	private float expansionFactor = 0f;
 	//all the cubes i'll be using
@@ -111,7 +110,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 * execute the action that were set in the pressedKeys array
 	 */
 	@Override
-	public void executeKeysAction() {
+	public synchronized void executeKeysAction() {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
 			//orientation.rotatePitch(pTheta);
 			ship1.pitchUp();
@@ -183,7 +182,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	//		instead of putting all the boilerplate code 
 	//		in here.class game is big enough as it is...
 	@Override
-	public void display(GLAutoDrawable gLDrawable) {
+	public synchronized void display(GLAutoDrawable gLDrawable) {
 		final GL gl = gLDrawable.getGL();
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
@@ -513,6 +512,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 
 	public void testExplosionEffect() {
-		new Explosion(new Vector(0f,0.2f,0f),orientation);
+		new Explosion(new Vector(0f,0.2f,0f),orientation, false);
 	}
 }
