@@ -1,6 +1,6 @@
 package com.biu.cg.math3d;
 
-import javax.vecmath.Vector3f;
+//import javax.vecmath.Vector3f;
 
 /**
  * a simple Vector class
@@ -135,10 +135,12 @@ public class Vector {
 	}
 	
 	public static Vector cross(Vector u, Vector v) {
-		//TODO: implement own version
-		Vector3f w = new Vector3f();
-		w.cross(new Vector3f(u.x, u.y, u.z), new Vector3f(v.x, v.y, v.z));
-		return new Vector(w.x,w.y,w.z).normalize();
+//		Vector3f w = new Vector3f();
+//		w.cross(new Vector3f(u.x, u.y, u.z), new Vector3f(v.x, v.y, v.z));
+//		return new Vector(w.x,w.y,w.z).normalize();
+		return new Vector(u.y*v.z-u.z*v.y,
+						  u.z*v.x-u.x*v.z,
+						  u.x*v.y-u.y*v.x);
 	}
 	
 	public Vector neg() {
