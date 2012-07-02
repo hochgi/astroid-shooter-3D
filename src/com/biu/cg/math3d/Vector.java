@@ -73,10 +73,11 @@ public class Vector {
 	 * @param v - vector
 	 * @return
 	 */
-	public void addMutate(Vector v, float step) {
+	public Vector addMutate(Vector v, float step) {
 		x+=v.getX()*step;
 		y+=v.getY()*step;
 		z+=v.getZ()*step;
+		return this;
 	}
 	
 	/**
@@ -88,20 +89,22 @@ public class Vector {
 		return new Vector(x-v.getX()*step,y-v.getY()*step,z-v.getZ()*step);
 	}
 	
-	public void subMutate(Vector v, float step) {
+	public Vector subMutate(Vector v, float step) {
 		x-=v.getX()*step;
 		y-=v.getY()*step;
 		z-=v.getZ()*step;
+		return this;
 	}
 	
 	public Vector mul(float c) {
 		return new Vector(c*x,c*y,c*z);
 	}
 	
-	public void mulMutate(float c) {
+	public Vector mulMutate(float c) {
 		x *= c;
 		y *= c;
 		z *= c;
+		return this;
 	}
 	
 	/**
@@ -145,6 +148,13 @@ public class Vector {
 	
 	public Vector neg() {
 		return new Vector(-x,-y,-z);
+	}
+	
+	public Vector negMutate() {
+		x = -x;
+		y = -y;
+		z = -z;
+		return this;
 	}
 	
 	public Vector noise(float noise) {

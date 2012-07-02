@@ -16,8 +16,8 @@ public class Shot extends SpriteEmitter {
 	private float vel;
 	private int age;
 
-	public Shot(Orientation camera, Vector direction, float velocity) {
-		super(new Vector(camera.getPosition()), camera);
+	public Shot(Vector position, Orientation camera, Vector direction, float velocity) {
+		super(position, camera);
 		dir = direction.normalize();
 		vel = velocity;
 		hasCollide = false;

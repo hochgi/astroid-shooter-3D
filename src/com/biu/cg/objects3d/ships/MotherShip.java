@@ -9,4 +9,7 @@ public class MotherShip extends Model3D  {
 		super(position, "models/mothership/mothership.wng" , "models/mothership/mothership.jpg");
 	}
 
+	@Override
+	protected void update() {}
+
 }

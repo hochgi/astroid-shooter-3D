@@ -16,21 +16,14 @@ public class Ship1 extends Ship {
 		super(position, "models/ship1/ship.wng" , "models/ship1/F02_512.jpg");
 		
 	}
-	
-	public void lookAtCamera1(GLAutoDrawable gLDrawable){
-		final GL gl = gLDrawable.getGL();
-		Game.glu.gluPerspective(50f, 2, 2, 5000.0);
-		
-		
-		Vector camPos = orientation.getPosition();
-		Vector target = orientation.getTargetLookAtVector();
-		Vector upVect = orientation.getUpVector();
-		
-		gl.glMatrixMode(GL.GL_MODELVIEW);
-		gl.glLoadIdentity();
-		Game.glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
-					  target.getX(), target.getY(), target.getZ(), 
-					  upVect.getX(), upVect.getY(), upVect.getZ());
+
+	@Override
+	public float getWingHeight() {
+		return -1.25f;
 	}
 
+	@Override
+	public float getWingWidth() {
+		return 2.5f;
+	}
 }

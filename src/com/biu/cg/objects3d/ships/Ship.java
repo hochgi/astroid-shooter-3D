@@ -1,6 +1,9 @@
 package com.biu.cg.objects3d.ships;
 
+import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+
+import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Space;
@@ -11,23 +14,26 @@ public abstract class Ship extends Model3D {
 	private float nTheta = ((float)Math.PI * 2f) - pTheta;
 	private float step = 4f;
 	private Space space;
+	private int wing = 1;
+	private Vector lookAt;
+	private boolean active = false;
 	
 	public Ship(Vector position ,String objFile, String texture) {
 		super(position, objFile , texture);
-		
+		lookAt = new Vector(orientation.getAxis('z'));
 		space = new Space("models/space/space.wng" , "models/space/space.jpg");
 		space.setScale(4000);
 	}
 	
 	public Ship(String objFile, String texture) {
 		super(objFile, texture);
-		
 		space = new Space("models/space/space.wng" , "models/space/space.jpg");
 		space.setScale(4000);
-		// TODO Auto-generated constructor stub
 	}
 
-	
+	public void setActive(boolean b) {
+		active = b;
+	}
 	
 	public void rollRight(){
 		orientation.rotateRoll(nTheta);
@@ -65,13 +71,13 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void turnLeft(){
-		orientation.rotateHeading(nTheta);
-		space.getOrientation().rotateHeading(nTheta);
+		synchronized(lock) {
+			orientation.rotateHeading(nTheta);
+			space.getOrientation().rotateHeading(nTheta);
+		}
 	}
 	
 	public void moveRight(){
-		
-		
 		orientation.translateRightward(step);
 		space.getOrientation().translateRightward(step);
 	}
@@ -93,8 +99,45 @@ public abstract class Ship extends Model3D {
 	
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
-		space.draw(gLDrawable);
 		super.synchronizedDraw(gLDrawable);
+		if(active){
+			space.draw(gLDrawable);
+		}
+	}
+	
+	public Vector getWingPosition() {
+		float w = getWingWidth();
+		float h = getWingHeight();
+		wing *= -1;
+		Vector x = getOrientation().getAxis('x');
+		Vector y = getOrientation().getAxis('y');
+		return getPosition().add(x, wing*w).addMutate(y, h);
+	}
+	
+	public abstract float getWingHeight();
+
+	public abstract float getWingWidth();
+
+	@Override
+	protected void update() {
+		Vector z = orientation.getAxis('z');
+		lookAt.addMutate(z, 0.25f).normalize();
+	}
+	
+	public void lookAtCamera1(GLAutoDrawable gLDrawable){
+		final GL gl = gLDrawable.getGL();
+		Game.glu.gluPerspective(50f, 2, 2, 5000.0);
+		
+		
+		Vector camPos = orientation.getPosition();
+		Vector target = lookAt.add(getPosition(), 1);
+		Vector upVect = orientation.getUpVector();
+		
+		gl.glMatrixMode(GL.GL_MODELVIEW);
+		gl.glLoadIdentity();
+		Game.glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
+					  target.getX(), target.getY(), target.getZ(), 
+					  upVect.getX(), upVect.getY(), upVect.getZ());
 	}
 	
 }

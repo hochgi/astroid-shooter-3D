@@ -60,5 +60,8 @@ public class Space extends Model3D  {
 			gl.glEnd();
 		}
 	}
+
+	@Override
+	protected void update() {}
 	
 }

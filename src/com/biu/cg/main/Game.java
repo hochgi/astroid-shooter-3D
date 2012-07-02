@@ -13,6 +13,7 @@ import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Cube;
 import com.biu.cg.objects3d.Model3D;
+import com.biu.cg.objects3d.Object3D;
 import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -169,7 +170,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	//		and before firing, check cooledOff, if
 	//		true, set to false and shoot! =)
 	private void shoot() {
-		SpriteEmitter.registerObject(new Shot(orientation, new Vector(orientation.getAxis('z')), 6f));
+		SpriteEmitter.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 6f));
 	}
 
 
@@ -379,11 +380,17 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		cube4 = Cube.createCube(new Vector(-50f,17.5f,0f), new Vector(1f,1f,-1f).normalize(), pTheta, 10f, "wood.gif");
 		tetra = Tetrahedron.createTetrahedron(new Vector(0f,1f*expansionFactor,0f), new Vector(0f,1f,0f).normalize(), pTheta * 2f, 25f);
 		ship1 = new Ship1(new Vector(0, 10 , 0));
+		Object3D.registerObject(ship1);
+		ship1.setActive(true);
 		ship2 = new Ship2(new Vector(50, 0 , 80));
 		motherShip = new MotherShip(new Vector(0, -38 , 40));
 		motherShip.setScale(5);
 		
-		earth = new Model3D(new Vector(3, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg");
+		earth = new Model3D(new Vector(3, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg"){
+			@Override
+			protected void update() {}
+		};
+		
 		earth.setScale(1000);
 		orientation = ship1.getOrientation();
 		GL gl = gLDrawable.getGL();

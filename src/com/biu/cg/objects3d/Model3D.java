@@ -14,7 +14,7 @@ import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
 
-public class Model3D extends Object3D {
+public abstract class Model3D extends Object3D {
 
 	protected Build builder;
 	protected Texture texture;
@@ -94,28 +94,17 @@ public class Model3D extends Object3D {
 			gl.glEnd();
 		}
 	}
-
-	@Override
-	protected void update() {
-		// TODO: implement.
-
-	}
 	
 	private void generateModelFromFile(String objFile, String texturePath) {
 		// TODO: remove String texture.
-		// TODO: implement. make use of loader: http://darksleep.com/oobjloader/
-		
-		
-		
+
 		builder = new Build();
         try {
 			new Parse(builder, objFile);
 			texture = TextureIO.newTexture(new File(texturePath),true);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}        
         

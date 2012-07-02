@@ -21,7 +21,7 @@ import com.biu.cg.math3d.Vector;
 public abstract class Object3D {
 	//static fields:
 	private static Timer timer;
-	private static Object lock = new Object();
+	protected static Object lock = new Object();
 	//the list keeps all the objects to update
 	private static LinkedList<Object3D> objects = new LinkedList<Object3D>();
 
