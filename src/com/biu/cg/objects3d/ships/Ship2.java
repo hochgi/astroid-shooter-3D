@@ -1,7 +1,6 @@
 package com.biu.cg.objects3d.ships;
 
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.objects3d.Model3D;
 
 public class Ship2 extends Ship  {
 

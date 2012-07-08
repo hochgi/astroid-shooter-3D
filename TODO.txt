@@ -2,13 +2,13 @@
 |TODO LIST|
 -----------
 
-* implement cross product, instead of using javax.vecmath's
+-DONE!- implement cross product, instead of using javax.vecmath's
 
 * splash screens: choose M-Model or G-Model battle craft.
 
-* implement obj/3ds file loader in Model3D class.
+-DONE!- implement obj/3ds file loader in Model3D class.
 
-* model and texture of the ships & the asteroids.
+-DONE!- model and texture of the ships & the asteroids.
 
 -DONE!- implement particles engine, and use shooting with particles (random spray factor?)
 
@@ -21,10 +21,10 @@
 
 * add comments!
 
-* update of renderable elements should take place on a different thread, with timertask scheduling
+-DONE!- update of renderable elements should take place on a different thread, with timertask scheduling
   since render loop slows down a lot when there's many heavy stuff to draw...
 
-* finish with explosion effect (flying sparks, smoke trails, round sparks)
+-DONE!- finish with explosion effect (flying sparks, smoke trails, round sparks)
 
 * implement a secondary weapon. the one we already made should be the "heavy artillery", 
   and the old particle_32X32.png should be a light weapon (a single shot = single particle)
@@ -40,3 +40,19 @@
 
 * build a nice looking status bar. minimap should show asteroid movement from top view, 
   turning red as they getting near the ground.
+  
+* LineSprites should return only the projection of the billboard, and not the billboard itself,
+  since it intersects with the orthogonal to camera point sprites.
+  
+* fix synchronization problems when rotating the ship.
+  
+* Game Logic:
+    - only allow to carry 3 rockets at a time.
+    - flying through the hangar should reload rockets.
+    - hangar should allow docking and to change the ship being used while docked.
+    - add points / score of destroyed asteroids.
+    - end game when an asteroid hits earth.
+    - add atmosphere to earth, preventing the ship to get too close to earth.
+    - an asteroid should be vanquished when it's being hit by 1 rocket, or 10 regular shots.
+    - use splines to iteratively get the rocket closer to an asteroid. (homing rocket - always hits the target)
+    

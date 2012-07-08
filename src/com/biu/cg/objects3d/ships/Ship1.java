@@ -1,8 +1,5 @@
 package com.biu.cg.objects3d.ships;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
 public class Ship1 extends Ship {
 	
