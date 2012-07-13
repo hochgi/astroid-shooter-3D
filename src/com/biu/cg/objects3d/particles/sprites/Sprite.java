@@ -119,7 +119,8 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		changeBlendingFunc(gLDrawable);
 		
-		Vector[] bb = getQuadBillboard();
+		//when you fix the bug, uncomment the commented out code:
+		Vector[] bb = /*makeOrthogonalToCameraPlane(*/getQuadBillboard()/*,getPosition())*/;
 		GL gl = gLDrawable.getGL();
 		
 	    getTexture().bind();
@@ -135,6 +136,20 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
 	}
 	
+	//DONT USE YET: HAS A BUG...
+//	private Vector[] makeOrthogonalToCameraPlane(Vector[] qbb, Vector pos) {
+//		if(qbb.length < 4){
+//			//throw new ArrayIsTooSmallException("billboard needs to have 4 vertices in it")
+//		}
+//		Vector norm = cam.getAxis('z');
+//		Vector[] rv = new Vector[4];
+//		rv[0] = (qbb[0].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
+//		rv[1] = (qbb[1].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
+//		rv[2] = (qbb[2].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
+//		rv[3] = (qbb[3].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
+//		return rv;
+//	}
+
 	/**
 	 * you may override the following method for different blending.
 	 * @return

@@ -24,11 +24,11 @@ public class Explosion {
 			Sprite shockwave = new Shockwave(shockwaveTex, pos);
 			Sprite.registerObject(shockwave);
 		}
-		new FlashEmitter(pos, camera, 4);
-		new FlameEmitter(pos, camera, 16);
-		new SmokeEmitter(pos, camera, 20);
-		new SparkEmitter(pos, camera, 40);
-		new GlintEmitter(pos, camera, 8); //round sparks
+		new FlashEmitter(pos, camera, 10);
+		new FlameEmitter(pos, camera, 40);
+		new SmokeEmitter(pos, camera, 50);
+		new SparkEmitter(pos, camera, 100);
+		new GlintEmitter(pos, camera, 20); //round sparks
 	}
 
 	public static void init() {

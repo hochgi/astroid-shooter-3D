@@ -133,8 +133,8 @@ public class Vector {
 		return x*u.x + y*u.y + z*u.z;
 	}
 	
-	public Vector projectionOnPlane(Vector normalToPlain) {		
-		return sub(normalToPlain.mul(dot(normalToPlain)),1);
+	public Vector projectionOnPlane(Vector normalToPlane) {		
+		return sub(normalToPlane.mul(dot(normalToPlane)),1);
 	}
 	
 	public static Vector cross(Vector u, Vector v) {

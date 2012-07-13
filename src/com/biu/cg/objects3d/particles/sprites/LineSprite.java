@@ -26,7 +26,7 @@ public abstract class LineSprite extends Sprite {
 	}
 
 	public boolean isPerpendicularToCamera() {
-		return false;
+		return false;//change to true if you switch to perpendicular to camera sprite
 	}
 	
 	public void moveTail(Vector tail) {
@@ -41,10 +41,14 @@ public abstract class LineSprite extends Sprite {
 		Vector perp = Vector.cross(pltp, line).normalize();
 		perp.mulMutate(rat * line.len());
 		
-		bb[0] = pos1.add(perp, 0.5f);
-		bb[1] = pos2.add(perp, 0.5f);
-		bb[2] = pos2.sub(perp, 0.5f);
-		bb[3] = pos1.sub(perp, 0.5f);
+		//uncomment the following lines, if you want a line sprite that is perpendicular to camera
+		//Vector normalToPlane = getCam().getPosition().sub(pos2, 1).normalize();
+
+		bb[0] = (pos1.add(perp, 0.5f));//.projectionOnPlane(normalToPlane);
+		bb[1] = (pos2.add(perp, 0.5f));//.projectionOnPlane(normalToPlane);
+		bb[2] = (pos2.sub(perp, 0.5f));//.projectionOnPlane(normalToPlane);
+		bb[3] = (pos1.sub(perp, 0.5f));//.projectionOnPlane(normalToPlane);
+		
 		return bb;
 	}
 }
