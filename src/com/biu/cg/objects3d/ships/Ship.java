@@ -17,12 +17,22 @@ public abstract class Ship extends Model3D {
 	private int wing = 1;
 	private Vector lookAt;
 	private boolean active = false;
+	private boolean updateLock = true;
 	
 	public Ship(Vector position ,String objFile, String texture) {
 		super(position, objFile , texture);
 		lookAt = new Vector(orientation.getAxis('z'));
 		space = new Space("models/space/space.wng" , "models/space/space.jpg");
 		space.setScale(4000);
+	}
+	
+	public synchronized void disableUpdate() {
+		updateLock  = false;
+	}
+	
+
+	public synchronized void enableUpdate() {
+		updateLock  = true;
 	}
 	
 	public Ship(String objFile, String texture) {
@@ -46,11 +56,13 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void pitchUp(){
+		innerUpdate();
 		orientation.rotatePitch(pTheta);
 		space.getOrientation().rotatePitch(pTheta);
 	}
 	
 	public void pitchDown(){
+		innerUpdate();
 		orientation.rotatePitch(nTheta);
 		space.getOrientation().rotatePitch(nTheta);
 	}
@@ -66,15 +78,15 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void turnRight(){
+		innerUpdate();
 		orientation.rotateHeading(pTheta);
 		space.getOrientation().rotateHeading(pTheta);
 	}
 	
 	public void turnLeft(){
-		synchronized(lock) {
-			orientation.rotateHeading(nTheta);
-			space.getOrientation().rotateHeading(nTheta);
-		}
+		innerUpdate();
+		orientation.rotateHeading(nTheta);
+		space.getOrientation().rotateHeading(nTheta);
 	}
 	
 	public void moveRight(){
@@ -105,6 +117,11 @@ public abstract class Ship extends Model3D {
 		}
 	}
 	
+	public void lookAtCameraAndDraw(GLAutoDrawable gLDrawable) {
+		lookAtCamera1(gLDrawable);
+		draw(gLDrawable);
+	}
+	
 	public Vector getWingPosition() {
 		float w = getWingWidth();
 		float h = getWingHeight();
@@ -117,9 +134,15 @@ public abstract class Ship extends Model3D {
 	public abstract float getWingHeight();
 
 	public abstract float getWingWidth();
-
+	
 	@Override
-	protected void update() {
+	protected synchronized void update() {
+		if(updateLock){
+			innerUpdate();
+		}
+	}
+	
+	private void innerUpdate() {
 		Vector z = orientation.getAxis('z');
 		lookAt.addMutate(z, 0.25f).normalize();
 	}

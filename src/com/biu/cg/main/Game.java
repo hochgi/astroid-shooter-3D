@@ -105,6 +105,12 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	@Override
 	public void keyReleased(KeyEvent e){
 		super.keyReleased(e);
+		if( !isKeyPressed(MultiKeysAdapter.LOOK_UP)   &&
+			!isKeyPressed(MultiKeysAdapter.LOOK_DOWN) &&
+			!isKeyPressed(MultiKeysAdapter.LOOK_LEFT) &&
+			!isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)){
+			ship1.enableUpdate();
+		}
 	}
 
 	/**
@@ -113,20 +119,20 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	@Override
 	public synchronized void executeKeysAction() {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
-			//orientation.rotatePitch(pTheta);
+			ship1.disableUpdate();
 			ship1.pitchUp();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_DOWN)) {
-			//orientation.rotatePitch(nTheta);
+			ship1.disableUpdate();
 			ship1.pitchDown();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)) {
-			//orientation.rotateHeading(pTheta);
+			ship1.disableUpdate();
 			ship1.turnRight();
 			
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_LEFT)) {
-			//orientation.rotateHeading(nTheta);
+			ship1.disableUpdate();
 			ship1.turnLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
