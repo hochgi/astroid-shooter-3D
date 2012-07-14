@@ -85,6 +85,9 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	
 	@Override
 	public int compareTo(Sprite o) {
+//		Vector zVec = cam.getAxis('z');
+//		float diff = cam.getPosition().vecDistanceTo(o.getPosition(), zVec)-cam.getPosition().vecDistanceTo(getPosition(), zVec);
+//		/*or:*/ float diff = cam.zedDistanceTo(o.getPosition())-cam.zedDistanceTo(getPosition());
 		float diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
 		int rv = (int)diff;
 		if(rv != 0){
@@ -120,6 +123,9 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		changeBlendingFunc(gLDrawable);
 		
 		//when you fix the bug, uncomment the commented out code:
+		//EDIT: i think the bug was generated since i used the wrong comaring function,
+		//		so the sorting was not good. need to implement vector distance (zedDistanceTo),
+		//		which means that the perpendicular planes to the given vector, is 'C' times the vector away from each other.
 		Vector[] bb = /*makeOrthogonalToCameraPlane(*/getQuadBillboard()/*,getPosition())*/;
 		GL gl = gLDrawable.getGL();
 		
