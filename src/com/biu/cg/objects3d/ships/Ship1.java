@@ -40,4 +40,10 @@ public class Ship1 extends Ship implements Collidable {
 		// TODO Auto-generated method stub
 		return new BoundingSphere(getVertices());
 	}
+
+	@Override
+	public Type getType() {
+		// TODO Auto-generated method stub
+		return Type.PLAYER_SHIP;
+	}
 }

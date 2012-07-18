@@ -51,9 +51,8 @@ public class Flare extends Sprite {
 
 	@Override
 	protected Vector[] getQuadBillboard() {
-		Vector pos = getPosition();
 		float size = this.size + ((float)Math.random() * 0.4f) - 0.2f;
-		return getCam().getOrthogonalQuadAtPosition(pos, size);
+		return getCam().getOrthogonalQuadAtPosition(getPosition(), size);
 	}
 
 	@Override

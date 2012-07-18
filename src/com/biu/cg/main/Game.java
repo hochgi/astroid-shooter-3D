@@ -15,6 +15,7 @@ import com.biu.cg.objects3d.Cube;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Object3D;
 import com.biu.cg.objects3d.Tetrahedron;
+import com.biu.cg.objects3d.particles.sprites.Photon;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
@@ -82,8 +83,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		case KeyEvent.VK_ESCAPE:
 			Exercise4.exit();
 			break;
+		case KeyEvent.VK_ALT:
+			shootRocket();
+			break;
 		case KeyEvent.VK_SPACE:
-			shoot();
+			shootPhoton();
 			break;
 		case KeyEvent.VK_F1:
 			help();
@@ -96,7 +100,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Exercise4.miniMap.repaint();
 		Exercise4.canvas.requestFocus();
 	}
-	
+
 	private void help() {
 		// TODO Auto-generated method stub
 		
@@ -137,49 +141,44 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			ship1.turnLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
-			//orientation.rotateRoll(nTheta);
 			ship1.rollRight();
 			
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CCW)) {
-			//orientation.rotateRoll(pTheta);
 			ship1.rollLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
-			//orientation.translateForward(step);
 			ship1.moveForward();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
-			//orientation.translateBackward(step);
 			ship1.moveBackward();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_LEFT)) {
-			//orientation.translateLeftward(step);
 			ship1.moveLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_RIGHT)) {
-			//orientation.translateRightward(step);
 			ship1.moveRight();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_UP)) {
-			//orientation.translateUpward(step);
 			ship1.moveUp();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
-			//orientation.translateDownward(step);
 			ship1.moveDown();
+		}
+		if(isKeyPressed(MultiKeysAdapter.FIRE)){
+			shootPhoton();
 		}
 	}
 
-	//TODO: cooloff. don't let high rate firing... 
-	//		add a timer that sets cooledOff to true
-	//		every once in a while (1-2 seconds?),
-	//		and before firing, check cooledOff, if
-	//		true, set to false and shoot! =)
-	private void shoot() {
+	private void shootRocket() {
 		SpriteEmitter.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 6f));
 	}
 
+	private void shootPhoton() {
+		if(Photon.canShoot()){
+			Photon.createNewPhoton(ship1.getWingPosition(),orientation,orientation.getAxis('z'),12f);
+		}
+	}
 
 	/**
 	 * display method inherited from GLEventListener.
@@ -231,6 +230,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	public void init(GLAutoDrawable gLDrawable) {
 
 		Explosion.init();
+		Photon.init();
 		Shot.init();
 		//loading textures
 		try {

@@ -19,7 +19,7 @@ import com.sun.opengl.util.texture.TextureIO;
 public abstract class Model3D extends Object3D {
 
 	protected Build builder;
-	protected Texture texture;
+	protected Texture texture=null;
 	protected float scale=1;
 	
 	public void setScale(float scale) {
@@ -69,9 +69,9 @@ public abstract class Model3D extends Object3D {
 					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
 					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
 					
-					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
-							gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-							gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
+					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){	
+						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
+						gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
 					}
 				}
 				gl.glEnd();
@@ -89,7 +89,7 @@ public abstract class Model3D extends Object3D {
 					
 					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
 						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
+						gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
 					}
 				}	
 				gl.glEnd();
@@ -116,8 +116,8 @@ public abstract class Model3D extends Object3D {
 					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
 					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
 					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);					
-					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
-							res.add(new Vector((float)(x + X.x + Y.x + Z.x)*scale , (float)(y + X.y + Y.y + Z.y)*scale , (float)(z + X.z + Y.z + Z.z)*scale));
+					if(f.vertices.get(i)!=null){
+						res.add(new Vector((float)(x + (X.x + Y.x + Z.x)*scale) , (float)(y + (X.y + Y.y + Z.y)*scale) , (float)(z + (X.z + Y.z + Z.z)*scale)));
 					}
 				}
 				break;
@@ -128,8 +128,8 @@ public abstract class Model3D extends Object3D {
 					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
 					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
 					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
-					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
-						res.add(new Vector((float)(x + X.x + Y.x + Z.x)*scale , (float)(y + X.y + Y.y + Z.y)*scale , (float)(z + X.z + Y.z + Z.z)*scale));
+					if(f.vertices.get(i)!=null){
+						res.add(new Vector((float)(x + (X.x + Y.x + Z.x)*scale) , (float)(y + (X.y + Y.y + Z.y)*scale) , (float)(z + (X.z + Y.z + Z.z)*scale)));
 					}
 				}	
 				break;
@@ -144,15 +144,17 @@ public abstract class Model3D extends Object3D {
 		// TODO: remove String texture.
 
 		builder = new Build();
-        try {
-			new Parse(builder, objFile);
-			texture = TextureIO.newTexture(new File(texturePath),true);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}        
-        
+		
+	        try {
+				new Parse(builder, objFile);
+				if(texturePath!=null)
+					texture = TextureIO.newTexture(new File(texturePath),true);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}        
+		
         
 	}
 
