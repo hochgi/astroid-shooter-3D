@@ -3,11 +3,8 @@ package com.biu.cg.objects3d.physics;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.biu.cg.object3d.boundingShapes.AABB;
 import com.biu.cg.object3d.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.boundingShapes.Dot;
-import com.biu.cg.objects3d.Object3D;
 
 public class Collidables {
 	//static fields:

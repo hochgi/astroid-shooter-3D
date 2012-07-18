@@ -35,22 +35,6 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 		return true;
 	}
 	
-//	public static void updateSprites() {
-//		synchronized(sLock) {
-//			particles.removeAll(graveyard);
-//			graveyard.clear();
-//			
-//			for (Sprite s : particles) {
-//				if(s.isDead()){
-//					graveyard.add(s);
-//				}
-//				else {
-//					s.update();
-//				}
-//			}
-//		}
-//	}
-	
 	public static void renderSprites(GLAutoDrawable gLDrawable) {
 		synchronized(sLock) {
 			sprites.removeAll(graveyard);
@@ -85,20 +69,23 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	
 	@Override
 	public int compareTo(Sprite o) {
+		//old implementation:
+//		float diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
+		//new generic to be implemented solution:
 //		Vector zVec = cam.getAxis('z');
 //		float diff = cam.getPosition().vecDistanceTo(o.getPosition(), zVec)-cam.getPosition().vecDistanceTo(getPosition(), zVec);
-		/*or:*/ float diff = cam.zedDistanceTo(o.getPosition())-cam.zedDistanceTo(getPosition());
-		//float diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
+		//or, the new implementaion:
+		float diff = cam.zedDistanceTo(o.getPosition())-cam.zedDistanceTo(getPosition());
 		int rv = (int)diff;
 		if(rv != 0){
 			return rv;
 		}
-		else if(isPerpendicularToCamera() && !o.isPerpendicularToCamera()) {
-			return 1;
-		}
-		else if(!isPerpendicularToCamera() && o.isPerpendicularToCamera()) {
-			return -1;
-		}
+//		else if(isPerpendicularToCamera() && !o.isPerpendicularToCamera()) {
+//			return 1;
+//		}
+//		else if(!isPerpendicularToCamera() && o.isPerpendicularToCamera()) {
+//			return -1;
+//		}
 		else if(diff > 0) {
 			return 1;
 		}

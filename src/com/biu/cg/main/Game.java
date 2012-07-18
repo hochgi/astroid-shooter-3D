@@ -18,7 +18,6 @@ import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
-import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
@@ -197,165 +196,27 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
 
 		gl.glMatrixMode(GL.GL_PROJECTION);
-		gl.glLoadIdentity();	
-//		glu.gluPerspective(50.0f, 1, 1.0, 1000.0);
-//		
-//		Vector camPos = orientation.getPosition();
-//		Vector target = orientation.getTargetLookAtVector();
-//		Vector upVect = orientation.getUpVector();
-//		
-//		gl.glMatrixMode(GL.GL_MODELVIEW);
-//		gl.glLoadIdentity();
-//		glu.gluLookAt(camPos.getX(), camPos.getY(), camPos.getZ(), 
-//					  target.getX(), target.getY(), target.getZ(), 
-//					  upVect.getX(), upVect.getY(), upVect.getZ());
-		
+		gl.glLoadIdentity();
 		ship1.lookAtCamera1(gLDrawable);
-	
 		
-		//applying ground texture
-        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
-		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-		ground.bind();
-		
-		//starting to draw the room
-		gl.glBegin(GL.GL_QUADS);
-		
-		//floor
-		gl.glTexCoord2f(0.0f, 0.0f); 
-		gl.glColor3f(0.5f, 0.25f, 0.25f);
-		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 0.0f); 
-		gl.glColor3f(0.25f, 0.5f, 0.25f);
-		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 10.0f);
-		gl.glColor3f(0.25f, 0.25f, 0.5f);
-		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(0.0f, 10.0f);
-		gl.glColor3f(0.33f, 0.33f, 0.33f);
-		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
-		
+		//the following piece of code is useless!!!
+		//it's only here because we have to render something that has no blending.
+		//if this code is to be omitted, for some strange reason particle rendering
+		//will cause the whole frame to render weirdly...
+		gl.glBegin(GL.GL_TRIANGLES);
+		gl.glColor3f(1f, 1f, 1f);
+		gl.glVertex3f(0,0,0);
+		gl.glColor3f(1f, 1f, 1f);
+		gl.glVertex3f(0,0,0);
+		gl.glColor3f(1f, 1f, 1f);
+		gl.glVertex3f(0,0,0);
 		gl.glEnd();
 
-		//applying wall texture
-        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
-		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-		wall.bind();
-		
-		gl.glBegin(GL.GL_QUADS);
-		
-		//wall 1
-		gl.glTexCoord2f(0.0f, 0.0f); 
-		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor,1f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(0.0f, 10.0f); 
-		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 10.0f); 
-		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 0.0f); 
-		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
-		
-		//wall 2
-		gl.glTexCoord2f(0.0f, 0.0f);
-		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(0.0f, 10.0f); 		
-		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 10.0f); 
-		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 0.0f); 
-		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
-		
-		//wall 3
-		gl.glTexCoord2f(0.0f, 0.0f); 
-		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(0.0f, 10.0f); 
-		gl.glColor3f(0.5f, 0.5f, 1.0f);
-		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 10.0f); 
-		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 0.0f); 
-		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
-		
-		//wall 4
-		gl.glTexCoord2f(0.0f, 0.0f); 
-		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(0.0f, 10.0f); 
-		gl.glColor3f(0.67f, 0.67f, 0.67f);
-		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 10.0f); 
-		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 0.0f); 
-		gl.glColor3f(1.0f, 0.5f, 0.5f);
-		gl.glVertex3f(-1f*expansionFactor, 0f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glEnd();
-		
-		//applying stars texture
-        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
-		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-        stars.bind();
-		
-		gl.glBegin(GL.GL_QUADS);
-		
-		//ceiling
-		gl.glTexCoord2f(0.0f, 0.0f);
-		gl.glColor3f(0.5f, 0.25f, 0.25f);
-		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glTexCoord2f(0.0f, 10.0f); 
-		gl.glColor3f(0.25f, 0.5f, 0.25f);
-		gl.glVertex3f(-1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 10.0f); 
-		gl.glColor3f(0.25f, 0.25f, 0.5f);
-		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, 1f*expansionFactor);
-		
-		gl.glTexCoord2f(10.0f, 0.0f);
-		gl.glColor3f(0.33f, 0.33f, 0.33f);
-		gl.glVertex3f(1f*expansionFactor, 1f*expansionFactor, -1f*expansionFactor);
-		
-		gl.glEnd();
-		
-		//drawing the elements (polyhedrons):
-//		cube1.draw(gLDrawable);
-//		cube2.draw(gLDrawable);
-//		cube3.draw(gLDrawable);
-//		cube4.draw(gLDrawable);
-//		tetra.draw(gLDrawable);
 		ship1.draw(gLDrawable);
 		ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
 		
 		earth.draw(gLDrawable);
-//		SpriteEmitter.updateSpriteEmitters();
-//		Sprite.updateSprites();
 		Sprite.renderSprites(gLDrawable);
 	}
 
@@ -532,6 +393,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 
 	public void testExplosionEffect() {
-		new Explosion(new Vector(0f,0.2f,0f),orientation, false);
+		new Explosion(new Vector(7.4f,100f,-90f),orientation, false);
 	}
 }

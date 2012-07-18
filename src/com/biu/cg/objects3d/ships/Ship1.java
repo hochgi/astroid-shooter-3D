@@ -1,12 +1,9 @@
 package com.biu.cg.objects3d.ships;
 
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.object3d.boundingShapes.AABB;
 import com.biu.cg.object3d.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.boundingShapes.BoundingSphere;
-import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.physics.Collidable;
-import java.awt.Toolkit;
 
 public class Ship1 extends Ship implements Collidable {
 	

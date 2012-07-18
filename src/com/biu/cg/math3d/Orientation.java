@@ -237,5 +237,6 @@ public class Orientation {
 
 	public float zedDistanceTo(Vector pos) {
 		return zUnit.x*pos.x + zUnit.y*pos.y + zUnit.z*pos.z;
+		//return xUnit.z*pos.x + yUnit.z*pos.y + zUnit.z*pos.z;
 	}
 }

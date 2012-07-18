@@ -3,17 +3,14 @@ package com.biu.cg.objects3d.particles.sprites;
 import java.io.File;
 import java.io.IOException;
 import javax.media.opengl.GLException;
-
 import com.biu.cg.main.Explosion;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.boundingShapes.Dot;
-import com.biu.cg.objects3d.particles.Particle;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.Ship;
-import com.biu.cg.objects3d.ships.Ship1;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -68,7 +65,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 		// TODO Auto-generated method stub
 		
 		if(!collidable.getClass().isInstance(Ship.class)){
-			new Explosion(new Vector(getPosition()),orientation, false);
+			new Explosion(new Vector(getPosition()),getCamera(), false);
 			Collidables.unregisterObject(this);
 			collisionDetected();
 		}
