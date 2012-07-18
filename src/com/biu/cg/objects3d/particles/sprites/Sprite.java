@@ -87,8 +87,8 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	public int compareTo(Sprite o) {
 //		Vector zVec = cam.getAxis('z');
 //		float diff = cam.getPosition().vecDistanceTo(o.getPosition(), zVec)-cam.getPosition().vecDistanceTo(getPosition(), zVec);
-//		/*or:*/ float diff = cam.zedDistanceTo(o.getPosition())-cam.zedDistanceTo(getPosition());
-		float diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
+		/*or:*/ float diff = cam.zedDistanceTo(o.getPosition())-cam.zedDistanceTo(getPosition());
+		//float diff = cam.getPosition().sqrDistanceTo(o.getPosition())-cam.getPosition().sqrDistanceTo(getPosition());
 		int rv = (int)diff;
 		if(rv != 0){
 			return rv;
@@ -121,12 +121,7 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		changeBlendingFunc(gLDrawable);
-		
-		//when you fix the bug, uncomment the commented out code:
-		//EDIT: i think the bug was generated since i used the wrong comaring function,
-		//		so the sorting was not good. need to implement vector distance (zedDistanceTo),
-		//		which means that the perpendicular planes to the given vector, is 'C' times the vector away from each other.
-		Vector[] bb = /*makeOrthogonalToCameraPlane(*/getQuadBillboard()/*,getPosition())*/;
+		Vector[] bb = convertToOrthogonalToCameraPlane(getQuadBillboard());
 		GL gl = gLDrawable.getGL();
 		
 	    getTexture().bind();
@@ -142,19 +137,38 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
 	}
 	
-	//DONT USE YET: HAS A BUG...
-//	private Vector[] makeOrthogonalToCameraPlane(Vector[] qbb, Vector pos) {
-//		if(qbb.length < 4){
-//			//throw new ArrayIsTooSmallException("billboard needs to have 4 vertices in it")
-//		}
-//		Vector norm = cam.getAxis('z');
-//		Vector[] rv = new Vector[4];
-//		rv[0] = (qbb[0].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
-//		rv[1] = (qbb[1].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
-//		rv[2] = (qbb[2].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
-//		rv[3] = (qbb[3].sub(pos, 1).projectionOnPlane(norm)).addMutate(pos, 1);
-//		return rv;
-//	}
+	//the idea of the implementation is explained nicely here: http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
+	private Vector[] convertToOrthogonalToCameraPlane(Vector[] qbb) {
+		if(qbb.length < 4){
+			//throw new ArrayIsTooSmallException("billboard needs to have 4 vertices in it")
+		}
+		
+		Vector[] rv = new Vector[4];
+		Vector N = cam.getAxis('z');
+		Vector P1 = cam.getPosition();
+		Vector P2 = null;
+		Vector P3 = getPosition();
+		float u = 0;
+
+		{
+			P2 = qbb[0];
+			u = N.dot(P3.sub(P1, 1)) / N.dot(P2.sub(P1, 1));
+			rv[0] = P1.add(P2.subMutate(P1, 1).mulMutate(u), 1);
+		}{
+			P2 = qbb[1];
+			u = N.dot(P3.sub(P1, 1)) / N.dot(P2.sub(P1, 1));
+			rv[1] = P1.add(P2.subMutate(P1, 1).mulMutate(u), 1);
+		}{
+			P2 = qbb[2];
+			u = N.dot(P3.sub(P1, 1)) / N.dot(P2.sub(P1, 1));
+			rv[2] = P1.add(P2.subMutate(P1, 1).mulMutate(u), 1);
+		}{
+			P2 = qbb[3];
+			u = N.dot(P3.sub(P1, 1)) / N.dot(P2.sub(P1, 1));
+			rv[3] = P1.add(P2.subMutate(P1, 1).mulMutate(u), 1);
+		}
+		return rv;
+	}
 
 	/**
 	 * you may override the following method for different blending.

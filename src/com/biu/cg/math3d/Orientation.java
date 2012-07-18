@@ -234,4 +234,8 @@ public class Orientation {
 	public void setPosition(Vector position) {
 		this.position = position;
 	}
+
+	public float zedDistanceTo(Vector pos) {
+		return zUnit.x*pos.x + zUnit.y*pos.y + zUnit.z*pos.z;
+	}
 }
