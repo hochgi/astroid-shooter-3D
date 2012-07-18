@@ -5,6 +5,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.biu.cg.object3d.boundingShapes.AABB;
+import com.biu.cg.object3d.boundingShapes.BoundingSphere;
+import com.biu.cg.object3d.boundingShapes.Dot;
 import com.biu.cg.objects3d.Object3D;
 
 public class Collidables {
@@ -26,10 +28,24 @@ public class Collidables {
 			synchronized(lock) {
 				for (int i=0 ; i< collidables.size()-1 ; i++) {
 					for (int j=i+1 ; j< collidables.size() ; j++){
-						if(collidables.get(i).getBoundingShape().intersect((AABB)collidables.get(j).getBoundingShape())){
-							collidables.get(i).collisionAction(collidables.get(j));
-							collidables.get(j).collisionAction(collidables.get(i));
+						try {
+							if(collidables.get(i).getBoundingShape().intersect((BoundingSphere)collidables.get(j).getBoundingShape())){
+								collidables.get(i).collisionAction(collidables.get(j));
+								collidables.get(j).collisionAction(collidables.get(i));
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
 						}
+						try {
+							if(collidables.get(i).getBoundingShape().intersect((Dot)collidables.get(j).getBoundingShape())){
+								collidables.get(i).collisionAction(collidables.get(j));
+								collidables.get(j).collisionAction(collidables.get(i));
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+						
+						
 					}
 						
 				}
@@ -50,6 +66,16 @@ public class Collidables {
 	public static void registerObject(Collidable obj) {
 		synchronized (lock) {
 			collidables.add(obj);
+		}
+	}
+	
+	/**
+	 * unregister an object from auto updating
+	 * @param obj
+	 */
+	public static void unregisterObject(Collidable obj) {
+		synchronized (lock) {
+			collidables.remove(obj);
 		}
 	}
 }

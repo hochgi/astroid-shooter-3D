@@ -18,6 +18,8 @@ import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
+import com.biu.cg.objects3d.physics.Collidable;
+import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
 import com.biu.cg.objects3d.ships.Ship2;
@@ -388,9 +390,14 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		ship1 = new Ship1(new Vector(0, 10 , 0));
 		Object3D.registerObject(ship1);
 		ship1.setActive(true);
+		
+		Collidables.registerObject(ship1);
+		
 		ship2 = new Ship2(new Vector(50, 0 , 80));
+		Collidables.registerObject(ship2);
 		motherShip = new MotherShip(new Vector(0, -38 , 40));
 		motherShip.setScale(5);
+		//Collidables.registerObject(motherShip);
 		
 		earth = new Model3D(new Vector(3, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg"){
 			@Override

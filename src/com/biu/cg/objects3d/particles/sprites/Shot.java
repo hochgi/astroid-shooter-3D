@@ -3,12 +3,21 @@ package com.biu.cg.objects3d.particles.sprites;
 import java.io.File;
 import java.io.IOException;
 import javax.media.opengl.GLException;
+
+import com.biu.cg.main.Explosion;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
+import com.biu.cg.object3d.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.boundingShapes.Dot;
+import com.biu.cg.objects3d.particles.Particle;
+import com.biu.cg.objects3d.physics.Collidable;
+import com.biu.cg.objects3d.physics.Collidables;
+import com.biu.cg.objects3d.ships.Ship;
+import com.biu.cg.objects3d.ships.Ship1;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
-public class Shot extends SpriteEmitter {
+public class Shot extends SpriteEmitter implements Collidable {
 
 	private static Texture particleTex;
 	private boolean hasCollide;
@@ -22,6 +31,8 @@ public class Shot extends SpriteEmitter {
 		vel = velocity;
 		hasCollide = false;
 		age = 400;
+		
+		Collidables.registerObject(this);
 	}
 	
 	public static void init() {
@@ -50,5 +61,25 @@ public class Shot extends SpriteEmitter {
 		for (int i = 0; i < 8; i++) {
 			Sprite.registerObject(new Flare(particleTex, new Vector(getPosition()), vel * ((float)Math.random()*0.45f + 0.45f), new Vector(dir).noise(0.005f), getCamera()));
 		}
+	}
+
+	@Override
+	public void collisionAction(Collidable collidable) {
+		// TODO Auto-generated method stub
+		
+		if(!collidable.getClass().isInstance(Ship.class)){
+			new Explosion(new Vector(getPosition()),orientation, false);
+			Collidables.unregisterObject(this);
+			collisionDetected();
+		}
+		
+		//
+		
+	}
+	
+	@Override
+	public BoundingShape getBoundingShape() {
+		// TODO Auto-generated method stub
+		return new Dot(getPosition());
 	}
 }

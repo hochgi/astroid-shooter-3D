@@ -3,6 +3,8 @@ package com.biu.cg.objects3d;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import com.biu.cg.math3d.Orientation;
@@ -96,6 +98,47 @@ public abstract class Model3D extends Object3D {
 			
 		}
 	}
+	
+	
+	
+	public ArrayList<Vector> getVertices(){
+		ArrayList<Vector> res = new ArrayList<Vector>();
+		double x = orientation.getPosition().getX();
+		double y = orientation.getPosition().getY();
+		double z = orientation.getPosition().getZ();
+		Orientation o = orientation;
+		for(Face f : builder.faces){
+			//Random rand = new Random();
+			switch(f.vertices.size()){
+			case 4:
+			{			
+				for(int i=0 ; i<4 ; i++){					
+					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
+					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
+					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);					
+					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
+							res.add(new Vector((float)(x + X.x + Y.x + Z.x)*scale , (float)(y + X.y + Y.y + Z.y)*scale , (float)(z + X.z + Y.z + Z.z)*scale));
+					}
+				}
+				break;
+			}
+			case 3:
+				for(int i=0 ; i<3 ; i++){
+					
+					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
+					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
+					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
+					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
+						res.add(new Vector((float)(x + X.x + Y.x + Z.x)*scale , (float)(y + X.y + Y.y + Z.y)*scale , (float)(z + X.z + Y.z + Z.z)*scale));
+					}
+				}	
+				break;
+			}
+		}
+		return res;
+	}
+	
+	
 	
 	private void generateModelFromFile(String objFile, String texturePath) {
 		// TODO: remove String texture.
