@@ -2,17 +2,15 @@ package com.biu.cg.objects3d.asteroids;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
-
 import com.biu.cg.main.Explosion;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.object3d.boundingShapes.BoundingShape;
-import com.biu.cg.object3d.boundingShapes.BoundingSphere;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
-import com.biu.cg.objects3d.ships.Ship;
 import com.owens.oobjloader.builder.Face;
 
 public class Asteroid extends Model3D implements Collidable{

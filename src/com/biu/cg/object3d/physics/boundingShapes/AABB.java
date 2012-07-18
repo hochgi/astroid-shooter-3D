@@ -1,4 +1,4 @@
-package com.biu.cg.object3d.boundingShapes;
+package com.biu.cg.object3d.physics.boundingShapes;
 
 import java.util.ArrayList;
 

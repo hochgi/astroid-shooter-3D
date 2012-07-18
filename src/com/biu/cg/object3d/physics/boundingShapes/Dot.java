@@ -1,4 +1,4 @@
-package com.biu.cg.object3d.boundingShapes;
+package com.biu.cg.object3d.physics.boundingShapes;
 
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Object3D;

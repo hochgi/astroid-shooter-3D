@@ -9,7 +9,7 @@ import javax.media.opengl.GLException;
 
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.object3d.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.sun.opengl.util.texture.Texture;

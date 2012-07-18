@@ -1,6 +1,6 @@
 package com.biu.cg.objects3d.physics;
 
-import com.biu.cg.object3d.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 
 public interface Collidable {
 	

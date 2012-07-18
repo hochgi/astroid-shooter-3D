@@ -1,8 +1,8 @@
 package com.biu.cg.object3d.planets;
 
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.object3d.boundingShapes.BoundingShape;
-import com.biu.cg.object3d.boundingShapes.BoundingSphere;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.physics.Collidable;
 
