@@ -11,10 +11,11 @@ import javax.media.opengl.glu.GLU;
 import com.biu.cg.gui.MultiKeysAdapter;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
+import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Cube;
-import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Object3D;
 import com.biu.cg.objects3d.Tetrahedron;
+import com.biu.cg.objects3d.asteroids.Asteroid;
 import com.biu.cg.objects3d.particles.sprites.Photon;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -55,7 +56,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private Ship2 ship2;
 	private MotherShip motherShip;
 	
-	private Model3D earth;
+	private Earth earth;
+	private Asteroid astroid;
 	//textures...
 	Texture ground = null;
 	Texture stars = null;
@@ -83,11 +85,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		case KeyEvent.VK_ESCAPE:
 			Exercise4.exit();
 			break;
-		case KeyEvent.VK_ALT:
-			shootRocket();
-			break;
 		case KeyEvent.VK_SPACE:
 			shootPhoton();
+			break;
+		case KeyEvent.VK_R:
+			shootRocket();
 			break;
 		case KeyEvent.VK_F1:
 			help();
@@ -100,7 +102,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Exercise4.miniMap.repaint();
 		Exercise4.canvas.requestFocus();
 	}
-
+	
 	private void help() {
 		// TODO Auto-generated method stub
 		
@@ -170,15 +172,16 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		}
 	}
 
+	private void shootPhoton() { 
+ 		if(Photon.canShoot()){ 
+ 			Photon.createNewPhoton(ship1.getWingPosition(),orientation,orientation.getAxis('z'),12f); 
+ 		} 
+ 	} 
+	
 	private void shootRocket() {
 		SpriteEmitter.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 6f));
 	}
 
-	private void shootPhoton() {
-		if(Photon.canShoot()){
-			Photon.createNewPhoton(ship1.getWingPosition(),orientation,orientation.getAxis('z'),12f);
-		}
-	}
 
 	/**
 	 * display method inherited from GLEventListener.
@@ -214,7 +217,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		ship1.draw(gLDrawable);
 		ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
-		
+		astroid.draw(gLDrawable);
 		earth.draw(gLDrawable);
 		Sprite.renderSprites(gLDrawable);
 	}
@@ -256,16 +259,17 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		ship2 = new Ship2(new Vector(50, 0 , 80));
 		Collidables.registerObject(ship2);
-		motherShip = new MotherShip(new Vector(0, -38 , 40));
+		motherShip = new MotherShip(new Vector(0, -180 , 40));
 		motherShip.setScale(5);
 		//Collidables.registerObject(motherShip);
 		
-		earth = new Model3D(new Vector(3, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg"){
-			@Override
-			protected void update() {}
-		};
-		
+		earth = new Earth();
+		Collidables.registerObject(earth);
 		earth.setScale(1000);
+		
+		astroid = new Asteroid(earth , ship1.getOrientation());
+		Object3D.registerObject(astroid);
+		
 		orientation = ship1.getOrientation();
 		GL gl = gLDrawable.getGL();
 		

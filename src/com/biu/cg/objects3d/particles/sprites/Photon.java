@@ -116,4 +116,10 @@ public class Photon extends Sprite implements Collidable {
 	public static boolean canShoot() {
 		return !wantToShoot;
 	}
+
+	@Override
+	public Type getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
