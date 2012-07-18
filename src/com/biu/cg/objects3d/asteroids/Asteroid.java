@@ -1,5 +1,7 @@
 package com.biu.cg.objects3d.asteroids;
 
+import java.util.Random;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import com.biu.cg.main.Explosion;
@@ -18,9 +20,10 @@ public class Asteroid extends Model3D implements Collidable{
 	boolean alive=true;
 	Vector dest;
 	Orientation camera;
+	Random rand = new Random();
 	
-	public Asteroid(Earth earth , Orientation camera) {
-		super(new Vector(0f , 0f , 0f), "models/asteroids/astro01.wng" , null);
+	public Asteroid(Earth earth , Orientation camera , Vector pos) {
+		super(pos, "models/asteroids/astro01.wng" , null);
 		this.camera = camera;
 		Collidables.registerObject(this);
 		dest = new Vector(earth.getPosition());
@@ -34,10 +37,18 @@ public class Asteroid extends Model3D implements Collidable{
 		switch(collidable.getType()){
 		case ROCKET:
 			alive=false;
+			Collidables.unregisterObject(this);
+			Asteroids.unregisterAsteroid(this);
+			break;
+		case PHOTON:
+			alive=false;
+			Collidables.unregisterObject(this);
+			Asteroids.unregisterAsteroid(this);
 			break;
 		case EARTH:
 			new Explosion(getPosition(),camera, false);
 			Collidables.unregisterObject(this);
+			Asteroids.unregisterAsteroid(this);
 			alive=false;
 			break;
 		}
@@ -62,9 +73,9 @@ public class Asteroid extends Model3D implements Collidable{
 		orientation.getPosition().y += 4*dest.y;
 		orientation.getPosition().z += 4*dest.z;
 		
-//		orientation.rotateHeading(2);
-//		orientation.rotatePitch(1);
-//		orientation.rotateRoll(3);
+		orientation.rotateHeading(0.1f);
+		orientation.rotatePitch(0.01f);
+		orientation.rotateRoll(0.02f);
 	}
 
 	@Override

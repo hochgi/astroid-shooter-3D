@@ -7,9 +7,11 @@ import java.util.TimerTask;
 
 import javax.media.opengl.GLException;
 
+import com.biu.cg.main.Explosion;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.Dot;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.sun.opengl.util.texture.Texture;
@@ -92,13 +94,30 @@ public class Photon extends Sprite implements Collidable {
 
 	@Override
 	public void collisionAction(Collidable collidable) {
-		hasCollide = true;
+		
+		switch(collidable.getType()){
+		case SHIP:
+//			new Explosion(getPosition(),getCam(), false);
+//			Collidables.unregisterObject(this);
+			
+			break;
+		case EARTH:
+			new Explosion(getPosition(),getCam(), false);
+			Collidables.unregisterObject(this);
+			hasCollide = true;
+			break;
+		case ASTEROID:
+			new Explosion(getPosition(),getCam(), false);
+			Collidables.unregisterObject(this);
+			hasCollide = true;
+			break;
+		}
 	}
 
 	@Override
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Dot(getPosition());
 	}
 
 	public static void createNewPhoton(Vector position, Orientation camera, Vector direction, float velocity) {
@@ -120,6 +139,6 @@ public class Photon extends Sprite implements Collidable {
 	@Override
 	public Type getType() {
 		// TODO Auto-generated method stub
-		return null;
+		return Type.PHOTON;
 	}
 }

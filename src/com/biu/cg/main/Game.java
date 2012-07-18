@@ -16,6 +16,7 @@ import com.biu.cg.objects3d.Cube;
 import com.biu.cg.objects3d.Object3D;
 import com.biu.cg.objects3d.Tetrahedron;
 import com.biu.cg.objects3d.asteroids.Asteroid;
+import com.biu.cg.objects3d.asteroids.Asteroids;
 import com.biu.cg.objects3d.particles.sprites.Photon;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -57,7 +58,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private MotherShip motherShip;
 	
 	private Earth earth;
-	private Asteroid astroid;
+	//private Asteroid astroid;
 	//textures...
 	Texture ground = null;
 	Texture stars = null;
@@ -217,8 +218,13 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		ship1.draw(gLDrawable);
 		ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
-		astroid.draw(gLDrawable);
+		//astroid.draw(gLDrawable);
 		earth.draw(gLDrawable);
+		
+		
+		for(Asteroid a : Asteroids.getAsteroids())
+			a.draw(gLDrawable);
+		
 		Sprite.renderSprites(gLDrawable);
 	}
 
@@ -267,8 +273,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Collidables.registerObject(earth);
 		earth.setScale(1000);
 		
-		astroid = new Asteroid(earth , ship1.getOrientation());
-		Object3D.registerObject(astroid);
+		Asteroids.setCamera(ship1.getOrientation());
+		Asteroids.setEarth(earth);
+		
+		//astroid = new Asteroid(earth , ship1.getOrientation());
+		//Object3D.registerObject(astroid);
 		
 		orientation = ship1.getOrientation();
 		GL gl = gLDrawable.getGL();
