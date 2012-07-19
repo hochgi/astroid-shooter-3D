@@ -15,6 +15,7 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.physics.boundingShapes.Dot;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
+import com.biu.cg.sound.SoundPlayer;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -60,6 +61,8 @@ public class Photon extends Sprite implements Collidable {
 		age = 20;
 		
 		Collidables.registerObject(this);
+		
+		SoundPlayer.photonShot();
 	}
 
 	public static void init() {

@@ -11,6 +11,7 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.Dot;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
+import com.biu.cg.sound.SoundPlayer;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -30,6 +31,8 @@ public class Shot extends SpriteEmitter implements Collidable {
 		age = 400;
 		
 		Collidables.registerObject(this);
+		
+		SoundPlayer.rocketShot();
 	}
 	
 	public static void init() {

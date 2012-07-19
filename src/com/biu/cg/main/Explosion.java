@@ -12,6 +12,7 @@ import com.biu.cg.objects3d.particles.sprites.GlintEmitter;
 import com.biu.cg.objects3d.particles.sprites.SmokeEmitter;
 import com.biu.cg.objects3d.particles.sprites.SparkEmitter;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
+import com.biu.cg.sound.SoundPlayer;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -29,6 +30,8 @@ public class Explosion {
 		new SmokeEmitter(pos, camera, 50);
 		new SparkEmitter(pos, camera, 100);
 		new GlintEmitter(pos, camera, 20); //round sparks
+		
+		SoundPlayer.explosion();
 	}
 
 	public static void init() {
