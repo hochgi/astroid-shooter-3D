@@ -37,11 +37,13 @@ public class Asteroid extends Model3D implements Collidable{
 		switch(collidable.getType()){
 		case ROCKET:
 			alive=false;
+			new Explosion(getPosition(), camera, false);
 			Collidables.unregisterObject(this);
 			Asteroids.unregisterAsteroid(this);
 			break;
 		case PHOTON:
 			alive=false;
+			new Explosion(getPosition(), camera, false);
 			Collidables.unregisterObject(this);
 			Asteroids.unregisterAsteroid(this);
 			break;
@@ -57,7 +59,7 @@ public class Asteroid extends Model3D implements Collidable{
 	@Override
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
-		return new BoundingSphere(getVertices());
+		return new BoundingSphere(getPosition(), 50);
 	}
 
 	@Override

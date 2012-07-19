@@ -271,7 +271,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		earth = new Earth();
 		Collidables.registerObject(earth);
-		earth.setScale(1000);
+		//earth.setScale(1000);
 		
 		Asteroids.setCamera(ship1.getOrientation());
 		Asteroids.setEarth(earth);

@@ -7,8 +7,10 @@ import com.biu.cg.objects3d.Object3D;
 
 public class BoundingSphere implements BoundingShape {
 
-	Vector center;
-	float radius;
+	private Vector center;
+	private float radius;
+	private float plus; 
+	private float mul;
 	
 	public Vector getCenter() {
 		return center;
@@ -18,7 +20,15 @@ public class BoundingSphere implements BoundingShape {
 		return radius;
 	}
 	
+	
+	public BoundingSphere(Vector center , float radius){
+		this.center = center;
+		this.radius = radius;
+	}
+	
+	
 	public BoundingSphere(ArrayList<Vector> vertices){	
+		
 		float xSum=0;
 		float ySum=0;
 		float zSum=0;
@@ -43,6 +53,38 @@ public class BoundingSphere implements BoundingShape {
 		}
 		
 		radius = (float)Math.sqrt(center.sqrDistanceTo(farestVector));
+	}
+	
+	public BoundingSphere(ArrayList<Vector> vertices , float plus , float mul){	
+		this.plus = plus;
+		this.mul = mul;
+		
+		
+		float xSum=0;
+		float ySum=0;
+		float zSum=0;
+		
+		Vector farestVector=vertices.get(0);
+		
+		for(Vector v : vertices){
+			xSum+=v.x;
+			ySum+=v.y;
+			zSum+=v.z;
+		}
+		xSum /= vertices.size();
+		ySum /= vertices.size();
+		zSum /= vertices.size();
+		
+		
+		center = new Vector(xSum , ySum , zSum);
+		
+		for(Vector v : vertices){
+			if(center.sqrDistanceTo(v) > center.sqrDistanceTo(farestVector))
+				farestVector = v;
+		}
+		
+		radius = (float)Math.sqrt(center.sqrDistanceTo(farestVector));
+		radius = (radius + plus) * mul;
 	}
 	
 	@Override

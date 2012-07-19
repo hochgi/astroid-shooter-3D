@@ -22,7 +22,8 @@ public class Earth extends Model3D implements Collidable {
 	@Override
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
-		return new BoundingSphere(getVertices());
+		return new BoundingSphere(getVertices() , 10 , 1);
+		//return new BoundingSphere(getVertices() , 0 , 3);
 	}
 	
 	@Override

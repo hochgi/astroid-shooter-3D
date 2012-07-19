@@ -11,6 +11,7 @@ import com.biu.cg.main.Explosion;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.physics.boundingShapes.Dot;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
@@ -56,7 +57,7 @@ public class Photon extends Sprite implements Collidable {
 		dir = direction.normalize();
 		vel = velocity;
 		hasCollide = false;
-		age = 100;
+		age = 60;
 		
 		Collidables.registerObject(this);
 	}
@@ -107,7 +108,6 @@ public class Photon extends Sprite implements Collidable {
 			hasCollide = true;
 			break;
 		case ASTEROID:
-			new Explosion(getPosition(),getCam(), false);
 			Collidables.unregisterObject(this);
 			hasCollide = true;
 			break;
@@ -117,7 +117,7 @@ public class Photon extends Sprite implements Collidable {
 	@Override
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
-		return new Dot(getPosition());
+		return new BoundingSphere(getPosition() , 5);
 	}
 
 	public static void createNewPhoton(Vector position, Orientation camera, Vector direction, float velocity) {

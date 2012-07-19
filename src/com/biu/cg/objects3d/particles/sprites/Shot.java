@@ -64,7 +64,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 	public void collisionAction(Collidable collidable) {		
 		switch(collidable.getType()){
 		case SHIP:
-			new Explosion(getPosition(),getCamera(), false);
+			//new Explosion(getPosition(),getCamera(), false);
 			Collidables.unregisterObject(this);
 			collisionDetected();
 			break;
@@ -74,7 +74,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 			collisionDetected();
 			break;
 		case ASTEROID:
-			new Explosion(getPosition(),getCamera(), false);
+			//new Explosion(getPosition(),getCamera(), false);
 			Collidables.unregisterObject(this);
 			collisionDetected();
 			break;
