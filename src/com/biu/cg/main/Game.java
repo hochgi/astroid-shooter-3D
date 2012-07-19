@@ -175,7 +175,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 	private void shootPhoton() { 
  		if(Photon.canShoot()){ 
- 			Photon.createNewPhoton(ship1.getWingPosition(),orientation,orientation.getAxis('z'),12f); 
+ 			Photon.createNewPhoton(ship1.getWingPosition(),orientation,orientation.getAxis('z'),36f); 
  		} 
  	} 
 	
@@ -271,6 +271,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		earth = new Earth();
 		Collidables.registerObject(earth);
+		Object3D.registerObject(earth);
 		//earth.setScale(1000);
 		
 		Asteroids.setCamera(ship1.getOrientation());

@@ -80,6 +80,6 @@ public class Asteroids {
 	//static initialization that executes only once
 	static {
 		timer = new Timer();
-		timer.scheduleAtFixedRate(task, 10000, 5000);
+		timer.scheduleAtFixedRate(task, 0, 10000);
 	}
 }

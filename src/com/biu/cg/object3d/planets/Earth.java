@@ -35,7 +35,7 @@ public class Earth extends Model3D implements Collidable {
 	@Override
 	protected void update() {
 		// TODO Auto-generated method stub
-		
+		orientation.rotateHeading(0.001f);
 	}
 	
 	

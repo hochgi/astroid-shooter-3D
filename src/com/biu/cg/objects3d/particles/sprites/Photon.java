@@ -57,7 +57,7 @@ public class Photon extends Sprite implements Collidable {
 		dir = direction.normalize();
 		vel = velocity;
 		hasCollide = false;
-		age = 60;
+		age = 20;
 		
 		Collidables.registerObject(this);
 	}
