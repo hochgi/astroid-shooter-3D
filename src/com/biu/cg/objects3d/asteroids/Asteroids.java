@@ -69,7 +69,11 @@ public class Asteroids {
 				return;
 			}
 			
-			Asteroid a = new Asteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
+			Asteroid a=null;
+			if(rand.nextInt(3)==0)
+				a = new BigAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
+			else
+				a = new SmallAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
 			
 			registerAsteroid(a);
 			Collidables.registerObject(a);

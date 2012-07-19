@@ -15,15 +15,17 @@ import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.owens.oobjloader.builder.Face;
 
-public class Asteroid extends Model3D implements Collidable{
+public abstract class Asteroid extends Model3D implements Collidable{
 
 	boolean alive=true;
 	Vector dest;
 	Orientation camera;
 	Random rand = new Random();
+	protected Earth earth;
 	
-	public Asteroid(Earth earth , Orientation camera , Vector pos) {
-		super(pos, "models/asteroids/astro01.wng" , null);
+	public Asteroid(Earth earth , Orientation camera , Vector pos , String objPath) {
+		super(pos, objPath , null);
+		this.earth = earth;
 		this.camera = camera;
 		Collidables.registerObject(this);
 		dest = new Vector(earth.getPosition());
@@ -31,36 +33,6 @@ public class Asteroid extends Model3D implements Collidable{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void collisionAction(Collidable collidable) {
-		// TODO Auto-generated method stub
-		switch(collidable.getType()){
-		case ROCKET:
-			alive=false;
-			new Explosion(getPosition(), camera, false);
-			Collidables.unregisterObject(this);
-			Asteroids.unregisterAsteroid(this);
-			break;
-		case PHOTON:
-			alive=false;
-			new Explosion(getPosition(), camera, false);
-			Collidables.unregisterObject(this);
-			Asteroids.unregisterAsteroid(this);
-			break;
-		case EARTH:
-			new Explosion(getPosition(),camera, false);
-			Collidables.unregisterObject(this);
-			Asteroids.unregisterAsteroid(this);
-			alive=false;
-			break;
-		}
-	}
-
-	@Override
-	public BoundingShape getBoundingShape() {
-		// TODO Auto-generated method stub
-		return new BoundingSphere(getPosition(), 50);
-	}
 
 	@Override
 	public Type getType() {
@@ -114,7 +86,7 @@ public class Asteroid extends Model3D implements Collidable{
 					
 					if(f.vertices.get(i)!=null){	
 						//gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glColor3f(1f, 1f, 1f);
+						gl.glColor3f(0f, 0f, 0f);
 						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
 					}
 				}
@@ -133,7 +105,7 @@ public class Asteroid extends Model3D implements Collidable{
 					
 					if(f.vertices.get(i)!=null){
 						//gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glColor3f(1f, 1f, 1f);
+						gl.glColor3f(0f, 0f, 0f);
 						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
 					}
 				}	
