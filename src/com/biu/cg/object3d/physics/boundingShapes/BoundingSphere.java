@@ -9,8 +9,8 @@ public class BoundingSphere implements BoundingShape {
 
 	private Vector center;
 	private float radius;
-	private float plus; 
-	private float mul;
+//	private float plus; 
+//	private float mul;
 	
 	public Vector getCenter() {
 		return center;
@@ -56,8 +56,8 @@ public class BoundingSphere implements BoundingShape {
 	}
 	
 	public BoundingSphere(ArrayList<Vector> vertices , float plus , float mul){	
-		this.plus = plus;
-		this.mul = mul;
+//		this.plus = plus;
+//		this.mul = mul;
 		
 		
 		float xSum=0;

@@ -2,17 +2,12 @@ package com.biu.cg.objects3d.particles.sprites;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.media.opengl.GLException;
-
 import com.biu.cg.main.Explosion;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
-import com.biu.cg.object3d.physics.boundingShapes.Dot;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.sound.SoundPlayer;
@@ -21,37 +16,14 @@ import com.sun.opengl.util.texture.TextureIO;
 
 public class Photon extends Sprite implements Collidable {
 
-	private static Timer timer;
+
 	private static Texture particleTex;
-	private static boolean wantToShoot = false;
-	private static float sVel;
-	private static Vector sPos;
-	private static Vector sDir;
-	private static Orientation sCam;
-	private static Object lock = new Object();
-	
-	private static TimerTask task = new TimerTask() {
-		@Override
-		public void run() {
-			synchronized(lock) {
-				if(wantToShoot){
-					Sprite.registerObject(new Photon(sPos, sCam, sDir, sVel));
-					wantToShoot = false;
-				}
-			}
-		}
-	};
-	
-	static {
-		timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0, 200);
-	}
+	private static int coolOff = 0;
 	
 	private boolean hasCollide;
 	private Vector dir;
 	private float vel;
 	private int age;
-
 	
 	public Photon(Vector position, Orientation camera, Vector direction, float velocity) {
 		super(position, camera);
@@ -63,6 +35,7 @@ public class Photon extends Sprite implements Collidable {
 		Collidables.registerObject(this);
 		
 		SoundPlayer.photonShot();
+		coolOff++;
 	}
 
 	public static void init() {
@@ -119,29 +92,19 @@ public class Photon extends Sprite implements Collidable {
 
 	@Override
 	public BoundingShape getBoundingShape() {
-		// TODO Auto-generated method stub
 		return new BoundingSphere(getPosition() , 5);
 	}
 
-	public static void createNewPhoton(Vector position, Orientation camera, Vector direction, float velocity) {
-		synchronized(lock) {
-			if(!wantToShoot){
-				sPos = position;
-				sCam = camera;
-				sDir = direction;
-				sVel = velocity;
-				wantToShoot = true;
-			}
-		}
-	}
-
 	public static boolean canShoot() {
-		return !wantToShoot;
+		return coolOff  == 0;
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
 		return Type.PHOTON;
+	}
+
+	public static void incrementCoolOff() {
+		coolOff = (coolOff + 1) % 5;
 	}
 }

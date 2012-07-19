@@ -13,17 +13,17 @@ public class StringUtils {
     // String parsing stuff
     // ----------------------------------------------------------------------
     public static void printErrMsg(String methodName, String errorMsg, int mCount, char message[]) {
-        System.err.println("ERROR: " + methodName + ": " + errorMsg);
-        System.err.print("ERROR: " + methodName + ": msg=\\");
-        for (int loopi = 0; loopi < message.length; loopi++) {
-            System.err.print(message[loopi]);
-        }
-        System.err.println("\\");
-        System.err.print("ERROR: " + methodName + ":      ");
-        for (int i = 0; i < mCount; i++) {
-            System.err.print(" ");
-        }
-        System.err.println("^");
+//        System.err.println("ERROR: " + methodName + ": " + errorMsg);
+//        System.err.print("ERROR: " + methodName + ": msg=\\");
+//        for (int loopi = 0; loopi < message.length; loopi++) {
+//            System.err.print(message[loopi]);
+//        }
+//        System.err.println("\\");
+//        System.err.print("ERROR: " + methodName + ":      ");
+//        for (int i = 0; i < mCount; i++) {
+//            System.err.print(" ");
+//        }
+//        System.err.println("^");
     }
 
     // if errMsg != null, then we test if we've run past end of message

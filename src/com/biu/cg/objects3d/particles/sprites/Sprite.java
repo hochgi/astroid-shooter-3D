@@ -14,7 +14,8 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
 	private static LinkedList<Sprite> sprites = new LinkedList<Sprite>();
 	private static LinkedList<Sprite> graveyard = new LinkedList<Sprite>();
-	private static Object sLock = new Object();
+	private static LinkedList<Sprite> newlyBorn = new LinkedList<Sprite>();
+	private static Object nLock = new Object();
 	private static final float[] rgba = {1f,1f,1f,1f};
 	
 	private Orientation cam;
@@ -26,8 +27,8 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	 */
 	public static void registerObject(Sprite sprite){
 		Particle.registerObject(sprite);
-		synchronized(sLock) {
-			sprites.add(sprite);
+		synchronized(nLock) {
+			newlyBorn.add(sprite);
 		}
 	}
 	
@@ -36,30 +37,31 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	}
 	
 	public static void renderSprites(GLAutoDrawable gLDrawable) {
-		synchronized(sLock) {
-			sprites.removeAll(graveyard);
-			graveyard.clear();
-			
-			//sort particles by square distance from camera
-			//further away should be in the head of the list
-			Collections.sort(sprites);
-			
-			GL gl = gLDrawable.getGL();
-	        // Enable blending
-			//blending function will be invoked differently for every sprite
-			gl.glEnable(GL.GL_BLEND);		
-			
-			for (Sprite s : sprites) {
-				if(s.isDead()){
-					graveyard.add(s);
-				}
-				else {
-					s.draw(gLDrawable);
-				}
-			}
-	
-			gl.glDisable(GL.GL_BLEND);
+		sprites.removeAll(graveyard);
+		graveyard.clear();
+		synchronized(nLock) {
+			sprites.addAll(newlyBorn);
+			newlyBorn.clear();
 		}
+		//sort particles by square distance from camera
+		//further away should be in the head of the list
+		Collections.sort(sprites);
+		
+		GL gl = gLDrawable.getGL();
+        // Enable blending
+		//blending function will be invoked differently for every sprite
+		gl.glEnable(GL.GL_BLEND);		
+		
+		for (Sprite s : sprites) {
+			if(s.isDead()){
+				graveyard.add(s);
+			}
+			else {
+				s.draw(gLDrawable);
+			}
+		}
+
+		gl.glDisable(GL.GL_BLEND);
 	}
 	
 	public Sprite(Vector position, Orientation camera) {
@@ -114,14 +116,14 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	    getTexture().bind();
 	    float[] rgba = getRGBA();
 	    gl.glColor4f(rgba[0],rgba[1],rgba[2],rgba[3]);
-
+	    //gl.glDisable(GL.GL_LIGHTING);
 	    gl.glBegin(GL.GL_QUADS);
 	    gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3d(bb[0].x, bb[0].y, bb[0].z);
 	    gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3d(bb[1].x, bb[1].y, bb[1].z);
 	    gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3d(bb[2].x, bb[2].y, bb[2].z);
 	    gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3d(bb[3].x, bb[3].y, bb[3].z);
 	    gl.glEnd();
-
+	    //gl.glEnable(GL.GL_LIGHTING);
 	}
 	
 	//the idea of the implementation is explained nicely here: http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/

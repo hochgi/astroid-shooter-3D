@@ -63,11 +63,11 @@ public class Build implements BuilderInterface {
     }
 
     public void addPoints(int[] values) {
-        System.err.println("Build.addPoints: @TODO: Got " + values.length + " points in builder, ignoring");
+        //System.err.println("Build.addPoints: @TODO: Got " + values.length + " points in builder, ignoring");
     }
 
     public void addLine(int[] values) {
-        System.err.println("Build.addLine: @TODO: Got a line of " + values.length + " segments in builder, ignoring");
+        //System.err.println("Build.addLine: @TODO: Got a line of " + values.length + " segments in builder, ignoring");
     }
 
     public void addFace(int[] vertexIndices) {
@@ -97,7 +97,7 @@ public class Build implements BuilderInterface {
                 // one, so we offset by -1 for the 0-indexed array lists.
                 fv.v = verticesG.get(vertexIndex - 1);
             } else {
-                System.err.println("Build.addFace: ERROR Index for geometric vertex=" + vertexIndex + " is out of the current range of geometric vertex values 1 to " + verticesG.size() + ", ignoring");
+                //System.err.println("Build.addFace: ERROR Index for geometric vertex=" + vertexIndex + " is out of the current range of geometric vertex values 1 to " + verticesG.size() + ", ignoring");
             }
 
             vertexIndex = vertexIndices[loopi++];
@@ -112,7 +112,7 @@ public class Build implements BuilderInterface {
                     // one, so we offset by -1 for the 0-indexed array lists.
                     fv.t = verticesT.get(vertexIndex - 1);
                 } else {
-                    System.err.println("Build.addFace: ERROR Index for texture vertex=" + vertexIndex + " is out of the current range of texture vertex values 1 to " + verticesT.size() + ", ignoring");
+                    //System.err.println("Build.addFace: ERROR Index for texture vertex=" + vertexIndex + " is out of the current range of texture vertex values 1 to " + verticesT.size() + ", ignoring");
                 }
             }
 
@@ -128,12 +128,12 @@ public class Build implements BuilderInterface {
                     // one, so we offset by -1 for the 0-indexed array lists.
                     fv.n = verticesN.get(vertexIndex - 1);
                 } else {
-                    System.err.println("Build.addFace: ERROR Index for vertex normal=" + vertexIndex + " is out of the current range of vertex normal values 1 to " + verticesN.size() + ", ignoring");
+                    //System.err.println("Build.addFace: ERROR Index for vertex normal=" + vertexIndex + " is out of the current range of vertex normal values 1 to " + verticesN.size() + ", ignoring");
                 }
             }
 
             if (fv.v == null) {
-                System.err.println("Build.addFace: ERROR Can't add vertex to face with missing vertex!  Throwing away face.");
+                //System.err.println("Build.addFace: ERROR Can't add vertex to face with missing vertex!  Throwing away face.");
                 faceErrorCount++;
                 return;
             }
@@ -302,16 +302,16 @@ public class Build implements BuilderInterface {
     // >     defined. There is no default.
     public void addMapLib(String[] names) {
         if (null == names) {
-            System.err.println("Build.addMapLib: @TODO: ERROR! Got a maplib line with null names array - blank group line? (i.e. \"g\\n\" ?)");
+            //System.err.println("Build.addMapLib: @TODO: ERROR! Got a maplib line with null names array - blank group line? (i.e. \"g\\n\" ?)");
             return;
         }
         if (names.length == 1) {
-            System.err.println("Build.addMapLib: @TODO: Got a maplib line with one name=|" + names[0] + "|");
+            //System.err.println("Build.addMapLib: @TODO: Got a maplib line with one name=|" + names[0] + "|");
             return;
         }
-        System.err.println("Build.addMapLib: @TODO: Got a maplib line;");
+        //System.err.println("Build.addMapLib: @TODO: Got a maplib line;");
         for (int loopi = 0; loopi < names.length; loopi++) {
-            System.err.println("        names[" + loopi + "] = |" + names[loopi] + "|");
+            //System.err.println("        names[" + loopi + "] = |" + names[loopi] + "|");
         }
     }
 
@@ -424,12 +424,12 @@ public class Build implements BuilderInterface {
     public void setD(boolean halo, float factor) {
         currentMaterialBeingParsed.dHalo = halo;
         currentMaterialBeingParsed.dFactor = factor;
-        System.err.println("Build.setD: @TODO: got a setD call!");
+        //System.err.println("Build.setD: @TODO: got a setD call!");
     }
 
     public void setNs(float exponent) {
         currentMaterialBeingParsed.nsExponent = exponent;
-        System.err.println("Build.setNs: @TODO: got a setNs call!");
+        //System.err.println("Build.setNs: @TODO: got a setNs call!");
     }
 
     public void setSharpness(float value) {
@@ -481,6 +481,6 @@ public class Build implements BuilderInterface {
     }
 
     public void doneParsingObj(String filename) {
-        System.err.println("Build.doneParsing: Loaded filename '" + filename + "' with " + verticesG.size() + " verticesG, " + verticesT.size() + " verticesT, " + verticesN.size() + " verticesN and " + faces.size() + " faces, of which " + faceTriCount + " triangles, " + faceQuadCount + " quads, and " + facePolyCount + " with more than 4 points, and faces with errors " + faceErrorCount);
+        //System.err.println("Build.doneParsing: Loaded filename '" + filename + "' with " + verticesG.size() + " verticesG, " + verticesT.size() + " verticesT, " + verticesN.size() + " verticesN and " + faces.size() + " faces, of which " + faceTriCount + " triangles, " + faceQuadCount + " quads, and " + facePolyCount + " with more than 4 points, and faces with errors " + faceErrorCount);
     }
 }

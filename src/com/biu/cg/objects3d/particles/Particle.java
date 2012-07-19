@@ -44,7 +44,7 @@ public abstract class Particle extends Object3D {
 	};
 	
 	static {
-		timer = new Timer();
+		timer = new Timer("Timer-Particle");
 		timer.scheduleAtFixedRate(task, 0, 40);
 	}
 	

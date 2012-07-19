@@ -121,13 +121,13 @@ public class Parse {
             } else if (line.startsWith(OBJ_MTLLIB)) {
                 processMaterialLib(line);
             } else {
-                System.err.println("Parse.parseObjFile: line " + lineCount + " unknown line |" + line + "|");
+                //System.err.println("Parse.parseObjFile: line " + lineCount + " unknown line |" + line + "|");
             }
             lineCount++;
         }
         bufferedReader.close();
 
-        System.err.println("Loaded " + lineCount + " lines");
+        //System.err.println("Loaded " + lineCount + " lines");
     }
 
     // @TODO: processVertex calls parseFloatList with params expecting
@@ -592,7 +592,7 @@ public class Parse {
                 try {
                     parseMtlFile(matlibnames[loopi]);
                 } catch (FileNotFoundException e) {
-                    System.err.println("Parse.processMaterialLib: ERROR: Can't find material file name='" + matlibnames[loopi] + "', e=" + e);
+                    //System.err.println("Parse.processMaterialLib: ERROR: Can't find material file name='" + matlibnames[loopi] + "', e=" + e);
                 }
             }
         }
@@ -679,14 +679,14 @@ public class Parse {
             } else if (line.startsWith(MTL_REFL)) {
                 processRefl(line);
             } else {
-                System.err.println("Parse.parseMtlFile: line " + lineCount + " unknown line |" + line + "|");
+                //System.err.println("Parse.parseMtlFile: line " + lineCount + " unknown line |" + line + "|");
 
             }
             lineCount++;
         }
         bufferedReader.close();
 
-        System.err.println("Parse.parseMtlFile: Loaded " + lineCount + " lines");
+        //System.err.println("Parse.parseMtlFile: Loaded " + lineCount + " lines");
     }
 
     private void processNewmtl(String line) {
@@ -706,16 +706,16 @@ public class Parse {
 
         String[] tokens = StringUtils.parseWhitespaceList(line.substring(fieldName.length()));
         if (null == tokens) {
-            System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got Ka line with no tokens, line = |" + line + "|");
+            //System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got Ka line with no tokens, line = |" + line + "|");
             return;
         }
         if (tokens.length <= 0) {
-            System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got Ka line with no tokens, line = |" + line + "|");
+            //System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got Ka line with no tokens, line = |" + line + "|");
             return;
         }
         if (tokens[0].equals("spectral")) {
             // Ka spectral file.rfl factor_num
-            System.err.println("Parse.processReflectivityTransmissivity: WARNING: Sorry Charlie, this parse doesn't handle \'spectral\' parsing.  (Mostly because I can't find any info on the spectra.rfl file.)");
+           // System.err.println("Parse.processReflectivityTransmissivity: WARNING: Sorry Charlie, this parse doesn't handle \'spectral\' parsing.  (Mostly because I can't find any info on the spectra.rfl file.)");
             return;
 // 	    if(tokens.length < 2) {
 // 		System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got spectral line with not enough tokens, need at least one token for spectral file and one value for factor, found "+(tokens.length-1)+" line = |"+line+"|");
@@ -725,7 +725,7 @@ public class Parse {
             // Ka xyz x_num y_num z_num
 
             if (tokens.length < 2) {
-                System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got xyz line with not enough x/y/z tokens, need at least one value for x, found " + (tokens.length - 1) + " line = |" + line + "|");
+                //System.err.println("Parse.processReflectivityTransmissivity: ERROR! Got xyz line with not enough x/y/z tokens, need at least one value for x, found " + (tokens.length - 1) + " line = |" + line + "|");
                 return;
             }
             float x = Float.parseFloat(tokens[1]);
@@ -757,7 +757,7 @@ public class Parse {
         line = line.substring(MTL_ILLUM.length()).trim();
         int illumModel = Integer.parseInt(line);
         if ((illumModel < 0) || (illumModel > 10)) {
-            System.err.println("Parse.processIllum: ERROR! Got illum model value out of range (0 to 10 inclusive is allowed), value=" + illumModel + ", line=" + line);
+            //System.err.println("Parse.processIllum: ERROR! Got illum model value out of range (0 to 10 inclusive is allowed), value=" + illumModel + ", line=" + line);
             return;
         }
         builder.setIllum(illumModel);
@@ -924,7 +924,7 @@ public class Parse {
                 type = BuilderInterface.MTL_REFL_TYPE_CUBE_RIGHT;
                 filename = line.substring(MTL_REFL_TYPE_CUBE_RIGHT.length()).trim();
             } else {
-                System.err.println("Parse.processRefl: ERROR! unknown material refl -type, line = |" + line + "|");
+                //System.err.println("Parse.processRefl: ERROR! unknown material refl -type, line = |" + line + "|");
                 return;
             }
         } else {

@@ -21,9 +21,12 @@ import com.biu.cg.math3d.Vector;
 public abstract class Object3D {
 	//static fields:
 	private static Timer timer;
-	protected static Object lock = new Object();
+	private static Object nLock = new Object();
+	private static Object gLock = new Object();
 	//the list keeps all the objects to update
 	private static LinkedList<Object3D> objects = new LinkedList<Object3D>();
+	private static LinkedList<Object3D> graveyard = new LinkedList<Object3D>();
+	private static LinkedList<Object3D> newlyBorn = new LinkedList<Object3D>();
 
 	// this anonymous timer task, handles the updating
 	// of every registered object in the objects list
@@ -31,20 +34,27 @@ public abstract class Object3D {
 		
 		@Override
 		public void run() {
+			synchronized (gLock) {
+				objects.removeAll(graveyard);
+				graveyard.clear();
+			}
+			synchronized (nLock) {
+				objects.addAll(newlyBorn);
+				newlyBorn.clear();
+			}
 			if(objects.isEmpty()) {
 				return;
 			}
-			synchronized(lock) {
-				for (Object3D o : objects) {
-					o.update();
-				}
+			for (Object3D o : objects) {
+				o.update();
 			}
 		}
 	};
 	
+	
 	//static initialization that executes only once
 	static {
-		timer = new Timer();
+		timer = new Timer("Timer-Object3D");
 		timer.scheduleAtFixedRate(task, 0, 40);
 	}
 
@@ -53,8 +63,14 @@ public abstract class Object3D {
 	 * @param obj
 	 */
 	public static void registerObject(Object3D obj) {
-		synchronized (lock) {
-			objects.add(obj);
+		synchronized (nLock) {
+			newlyBorn.add(obj);
+		}
+	}
+	
+	public static void unregisterAsteroid(Object3D obj) {
+		synchronized (gLock) {
+			graveyard.add(obj);
 		}
 	}
 	
@@ -111,9 +127,7 @@ public abstract class Object3D {
 	 * @param gLDrawable
 	 */
 	public final void draw(GLAutoDrawable gLDrawable) {
-		synchronized (lock) {
-			synchronizedDraw(gLDrawable);
-		}
+		synchronizedDraw(gLDrawable);
 	}
 	
 	/**

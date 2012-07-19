@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.media.opengl.GLAutoDrawable;
+
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
@@ -18,8 +20,12 @@ public class Asteroids {
 	private static Orientation camera=null;
 	
 	private static Timer timer;
-	protected static Object lock = new Object();
+	private static final Object nLock = new Object();
+	private static final Object gLock = new Object();
+	private static final Object aLock = new Object();
 	private static LinkedList<Asteroid> asteroids = new LinkedList<Asteroid>();
+	private static LinkedList<Asteroid> newlyBorn = new LinkedList<Asteroid>();
+	private static LinkedList<Asteroid> graveyard = new LinkedList<Asteroid>();
 	
 	
 	public static void setEarth(Earth earth) {
@@ -30,12 +36,8 @@ public class Asteroids {
 		Asteroids.camera = camera;
 	}
 	
-	
 	public static LinkedList<Asteroid> getAsteroids() {
-		synchronized (lock) {
-			return (LinkedList<Asteroid>) asteroids.clone();
-		}
-		
+		return asteroids;
 	}
 	
 	/**
@@ -43,8 +45,8 @@ public class Asteroids {
 	 * @param obj
 	 */
 	public static void registerAsteroid(Asteroid obj) {
-		synchronized (lock) {
-			asteroids.addLast(obj);
+		synchronized (nLock) {
+			newlyBorn.addLast(obj);
 		}
 	}
 	
@@ -53,8 +55,8 @@ public class Asteroids {
 	 * @param obj
 	 */
 	public static void unregisterAsteroid(Asteroid obj) {
-		synchronized (lock) {
-			asteroids.remove(obj);
+		synchronized (gLock) {
+			graveyard.add(obj);
 		}
 	}
 	
@@ -65,12 +67,25 @@ public class Asteroids {
 		
 		@Override
 		public void run() {
+			synchronized (gLock) {
+				synchronized (aLock) {
+					asteroids.removeAll(graveyard);
+				}
+				graveyard.clear();
+			}
+			synchronized (nLock) {
+				synchronized (aLock) {
+					asteroids.addAll(newlyBorn);
+				}
+				newlyBorn.clear();
+			}
+			
 			if(earth==null || camera==null) {
 				return;
 			}
 			
 			Asteroid a=null;
-			if(rand.nextInt(3)==0)
+			if(rand.nextInt(5)==0)
 				a = new BigAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
 			else
 				a = new SmallAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
@@ -83,7 +98,15 @@ public class Asteroids {
 	
 	//static initialization that executes only once
 	static {
-		timer = new Timer();
+		timer = new Timer("Timer-Asteroids");
 		timer.scheduleAtFixedRate(task, 0, 10000);
+	}
+
+	public static void drawAsteroids(GLAutoDrawable gLDrawable) {
+		synchronized (aLock) {
+			for (Asteroid a : asteroids) {
+				a.draw(gLDrawable);
+			}
+		}
 	}
 }

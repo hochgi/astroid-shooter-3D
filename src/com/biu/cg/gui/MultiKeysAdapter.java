@@ -55,7 +55,7 @@ public abstract class MultiKeysAdapter implements KeyListener {
 				executeKeysAction();
 			}
 		};
-		timer = new Timer();
+		timer = new Timer("Timer-MultiKeysAdapter");
 		for (int i = 0; i < pressedKeys.length; i++) {
 			pressedKeys[i] = false;
 		}
