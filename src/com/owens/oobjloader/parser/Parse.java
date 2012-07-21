@@ -64,7 +64,7 @@ public class Parse {
     }
 
     private void parseObjFile(String objFilename) throws FileNotFoundException, IOException {
-        int lineCount = 0;
+       // int lineCount = 0;
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
 
@@ -123,7 +123,7 @@ public class Parse {
             } else {
                 //System.err.println("Parse.parseObjFile: line " + lineCount + " unknown line |" + line + "|");
             }
-            lineCount++;
+            //lineCount++;
         }
         bufferedReader.close();
 
@@ -615,7 +615,7 @@ public class Parse {
     // material file processing
     // ----------------------------------------------------------------------
     private void parseMtlFile(String mtlFilename) throws FileNotFoundException, IOException {
-        int lineCount = 0;
+        //int lineCount = 0;
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
 
@@ -682,7 +682,7 @@ public class Parse {
                 //System.err.println("Parse.parseMtlFile: line " + lineCount + " unknown line |" + line + "|");
 
             }
-            lineCount++;
+            //lineCount++;
         }
         bufferedReader.close();
 

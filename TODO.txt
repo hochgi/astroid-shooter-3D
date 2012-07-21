@@ -2,6 +2,10 @@
 |TODO LIST|
 -----------
 
+* make sprite rendering to not generate too many Vector instances
+
+* make collidables to not generate too many Bounding_?_ instances
+
 -DONE!- implement cross product, instead of using javax.vecmath's
 
 * splash screens: choose M-Model or G-Model battle craft.
@@ -26,25 +30,25 @@
 
 -DONE!- finish with explosion effect (flying sparks, smoke trails, round sparks)
 
-* implement a secondary weapon. the one we already made should be the "heavy artillery", 
-  and the old particle_32X32.png should be a light weapon (a single shot = single particle)
-  so it won't be heavy on the render...
+-DONE!- implement a secondary weapon. the one we already made should be the "heavy artillery", 
+  		and the old particle_32X32.png should be a light weapon (a single shot = single particle)
+  		so it won't be heavy on the render...
 
-* implement "cool off" for weapons. we don't want high rate off firing that would burden the game.
+-DONE!- implement "cool off" for weapons. we don't want high rate off firing that would burden the game.
 
-* implement Collidable interface for whatever objects we want (including Shot)
+-DONE!- implement Collidable interface for whatever objects we want (including Shot)
 
-* build the scene
+-DONE!- build the scene
 
 * implement help splash screen on F1 hits
 
 * build a nice looking status bar. minimap should show asteroid movement from top view, 
   turning red as they getting near the ground.
   
-* LineSprites should return only the projection of the billboard, and not the billboard itself,
-  since it intersects with the orthogonal to camera point sprites.
+-DONE!- LineSprites should return only the projection of the billboard, and not the billboard itself,
+  		since it intersects with the orthogonal to camera point sprites.
   
-* fix synchronization problems when rotating the ship.
+-DONE!- fix synchronization problems when rotating the ship.
   
 * Game Logic:
     - only allow to carry 3 rockets at a time.
@@ -54,5 +58,5 @@
     - end game when an asteroid hits earth.
     - add atmosphere to earth, preventing the ship to get too close to earth.
     - an asteroid should be vanquished when it's being hit by 1 rocket, or 10 regular shots.
-    - use splines to iteratively get the rocket closer to an asteroid. (homing rocket - always hits the target)
+    -DONE!- use splines to iteratively get the rocket closer to an asteroid. (homing rocket - always hits the target)
     
