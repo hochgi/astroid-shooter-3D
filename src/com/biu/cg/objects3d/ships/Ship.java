@@ -83,6 +83,11 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void moveForward(){
+		orientation.translateForward(step*speed);
+		space.getOrientation().translateForward(step*speed);
+	}
+	
+	public void turboForward(){
 		perspective = Math.min(perspective+2, 80f);
 		orientation.translateForward(turboStep);
 		space.getOrientation().translateForward(turboStep);
@@ -126,11 +131,11 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void speedUp(){
-		speed = Math.min(speed+1, 5);
+		speed = Math.min(speed+1, 4);
 	}
 	
 	public void speedDown(){
-		speed = Math.max(speed-1, -3);
+		speed = Math.max(speed-1, -2);
 	}
 	
 	@Override
@@ -167,9 +172,6 @@ public abstract class Ship extends Model3D {
 		if(moveLock){
 			perspective = Math.max(perspective-2f, 50f);
 		}
-		
-		orientation.translateForward(step*speed);
-		space.getOrientation().translateForward(step*speed);
 		
 	}
 	

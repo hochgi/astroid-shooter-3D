@@ -23,7 +23,7 @@ public abstract class MultiKeysAdapter implements KeyListener {
 	//TRANSLATIONS://
 	/////////////////
 	
-	public static final int MOVE_FORWARD = 6;	// confront to: KeyEvent.VK_W
+	public static final int TURBO_FORWARD = 6;	// confront to: KeyEvent.VK_W (WAS MOVE_FORWARD)
 	public static final int MOVE_BACKWARD = 7;	// confront to: KeyEvent.VK_S
 	public static final int MOVE_LEFT = 8;		// confront to: KeyEvent.VK_A
 	public static final int MOVE_RIGHT = 9;		// confront to: KeyEvent.VK_D
@@ -99,7 +99,7 @@ public abstract class MultiKeysAdapter implements KeyListener {
 			break;
 		//forwards
 		case KeyEvent.VK_W:
-			pressedKeys[MOVE_FORWARD] = value;
+			pressedKeys[TURBO_FORWARD] = value;
 			break;
 		//backwards
 		case KeyEvent.VK_S:

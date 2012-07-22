@@ -101,7 +101,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			!isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)){
 			ship1.enableRotateUpdate();
 		}
-		if(!isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)){
+		if(!isKeyPressed(MultiKeysAdapter.TURBO_FORWARD)){
 			ship1.enableMoveUpdate();
 		}
 	}
@@ -111,6 +111,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 */
 	@Override
 	public synchronized void executeKeysAction() {
+		ship1.moveForward();
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
 			ship1.disableRotateUpdate();
 			ship1.pitchUp();
@@ -135,9 +136,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CCW)) {
 			ship1.rollLeft();
 		}
-		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
+		if(isKeyPressed(MultiKeysAdapter.TURBO_FORWARD)) {
 			ship1.disableMoveUpdate();
-			ship1.moveForward();
+			ship1.turboForward();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
 			ship1.moveBackward();
