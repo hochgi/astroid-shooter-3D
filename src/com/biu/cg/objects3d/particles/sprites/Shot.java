@@ -24,7 +24,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 	private float vel;
 	private int age;
 	private boolean locked=false;
-	private int homingRadius=10;
+	private int homingRadius=200;
 	//private int homingDelay=10;
 	
 	private Asteroid target=null;
@@ -69,7 +69,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 		if(!isDead()){
 			age--;
 			if(!locked){
-				setPosition(getPosition().add(dir, vel));
+				//setPosition(getPosition().add(dir, vel));
 				
 				
 				float dist=Float.MAX_VALUE;
@@ -84,11 +84,11 @@ public class Shot extends SpriteEmitter implements Collidable {
 						}
 					}
 				}
-				homingRadius++;
+				homingRadius+=10;
 				
 			}else{
 				float d = (float)Math.sqrt(target.getPosition().sqrDistanceTo(getPosition()));
-				dir.addMutate(target.getPosition().sub(getPosition(),1f).normalize(),5f/d).normalize();
+				dir.addMutate(target.getPosition().sub(getPosition(),1f).normalize(),6f/d).normalize();
 			}
 			setPosition(getPosition().add(dir, vel));
 			for (int i = 0; i < 8; i++) {

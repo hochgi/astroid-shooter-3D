@@ -71,6 +71,12 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		case KeyEvent.VK_F1:
 			help();
 			break;
+		case KeyEvent.VK_0:
+			speedUp();
+			break;
+		case KeyEvent.VK_9:
+			speedDown();
+			break;
 		default:
 				//do nothing
 		}
@@ -93,7 +99,10 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			!isKeyPressed(MultiKeysAdapter.LOOK_DOWN) &&
 			!isKeyPressed(MultiKeysAdapter.LOOK_LEFT) &&
 			!isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)){
-			ship1.enableUpdate();
+			ship1.enableRotateUpdate();
+		}
+		if(!isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)){
+			ship1.enableMoveUpdate();
 		}
 	}
 
@@ -103,20 +112,20 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	@Override
 	public synchronized void executeKeysAction() {
 		if(isKeyPressed(MultiKeysAdapter.LOOK_UP)) {
-			ship1.disableUpdate();
+			ship1.disableRotateUpdate();
 			ship1.pitchUp();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_DOWN)) {
-			ship1.disableUpdate();
+			ship1.disableRotateUpdate();
 			ship1.pitchDown();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_RIGHT)) {
-			ship1.disableUpdate();
+			ship1.disableRotateUpdate();
 			ship1.turnRight();
 			
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_LEFT)) {
-			ship1.disableUpdate();
+			ship1.disableRotateUpdate();
 			ship1.turnLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.LOOK_ROLL_CW)) {
@@ -127,6 +136,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			ship1.rollLeft();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_FORWARD)) {
+			ship1.disableMoveUpdate();
 			ship1.moveForward();
 		}
 		if(isKeyPressed(MultiKeysAdapter.MOVE_BACKWARD)) {
@@ -163,6 +173,14 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	
 	private void shootRocket() {
 		SpriteEmitter.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 9f));
+	}
+	
+	private void speedUp(){
+		ship1.speedUp();
+	}
+	
+	private void speedDown(){
+		ship1.speedDown();
 	}
 
 

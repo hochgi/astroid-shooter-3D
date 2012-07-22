@@ -34,7 +34,7 @@ public class SmallAsteroid extends Asteroid {
 	
 	@Override
 	public BoundingShape getBoundingShape() {
-		return new BoundingSphere(getPosition(), 50);
+		return new BoundingSphere(getPosition(), 20);
 	}
 
 }

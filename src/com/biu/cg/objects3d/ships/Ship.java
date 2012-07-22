@@ -12,12 +12,18 @@ public abstract class Ship extends Model3D {
 	private float pTheta = (float)Math.toRadians(1.5);
 	//negative angle (in radians)
 	private float nTheta = ((float)Math.PI * 2f) - pTheta;
-	private float step = 4f;
+	private float step = 1f;
+	private float turboStep = 8f;
 	private Space space;
 	private int wing = 1;
 	private Vector lookAt;
 	private boolean active = false;
-	private boolean updateLock = true;
+	private boolean rotateLock = true;
+	private boolean moveLock = true;
+	
+	private int speed=0;
+	
+	private float perspective = 50f;
 	
 	public Ship(Vector position ,String objFile, String texture) {
 		super(position, objFile , texture);
@@ -26,13 +32,22 @@ public abstract class Ship extends Model3D {
 		space.setScale(4000);
 	}
 	
-	public synchronized void disableUpdate() {
-		updateLock  = false;
+	public synchronized void disableRotateUpdate() {
+		rotateLock  = false;
 	}
 	
 
-	public synchronized void enableUpdate() {
-		updateLock  = true;
+	public synchronized void enableRotateUpdate() {
+		rotateLock  = true;
+	}
+	
+	public synchronized void disableMoveUpdate() {
+		moveLock  = false;
+	}
+	
+
+	public synchronized void enableMoveUpdate() {
+		moveLock  = true;
 	}
 	
 	public Ship(String objFile, String texture) {
@@ -68,8 +83,9 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void moveForward(){
-		orientation.translateForward(step);
-		space.getOrientation().translateForward(step);
+		perspective = Math.min(perspective+2, 80f);
+		orientation.translateForward(turboStep);
+		space.getOrientation().translateForward(turboStep);
 	}
 	
 	public void moveBackward(){
@@ -109,6 +125,14 @@ public abstract class Ship extends Model3D {
 		space.getOrientation().translateDownward(step);
 	}
 	
+	public void speedUp(){
+		speed = Math.min(speed+1, 5);
+	}
+	
+	public void speedDown(){
+		speed = Math.max(speed-1, -3);
+	}
+	
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		super.synchronizedDraw(gLDrawable);
@@ -137,9 +161,16 @@ public abstract class Ship extends Model3D {
 	
 	@Override
 	protected synchronized void update() {
-		if(updateLock){
+		if(rotateLock){
 			innerUpdate();
 		}
+		if(moveLock){
+			perspective = Math.max(perspective-2f, 50f);
+		}
+		
+		orientation.translateForward(step*speed);
+		space.getOrientation().translateForward(step*speed);
+		
 	}
 	
 	private void innerUpdate() {
@@ -149,7 +180,8 @@ public abstract class Ship extends Model3D {
 	
 	public void lookAtCamera1(GLAutoDrawable gLDrawable){
 		final GL gl = gLDrawable.getGL();
-		Game.glu.gluPerspective(50f, 2, 2, 5000.0);
+		
+		Game.glu.gluPerspective(perspective, 2, 2, 5000.0);
 		
 		
 		Vector camPos = orientation.getPosition();
