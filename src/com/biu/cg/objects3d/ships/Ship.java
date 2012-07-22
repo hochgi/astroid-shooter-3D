@@ -88,7 +88,7 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void turboForward(){
-		perspective = Math.min(perspective+2, 80f);
+		perspective = Math.min(perspective+1, 80f);
 		orientation.translateForward(turboStep);
 		space.getOrientation().translateForward(turboStep);
 	}
@@ -142,7 +142,7 @@ public abstract class Ship extends Model3D {
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		super.synchronizedDraw(gLDrawable);
 		if(active){
-			//space.draw(gLDrawable);
+			space.draw(gLDrawable);
 		}
 	}
 	
@@ -170,7 +170,7 @@ public abstract class Ship extends Model3D {
 			innerUpdate();
 		}
 		if(moveLock){
-			perspective = Math.max(perspective-2f, 50f);
+			perspective = Math.max(perspective-1f, 50f);
 		}
 		
 	}

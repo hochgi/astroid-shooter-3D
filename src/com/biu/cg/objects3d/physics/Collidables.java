@@ -38,7 +38,7 @@ public class Collidables {
 			}
 			
 			
-				
+			System.out.println(collidables.size());
 			for (int i=0 ; i< collidables.size()-1 ; i++) {
 				for (int j=i+1 ; j< collidables.size() ; j++){
 					try {

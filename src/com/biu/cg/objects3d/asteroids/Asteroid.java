@@ -22,6 +22,11 @@ public abstract class Asteroid extends Model3D implements Collidable{
 	protected Earth earth;
 	private LinkedList<Shot> rockets = new LinkedList<Shot>();
 	
+	
+	public boolean isAlive() {
+		return alive;
+	}
+	
 	public Asteroid(Earth earth , Orientation camera , Vector pos , String objPath) {
 		super(pos, objPath , null);
 		this.earth = earth;

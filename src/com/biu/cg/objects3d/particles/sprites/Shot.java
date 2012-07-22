@@ -68,13 +68,15 @@ public class Shot extends SpriteEmitter implements Collidable {
 	protected void update() {
 		if(!isDead()){
 			age--;
+			if(isDead())
+				Collidables.unregisterObject(this);
 			if(!locked){
 				//setPosition(getPosition().add(dir, vel));
 				
 				
 				float dist=Float.MAX_VALUE;
 				for(Asteroid a : Asteroids.getAsteroids()){
-					if(getHomingArea().intersect((BoundingSphere)a.getBoundingShape())){
+					if(getHomingArea().intersect((BoundingSphere)a.getBoundingShape()) && a.isAlive()){
 						float d = getPosition().sqrDistanceTo(a.getPosition());
 						if(d<dist){
 							locked=true;
@@ -123,7 +125,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 	
 	@Override
 	public BoundingShape getBoundingShape() {
-		return new BoundingSphere(getPosition(), 2);
+		return new BoundingSphere(getPosition(), 4);
 	}
 
 	@Override

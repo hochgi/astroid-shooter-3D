@@ -65,7 +65,10 @@ public class Photon extends Sprite implements Collidable {
 
 	@Override
 	protected void update() {
+		
 		age--;
+		if(isDead())
+			Collidables.unregisterObject(this);
 		setPosition(getPosition().add(dir, vel));
 	}
 
