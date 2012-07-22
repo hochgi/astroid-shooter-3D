@@ -70,14 +70,14 @@ public class Asteroids {
 			synchronized (gLock) {
 				synchronized (aLock) {
 					asteroids.removeAll(graveyard);
+          graveyard.clear();
 				}
-				graveyard.clear();
 			}
 			synchronized (nLock) {
 				synchronized (aLock) {
 					asteroids.addAll(newlyBorn);
+          newlyBorn.clear();
 				}
-				newlyBorn.clear();
 			}
 			
 			if(earth==null || camera==null) {

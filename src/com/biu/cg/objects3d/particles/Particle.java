@@ -32,12 +32,12 @@ public abstract class Particle extends Object3D {
 			 }
 			  
 			 for (Particle p : particles) {
-			  ﻿ if(p.isDead()) {
-			  ﻿ 	graveyard.add(p);
-				}
-			  ﻿ else{
-			  ﻿ 	p.update();
-			  ﻿ }
+				 if(p.isDead()) {
+					 graveyard.add(p);
+				 }
+				 else{
+					 p.update();
+				 }
 			 }
 		}
 	};
