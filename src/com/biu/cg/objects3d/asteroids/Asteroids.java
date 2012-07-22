@@ -46,7 +46,7 @@ public class Asteroids {
 	 */
 	public static void registerAsteroid(Asteroid obj) {
 		synchronized (nLock) {
-			newlyBorn.addLast(obj);
+			newlyBorn.add(obj);
 		}
 	}
 	
@@ -67,6 +67,7 @@ public class Asteroids {
 		
 		@Override
 		public void run() {
+//			System.out.println(newlyBorn.size());
 			synchronized (gLock) {
 				synchronized (aLock) {
 					asteroids.removeAll(graveyard);
@@ -77,6 +78,7 @@ public class Asteroids {
 				synchronized (aLock) {
 					asteroids.addAll(newlyBorn);
 					newlyBorn.clear();
+					
 				}
 			}
 			
@@ -91,7 +93,6 @@ public class Asteroids {
 				a = new SmallAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
 			
 			registerAsteroid(a);
-			Collidables.registerObject(a);
 			Object3D.registerObject(a);
 		}
 	};

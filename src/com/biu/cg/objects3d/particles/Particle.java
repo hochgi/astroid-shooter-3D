@@ -21,24 +21,23 @@ public abstract class Particle extends Object3D {
 		
 		@Override
 		public void run() {
-      particles.removeAll(graveyard);
-      graveyard.clear();
+			particles.removeAll(graveyard);
+			graveyard.clear();
 			synchronized(pLock) {
 				particles.addAll(newlyBorn);
 				newlyBorn.clear();
-      }
+			}
 			if(particles.isEmpty()) {
 				return;
-			 }
-			  
-			 for (Particle p : particles) {
-				 if(p.isDead()) {
-					 graveyard.add(p);
-				 }
-				 else{
-					 p.update();
-				 }
-			 }
+			}
+			for (Particle p : particles) {
+				if(p.isDead()) {
+					graveyard.add(p);
+				}
+				else{
+					p.update();
+				}
+			}
 		}
 	};
 	

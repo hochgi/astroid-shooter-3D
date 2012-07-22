@@ -79,8 +79,8 @@ public class Exercise4 {
 		frame.add(pButton);
 		frame.add(eButton);
 		frame.add(canvas);
-		frame.setUndecorated(true);
-		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+//		frame.setUndecorated(true);
+//		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 		
 		animator.start();

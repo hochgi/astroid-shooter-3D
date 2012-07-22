@@ -23,22 +23,17 @@ public class Collidables {
 		
 		@Override
 		public void run() {
-			synchronized(lock1) {		
-				collidables.addAll(newlyBorn);
-				newlyBorn.clear();
-			}
-			
-			if(collidables.isEmpty()) {
-				return;
-			}
-			
 			synchronized(lock2) {		
 				collidables.removeAll(graveYard);
 				graveYard.clear();
 			}
-			
-			
-			System.out.println(collidables.size());
+			synchronized(lock1) {		
+				collidables.addAll(newlyBorn);
+				newlyBorn.clear();
+			}
+			if(collidables.isEmpty()) {
+				return;
+			}
 			for (int i=0 ; i< collidables.size()-1 ; i++) {
 				for (int j=i+1 ; j< collidables.size() ; j++){
 					try {
@@ -59,12 +54,8 @@ public class Collidables {
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
-					
-					
 				}
-					
 			}
-			
 		}
 	};
 	

@@ -52,6 +52,7 @@ public abstract class MultiKeysAdapter implements KeyListener {
 			
 			@Override
 			public void run() {
+				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 				executeKeysAction();
 			}
 		};

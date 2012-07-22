@@ -11,6 +11,7 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
 import com.biu.cg.objects3d.asteroids.Asteroids;
+import com.biu.cg.objects3d.particles.Particle;
 import com.biu.cg.objects3d.particles.sprites.Photon;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -155,7 +156,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		if(isKeyPressed(MultiKeysAdapter.MOVE_DOWN)) {
 			ship1.moveDown();
 		}
-		if(isKeyPressed(MultiKeysAdapter.FIRE)){
+		if(isKeyPressed(MultiKeysAdapter.FIRE) && Photon.canShoot()){
 			shootPhoton();
 		}
 		else if(!Photon.canShoot()){
@@ -164,16 +165,11 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	}
 
 	private void shootPhoton() { 
- 		if(Photon.canShoot()){ 
- 			Sprite.registerObject(new Photon(ship1.getWingPosition(),orientation,new Vector(orientation.getAxis('z')),36f));
- 		} 
- 		else{
- 			Photon.incrementCoolOff();
- 		}
+ 		Sprite.registerObject(new Photon(ship1.getWingPosition(),orientation,new Vector(orientation.getAxis('z')),36f));
  	} 
 	
 	private void shootRocket() {
-		SpriteEmitter.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 9f));
+		Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 9f));
 	}
 	
 	private void speedUp(){
