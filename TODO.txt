@@ -2,6 +2,12 @@
 |TODO LIST|
 -----------
 
+* GPanel: implement top for ship. not absolute
+
+* motherShip should be collidable... don't allow to fly through it...
+
+* try to replace the newlyBorn+graveyard+working Lists with concurent (blocking) lists implementation
+
 * make sprite rendering to not generate too many Vector instances
 
 * make collidables to not generate too many Bounding_?_ instances

@@ -4,14 +4,11 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.media.opengl.GLAutoDrawable;
-
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
-import com.biu.cg.objects3d.physics.Collidables;
 
 public class Asteroids {
 	

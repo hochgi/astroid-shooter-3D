@@ -32,6 +32,18 @@ public abstract class Ship extends Model3D {
 		space.setScale(4000);
 	}
 	
+	public void reset(float xf, float yf, float zf) {
+		getOrientation().reset(xf,yf,zf,
+							   1f,0f,0f,
+							   0f,1f,0f,
+							   0f,0f,1f);
+		
+		space.getOrientation().reset(xf,yf,zf,
+									 1f,0f,0f,
+									 0f,1f,0f,
+									 0f,0f,1f);
+	}
+	
 	public synchronized void disableRotateUpdate() {
 		rotateLock  = false;
 	}
@@ -142,7 +154,7 @@ public abstract class Ship extends Model3D {
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		super.synchronizedDraw(gLDrawable);
 		if(active){
-			//space.draw(gLDrawable);
+			space.draw(gLDrawable);
 		}
 	}
 	

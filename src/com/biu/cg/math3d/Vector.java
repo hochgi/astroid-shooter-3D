@@ -8,6 +8,7 @@ package com.biu.cg.math3d;
  *
  */
 public class Vector {
+	private final static Vector defaultInstance = new Vector();
 	public float x;
 	public float y;
 	public float z;
@@ -191,5 +192,9 @@ public class Vector {
 		default:
 				//do nothing
 		}
+	}
+
+	public static Vector defaultInstance() {
+		return defaultInstance ;
 	}
 }

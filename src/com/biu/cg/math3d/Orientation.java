@@ -239,4 +239,14 @@ public class Orientation {
 		return zUnit.x*pos.x + zUnit.y*pos.y + zUnit.z*pos.z;
 		//return xUnit.z*pos.x + yUnit.z*pos.y + zUnit.z*pos.z;
 	}
+
+	public void convertVector(Vector v) {
+		float vx = v.x;
+		float vy = v.y;
+		float vz = v.z;
+		
+		v.x = xUnit.x*vx + xUnit.y*vy + xUnit.z*vz;
+		v.y = yUnit.x*vx + yUnit.y*vy + yUnit.z*vz;
+		v.z = zUnit.x*vx + zUnit.y*vy + zUnit.z*vz;
+	}
 }

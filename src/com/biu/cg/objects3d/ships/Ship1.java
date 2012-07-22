@@ -30,20 +30,16 @@ public class Ship1 extends Ship implements Collidable {
 
 	@Override
 	public void collisionAction(Collidable collidable) {
-		// TODO Auto-generated method stub
-		if(!collidable.getClass().isInstance(Shot.class))
-			System.out.println("COLLISION");
+		
 	}
 
 	@Override
 	public BoundingShape getBoundingShape() {
-		// TODO Auto-generated method stub
 		return new BoundingSphere(getVertices());
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
 		return Type.PLAYER_SHIP;
 	}
 }

@@ -1,6 +1,8 @@
 package com.biu.cg.main;
 
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -10,12 +12,12 @@ import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
+import com.biu.cg.objects3d.asteroids.Asteroid;
 import com.biu.cg.objects3d.asteroids.Asteroids;
 import com.biu.cg.objects3d.particles.Particle;
 import com.biu.cg.objects3d.particles.sprites.Photon;
 import com.biu.cg.objects3d.particles.sprites.Shot;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
-import com.biu.cg.objects3d.particles.sprites.SpriteEmitter;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
@@ -372,6 +374,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 * @return
 	 */
 	public Vector getCamPos() {
+		if(orientation == null){
+			return Vector.defaultInstance();
+		}
 		return orientation.getPosition();
 	}
 
@@ -382,14 +387,29 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 * this button might save your arse...
 	 */
 	public void resetOrientation() {
-		orientation.reset(0f,1f,0f,
-				 		  1f,0f,0f, 
-				 		  0f,1f,0f,
-				 		  0f,0f,1f);
+		ship1.reset(0f,10f,0f);
 	}
 
 
 	public void testExplosionEffect() {
 		new Explosion(ship1.getPosition().add(ship1.getOrientation().getAxis('z'), 200),orientation, false);
+	}
+
+
+	public LinkedList<Vector> getAsteroidsInSquareRange(int range) {
+		LinkedList<Vector> rv = new LinkedList<Vector>();
+		for (Asteroid ast : Asteroids.getAsteroids()) {
+			if(ast.getPosition().sqrDistanceTo(ship1.getPosition()) < range){
+				rv.add(ast.getPosition().sub(ship1.getPosition(), 1));
+			}
+		}
+		return rv;
+	}
+
+
+	public void convertAbsoluteVectorToShipRelative(LinkedList<Vector> asteroids) {
+		for (Vector v : asteroids) {
+			ship1.getOrientation().convertVector(v);
+		}
 	}
 }

@@ -2,9 +2,12 @@ package com.biu.cg.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.LinkedList;
+
 import javax.swing.JPanel;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
+import com.biu.cg.objects3d.asteroids.Asteroid;
 
 /**
  * this class is for the minimap.
@@ -61,20 +64,38 @@ public class GPanel extends JPanel {
 		
 		//compute the location on map
 		Vector pos = game.getCamPos();
-		int x = (int)(pos.getX()/3) - 3 + (this.getSize().width / 2);
-		int y = (int)(pos.getZ()/3) - 3 + (this.getSize().height / 2);
+		LinkedList<Vector> asteroids = game.getAsteroidsInSquareRange(625);
+		game.convertAbsoluteVectorToShipRelative(asteroids);
 		
-		//if in borders: draw a red circle with crossed lines
-		if(x > -2 && x < getWidth() + 2 && y > -2 && y < getHeight() + 2) {
-			g.setColor(Color.red);
-			g.drawOval(x, y, 6, 6);
-			g.drawLine(x, y+3, x+5, y+3);
-			g.drawLine(x+3, y, x+3, y+5);
+		float dist;
+		int x,y;
+		for (Vector v : asteroids) {
+			dist = v.sqrDistanceTo(pos);
+			if(dist <= 35f){
+				g.setColor(Color.black);
+			}
+			else if(dist <= 145f){
+				g.setColor(Color.darkGray);
+			}
+			else if(dist <= 325f){
+				g.setColor(Color.gray);
+			}
+			else{
+				g.setColor(Color.lightGray);
+			}
+
+			x = (int)(v.getX()/25) - 2 + (this.getSize().width / 2);
+			y = (int)(v.getZ()/25) - 2 + (this.getSize().height / 2);
+			
+			g.drawOval(x, y, 4, 4);
 		}
-		//if not in the map, just draw: "out of map"
-		else {
-			g.setColor(Color.black);
-			g.drawString("out of map", getWidth() / 2 - 27, getHeight() / 2 + 4);
-		}
+		
+		x = (int)(this.getSize().width / 2) -3;
+		y = (int)(this.getSize().height / 2) -3;
+
+		g.setColor(Color.red);
+		g.drawOval(x, y, 6, 6);
+		g.drawLine(x, y+3, x+5, y+3);
+		g.drawLine(x+3, y, x+3, y+5);
 	}
 }
