@@ -142,7 +142,7 @@ public abstract class Ship extends Model3D {
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
 		super.synchronizedDraw(gLDrawable);
 		if(active){
-			space.draw(gLDrawable);
+			//space.draw(gLDrawable);
 		}
 	}
 	
