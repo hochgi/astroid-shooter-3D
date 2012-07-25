@@ -3,11 +3,9 @@ package com.biu.cg.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
-
 import javax.swing.JPanel;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
-import com.biu.cg.objects3d.asteroids.Asteroid;
 
 /**
  * this class is for the minimap.
@@ -63,32 +61,34 @@ public class GPanel extends JPanel {
 		super.paintComponent(g);  
 		
 		//compute the location on map
-		Vector pos = game.getCamPos();
 		LinkedList<Vector> asteroids = game.getAsteroidsInSquareRange(625);
 		game.convertAbsoluteVectorToShipRelative(asteroids);
 		
-		float dist;
+//		float dist;
 		int x,y;
-		for (Vector v : asteroids) {
-			dist = v.sqrDistanceTo(pos);
-			if(dist <= 35f){
-				g.setColor(Color.black);
-			}
-			else if(dist <= 145f){
-				g.setColor(Color.darkGray);
-			}
-			else if(dist <= 325f){
-				g.setColor(Color.gray);
-			}
-			else{
-				g.setColor(Color.lightGray);
-			}
-
-			x = (int)(v.getX()/25) - 2 + (this.getSize().width / 2);
-			y = (int)(v.getZ()/25) - 2 + (this.getSize().height / 2);
-			
-			g.drawOval(x, y, 4, 4);
-		}
+//		for (Vector v : asteroids) {
+//			dist = v.sqrDistanceTo(game.getCamPos());
+//			if(dist <= 10000f){
+//				g.setColor(Color.black);
+//			}
+//			else if(dist <= 40000f){
+//				g.setColor(Color.darkGray);
+//			}
+//			else if(dist <= 90000f){
+//				g.setColor(Color.gray);
+//			}
+//			else{
+//				g.setColor(Color.lightGray);
+//			}//g.setColor(Color.black);
+//
+//			x = (int)(v.getX()/400) - 2 + (this.getSize().width / 2);
+//			y = (int)(v.getZ()/400) - 2 + (this.getSize().height / 2);
+//			System.out.println("draw asteroid at mm: (" +x+ "," +y+ ")");
+//			System.out.println("asteroid properties: "  +  v.toString());
+//			System.out.println("camera vectors base: "+game.getCamera());
+//			
+//			g.fillOval(x, y, 4, 4);
+//		}
 		
 		x = (int)(this.getSize().width / 2) -3;
 		y = (int)(this.getSize().height / 2) -3;

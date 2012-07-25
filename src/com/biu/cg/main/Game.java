@@ -412,4 +412,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			ship1.getOrientation().convertVector(v);
 		}
 	}
+
+
+	public Orientation getCamera() {
+		return ship1.getOrientation();
+	}
 }

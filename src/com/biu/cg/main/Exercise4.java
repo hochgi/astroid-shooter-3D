@@ -70,14 +70,14 @@ public class Exercise4 {
 		eButton.setLocation(0, 256);
 		eButton.setSize(128, 64);
 		eButton.setToolTipText("Test Explosion Effect");
-
+		
 		//add components to the frame
-		frame.add(miniMap);
-		frame.add(rButton);
-		frame.add(cButton);
-		frame.add(tButton);
-		frame.add(pButton);
-		frame.add(eButton);
+//		frame.add(miniMap);
+//		frame.add(rButton);
+//		frame.add(cButton);
+//		frame.add(tButton);
+//		frame.add(pButton);
+//		frame.add(eButton);
 		frame.add(canvas);
 		frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
