@@ -1,11 +1,14 @@
 package com.biu.cg.main;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
+import javax.media.opengl.GLException;
 import javax.media.opengl.glu.GLU;
 import com.biu.cg.gui.MultiKeysAdapter;
 import com.biu.cg.math3d.Orientation;
@@ -22,6 +25,8 @@ import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
 import com.biu.cg.objects3d.ships.Ship2;
+import com.sun.opengl.util.texture.Texture;
+import com.sun.opengl.util.texture.TextureIO;
 
 /**
  * Game class:
@@ -41,8 +46,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private Ship1 ship1;
 	private Ship2 ship2;
 	private MotherShip motherShip;
-	
 	private Earth earth;
+	public static Texture particleTex;
 	//private Asteroid astroid;
 
 	/**
@@ -260,6 +265,14 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Explosion.init();
 		Photon.init();
 		Shot.init();
+		
+		try {
+			particleTex = TextureIO.newTexture(new File( "textures/round_particle_16X16.png" ),false);
+		} catch (GLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		ship1 = new Ship1(new Vector(0, 10 , 0));
 		Object3D.registerObject(ship1);

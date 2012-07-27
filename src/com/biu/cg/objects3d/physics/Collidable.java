@@ -4,7 +4,7 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 
 public interface Collidable {
 	
-	enum Type {ROCKET , PHOTON , ASTEROID , SHIP , PLAYER_SHIP , EARTH , OTHER}
+	enum Type {ROCKET , PHOTON , ASTEROID , SHIP , PLAYER_SHIP , EARTH , ATMOSPHERE , OTHER}
 	
 	public void collisionAction(Collidable collidable);
 	

@@ -24,6 +24,9 @@ public class Asteroids {
 	private static LinkedList<Asteroid> newlyBorn = new LinkedList<Asteroid>();
 	private static LinkedList<Asteroid> graveyard = new LinkedList<Asteroid>();
 	
+	private static int creationCounter=0;
+	private static final int CREATION_DELAY = 250;
+	
 	
 	public static void setEarth(Earth earth) {
 		Asteroids.earth = earth;
@@ -83,21 +86,25 @@ public class Asteroids {
 				return;
 			}
 			
-			Asteroid a=null;
-			if(rand.nextInt(5)==0)
-				a = new BigAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
-			else
-				a = new SmallAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
 			
-			registerAsteroid(a);
-			Object3D.registerObject(a);
+			creationCounter = (creationCounter + 1) % CREATION_DELAY;
+			if(creationCounter==0){
+				Asteroid a=null;
+				if(rand.nextInt(5)==0)
+					a = new BigAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
+				else
+					a = new SmallAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
+				
+				registerAsteroid(a);
+				Object3D.registerObject(a);
+			}
 		}
 	};
 	
 	//static initialization that executes only once
 	static {
 		timer = new Timer("Timer-Asteroids");
-		timer.scheduleAtFixedRate(task, 0, 10000);
+		timer.scheduleAtFixedRate(task, 0, 40);
 	}
 
 	public static void drawAsteroids(GLAutoDrawable gLDrawable) {
