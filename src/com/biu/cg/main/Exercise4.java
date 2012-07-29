@@ -31,6 +31,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -59,6 +60,24 @@ public class Exercise4 {
     static public FuelPanel fuelPanel;
     
     public static GPanel  miniMap;
+    
+    
+    public static void showInfo(){
+    	JOptionPane.showMessageDialog(frame, "SAVE PLANET EARTH FROM THE EVIL ASTEROIDS!!\n" +
+    			"Don't let asteroids hit earth.\n" +
+    			"============== BUTTON DESCRIPTION ==============\n" +
+    			"I - look up\n" +
+    			"K - look down\n" +
+    			"J - turn left\n" +
+    			"L - turn right\n" +
+    			"U - roll left\n" +
+    			"O - roll right\n" +
+    			"0 - speed up\n" +
+    			"9 - speed down\n" +
+    			"W - turbo speed\n" +
+    			"Space - shoot photon\n" +
+    			"R - shoot rocket\n");
+    }
     		
 	public static void main(String[] args) {
 		Game game = new Game();

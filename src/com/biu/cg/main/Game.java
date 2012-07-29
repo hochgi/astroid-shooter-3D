@@ -96,6 +96,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	
 	private void help() {
 		// TODO Auto-generated method stub
+		Exercise4.showInfo();
 		
 	}
 
