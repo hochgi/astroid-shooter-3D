@@ -3,6 +3,7 @@ package com.biu.cg.objects3d.ships;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 
+import com.biu.cg.main.Exercise4;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
@@ -20,6 +21,7 @@ public abstract class Ship extends Model3D {
 	private boolean active = false;
 	private boolean rotateLock = true;
 	private boolean moveLock = true;
+	private int fuel=600;
 	
 	private int speed=0;
 	
@@ -100,11 +102,12 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void turboForward(){
-		perspective = Math.min(perspective+1, 80f);
-		orientation.translateForward(turboStep);
-		space.getOrientation().translateForward(turboStep);
+		if(fuel>0){	
+			perspective = Math.min(perspective+1, 80f);
+			orientation.translateForward(turboStep);
+			space.getOrientation().translateForward(turboStep);
+		}
 	}
-	
 	public void moveBackward(){
 		orientation.translateBackward(step);
 		space.getOrientation().translateBackward(step);
@@ -181,9 +184,25 @@ public abstract class Ship extends Model3D {
 		if(rotateLock){
 			innerUpdate();
 		}
-		if(moveLock){
+		if(moveLock || fuel==0){
 			perspective = Math.max(perspective-1f, 50f);
+			Exercise4.speedPanel.setSpeed(speed);
+			Exercise4.speedPanel.repaint();
+			
 		}
+		else{
+			
+			Exercise4.speedPanel.setSpeed(5);
+			Exercise4.speedPanel.repaint();
+			fuel = Math.max(fuel-1, 0);
+			
+			if(fuel!=0)
+				Exercise4.fuelPanel.setFuel((fuel/100)+1);
+			else
+				Exercise4.fuelPanel.setFuel(0);
+			Exercise4.fuelPanel.repaint();
+		}
+		
 		
 	}
 	

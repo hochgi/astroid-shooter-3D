@@ -1,13 +1,37 @@
 package com.biu.cg.main;
 
 import java.awt.Frame;
+
+import javax.imageio.ImageIO;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLCapabilities;
 import javax.swing.JButton;
+
+import sun.tools.jar.JarImageSource;
+
 import com.biu.cg.gui.ButtonEnum;
 import com.biu.cg.gui.GPanel;
 import com.biu.cg.gui.GameActionListener;
+import com.biu.cg.panels.FuelPanel;
+import com.biu.cg.panels.ImagePanel;
+import com.biu.cg.panels.SpeedPanel;
 import com.sun.opengl.util.Animator;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * main class.
@@ -16,6 +40,9 @@ import com.sun.opengl.util.Animator;
  *
  */
 public class Exercise4 {
+	
+
+	
 
     public static GLCanvas canvas = new GLCanvas(getCapabilities());
     static Frame frame = new Frame("Astroid Shooter - 0.1 Beta");
@@ -25,11 +52,17 @@ public class Exercise4 {
     static JButton tButton = new JButton("CTS");
     static JButton pButton = new JButton("RCO");
     static JButton eButton = new JButton("EXP");
+    //static ClassLoader cl = this.getClass().getClassLoader();
+    static ImageIcon img = new ImageIcon("textures/cockpit/panel.png");
+    static JLabel label;
+    static public SpeedPanel speedPanel;
+    static public FuelPanel fuelPanel;
+    
     public static GPanel  miniMap;
     		
 	public static void main(String[] args) {
 		Game game = new Game();
-		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		//canvas initialization
 		canvas.addGLEventListener(game);
 		canvas.addKeyListener(game);
@@ -41,6 +74,21 @@ public class Exercise4 {
 		miniMap.setLocation(0, 0);
 		miniMap.addKeyListener(game);
 		
+		
+		
+		ImagePanel leftPanel = new ImagePanel("textures/cockpit/panel1.png");
+		speedPanel = new SpeedPanel();
+		
+		speedPanel.setSize(109,109);
+		speedPanel.setLocation(40, (int)(screenSize.height - 222+40));
+		
+		fuelPanel = new FuelPanel();
+		fuelPanel.setSize(209,109);
+		fuelPanel.setLocation(180, (int)(screenSize.height - 222+40));
+		
+		//label = new JLabel(icon);
+		leftPanel.setLocation(0, (int)(screenSize.height - 222));
+		leftPanel.setSize(395,193);
 		//reverse cube rotation button setup
 		rButton.addActionListener(new GameActionListener(game, ButtonEnum.RCR));
 		rButton.setLocation(0, 128);
@@ -70,6 +118,9 @@ public class Exercise4 {
 		eButton.setLocation(0, 256);
 		eButton.setSize(128, 64);
 		eButton.setToolTipText("Test Explosion Effect");
+		frame.add(speedPanel);
+		frame.add(fuelPanel);
+		frame.add(leftPanel);
 		
 		//add components to the frame
 //		frame.add(miniMap);
@@ -79,7 +130,8 @@ public class Exercise4 {
 //		frame.add(pButton);
 //		frame.add(eButton);
 		frame.add(canvas);
-		frame.setUndecorated(true);
+		
+		//frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 		
