@@ -14,6 +14,7 @@ import com.biu.cg.gui.GPanel;
 import com.biu.cg.gui.GameActionListener;
 import com.biu.cg.panels.FuelPanel;
 import com.biu.cg.panels.ImagePanel;
+import com.biu.cg.panels.RocketPanel;
 import com.biu.cg.panels.SpeedPanel;
 import com.sun.opengl.util.Animator;
 
@@ -58,6 +59,8 @@ public class Exercise4 {
     static JLabel label;
     static public SpeedPanel speedPanel;
     static public FuelPanel fuelPanel;
+    static public RocketPanel rocketPanel;
+    
     
     public static GPanel  miniMap;
     
@@ -96,6 +99,7 @@ public class Exercise4 {
 		
 		
 		ImagePanel leftPanel = new ImagePanel("textures/cockpit/panel1.png");
+		ImagePanel rightPanel = new ImagePanel("textures/cockpit/panel1.png");
 		speedPanel = new SpeedPanel();
 		
 		speedPanel.setSize(109,109);
@@ -105,9 +109,23 @@ public class Exercise4 {
 		fuelPanel.setSize(209,109);
 		fuelPanel.setLocation(180, (int)(screenSize.height - 222+40));
 		
-		//label = new JLabel(icon);
+		
+		
+		
+		
+		
 		leftPanel.setLocation(0, (int)(screenSize.height - 222));
 		leftPanel.setSize(395,193);
+		
+		
+		rocketPanel = new RocketPanel();
+		rocketPanel.setSize(109, 109);
+		rocketPanel.setLocation(screenSize.width - 395 + 260, (int)(screenSize.height - 222 + 40));
+		
+		rightPanel.setLocation(screenSize.width - 395, (int)(screenSize.height - 222));
+		rightPanel.setSize(395,193);
+		
+		
 		//reverse cube rotation button setup
 		rButton.addActionListener(new GameActionListener(game, ButtonEnum.RCR));
 		rButton.setLocation(0, 128);
@@ -139,7 +157,9 @@ public class Exercise4 {
 		eButton.setToolTipText("Test Explosion Effect");
 		frame.add(speedPanel);
 		frame.add(fuelPanel);
+		frame.add(rocketPanel);
 		frame.add(leftPanel);
+		frame.add(rightPanel);
 		
 		//add components to the frame
 //		frame.add(miniMap);

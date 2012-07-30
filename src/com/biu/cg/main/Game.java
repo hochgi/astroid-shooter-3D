@@ -178,6 +178,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	
 	private void shootRocket() {
 		Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 9f));
+		Exercise4.rocketPanel.removeRocket();
+		Exercise4.rocketPanel.repaint();
 	}
 	
 	private void speedUp(){
