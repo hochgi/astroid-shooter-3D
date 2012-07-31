@@ -13,6 +13,7 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.physics.Collidable;
+import com.biu.cg.objects3d.physics.Collidables;
 import com.owens.oobjloader.builder.Face;
 
 public class MotherShip extends Model3D implements Collidable {
@@ -32,6 +33,11 @@ public class MotherShip extends Model3D implements Collidable {
 		aabbarray.add(new AABB(position, "models/mothership/BoundingBoxs/b6.wng" , scale));
 		
 		aabbs = new AABBSuit(aabbarray);
+		
+		Vector v = new Vector(position);
+		v.y+=150;
+		
+		Collidables.registerObject(new ReloadPoint(v));
 	}
 
 	@Override

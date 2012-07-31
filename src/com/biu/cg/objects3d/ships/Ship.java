@@ -21,7 +21,7 @@ public abstract class Ship extends Model3D {
 	private boolean active = false;
 	private boolean rotateLock = true;
 	private boolean moveLock = true;
-	private int fuel=600;
+	protected int fuel=600;
 	
 	protected boolean canMove=true;
 	protected int speed=0;

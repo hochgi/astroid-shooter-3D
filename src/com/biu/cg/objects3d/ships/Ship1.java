@@ -1,10 +1,12 @@
 package com.biu.cg.objects3d.ships;
 
+import com.biu.cg.main.Exercise4;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.physics.Collidable;
+import com.biu.cg.panels.FuelPanel;
 
 public class Ship1 extends Ship implements Collidable {
 	
@@ -34,6 +36,15 @@ public class Ship1 extends Ship implements Collidable {
 		switch(collidable.getType()){
 		case MOTHERSHIP:
 			speed = 0;
+			break;
+		case RELOAD:
+			fuel=600;
+			Exercise4.fuelPanel.setFuel(fuel);
+			Exercise4.fuelPanel.repaint();
+			System.out.println("RELOAD");
+			break;
+		default:
+			canMove=true;
 			break;
 		}
 	}
