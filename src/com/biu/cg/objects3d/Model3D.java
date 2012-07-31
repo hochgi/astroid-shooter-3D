@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import com.biu.cg.math3d.Orientation;
+import com.biu.cg.math3d.Polygon;
 import com.biu.cg.math3d.Vector;
 import com.owens.oobjloader.builder.Build;
 import com.owens.oobjloader.builder.Face;
+import com.owens.oobjloader.builder.FaceVertex;
 import com.owens.oobjloader.parser.Parse;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
@@ -51,10 +53,11 @@ public abstract class Model3D extends Object3D {
 		
 		final GL gl = gLDrawable.getGL();
 		
-		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
-        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );   
-		texture.bind();
-		
+		if(texture!=null){
+			gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
+	        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );   
+			texture.bind();
+		}
 		Orientation o = orientation;
 		//int counter=0;
 		for(Face f : builder.faces){
@@ -69,10 +72,10 @@ public abstract class Model3D extends Object3D {
 					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
 					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
 					
-					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){	
+					if(f.vertices.get(i).t!=null)	
 						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
-					}
+					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
+					
 				}
 				gl.glEnd();
 				break;
@@ -87,10 +90,10 @@ public abstract class Model3D extends Object3D {
 					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
 					
 					
-					if(f.vertices.get(i)!=null && f.vertices.get(i).t!=null){
+					if(f.vertices.get(i).t!=null)
 						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
-					}
+					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
+					
 				}	
 				gl.glEnd();
 				break;
@@ -99,63 +102,57 @@ public abstract class Model3D extends Object3D {
 		}
 	}
 	
+
+	
+
 	
 	
 	public ArrayList<Vector> getVertices(){
 		ArrayList<Vector> res = new ArrayList<Vector>();
-		double x = orientation.getPosition().getX();
-		double y = orientation.getPosition().getY();
-		double z = orientation.getPosition().getZ();
-		Orientation o = orientation;
-		for(Face f : builder.faces){
-			//Random rand = new Random();
-			switch(f.vertices.size()){
-			case 4:
-			{			
-				for(int i=0 ; i<4 ; i++){					
-					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
-					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
-					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);					
-					if(f.vertices.get(i)!=null){
-						res.add(new Vector((float)(x + (X.x + Y.x + Z.x)*scale) , (float)(y + (X.y + Y.y + Z.y)*scale) , (float)(z + (X.z + Y.z + Z.z)*scale)));
-					}
-				}
-				break;
-			}
-			case 3:
-				for(int i=0 ; i<3 ; i++){
-					
-					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
-					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
-					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
-					if(f.vertices.get(i)!=null){
-						res.add(new Vector((float)(x + (X.x + Y.x + Z.x)*scale) , (float)(y + (X.y + Y.y + Z.y)*scale) , (float)(z + (X.z + Y.z + Z.z)*scale)));
-					}
-				}	
-				break;
-			}
+		ArrayList<Polygon> polygons = getPolygons();
+		
+		for(Polygon p : polygons){
+			for(Vector v : p.vertices)
+				res.add(v);
 		}
+		
 		return res;
 	}
 	
 	
 	
+	public ArrayList<Polygon> getPolygons(){
+		ArrayList<Polygon> res = new ArrayList<Polygon>();	
+		double x = orientation.getPosition().getX();
+		double y = orientation.getPosition().getY();
+		double z = orientation.getPosition().getZ();
+		Orientation o = orientation;
+		for(Face f : builder.faces){
+			Polygon poly = new Polygon();
+			for(FaceVertex fv : f.vertices){
+				Vector X = o.getAxis('x').mul(fv.v.x);
+				Vector Y = o.getAxis('y').mul(fv.v.y);
+				Vector Z = o.getAxis('z').mul(fv.v.z);
+				//if(fv!=null && fv.t!=null)
+					poly.vertices.add(new Vector((float)(x + (X.x + Y.x + Z.x)*scale) , (float)(y + (X.y + Y.y + Z.y)*scale) , (float)(z + (X.z + Y.z + Z.z)*scale)));
+			}
+			res.add(poly);
+		}
+		return res;
+	}
+	
+	
 	private void generateModelFromFile(String objFile, String texturePath) {
 		// TODO: remove String texture.
-
 		builder = new Build();
-		
-	        try {
-				new Parse(builder, objFile);
-				if(texturePath!=null)
-					texture = TextureIO.newTexture(new File(texturePath),true);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}        
-		
-        
+        try {
+			new Parse(builder, objFile);
+			if(texturePath!=null)
+				texture = TextureIO.newTexture(new File(texturePath),true);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}        
 	}
-
 }

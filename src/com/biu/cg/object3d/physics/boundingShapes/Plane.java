@@ -1,21 +1,24 @@
 package com.biu.cg.object3d.physics.boundingShapes;
 
+import java.util.ArrayList;
+
+import com.biu.cg.math3d.Polygon;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Object3D;
 
-public class Dot implements BoundingShape {
+public class Plane implements BoundingShape {
+	private ArrayList<Vector> vertices;
 	
-	private Vector pos;
-	
-	
-	public Vector getPos() {
-		return pos;
+	public Plane(Polygon poly){
+		this.vertices = poly.vertices;
 	}
 	
-	public Dot(Vector pos){
-		this.pos = pos;
-	}
+	public Plane(){}
+
 	
+	public void addVertex(Vector v){
+		vertices.add(v);
+	}
 	
 	@Override
 	public boolean intersect(AABB shape) {
@@ -25,13 +28,9 @@ public class Dot implements BoundingShape {
 
 	@Override
 	public boolean intersect(BoundingSphere shape) {
-		// TODO Auto-generated method stubs
-		if(Math.sqrt(pos.sqrDistanceTo(shape.getCenter())) < shape.getRadius())
-			return true;
-		
+		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 	@Override
 	public boolean intersect(Dot shape) {
@@ -48,7 +47,6 @@ public class Dot implements BoundingShape {
 	@Override
 	public boolean intersect(AABBSuit shape) {
 		// TODO Auto-generated method stub
-		return shape.intersect(this);
+		return false;
 	}
-
 }

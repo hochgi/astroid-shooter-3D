@@ -44,6 +44,7 @@ public class BigAsteroid extends Asteroid{
 			Collidables.registerObject(a4);
 			Object3D.registerObject(a4);
 		case ROCKET:
+		case MOTHERSHIP:
 		case EARTH:
 			new Explosion(getPosition(),camera, false);
 			Collidables.unregisterObject(this);

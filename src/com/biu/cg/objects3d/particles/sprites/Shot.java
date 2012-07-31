@@ -109,6 +109,7 @@ public class Shot extends SpriteEmitter implements Collidable {
 			collisionDetected();
 			
 			break;
+		case MOTHERSHIP:
 		case EARTH:
 			new Explosion(getPosition(),getCamera(), false);
 			Collidables.unregisterObject(this);

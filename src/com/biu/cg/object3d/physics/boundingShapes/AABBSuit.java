@@ -1,41 +1,41 @@
 package com.biu.cg.object3d.physics.boundingShapes;
 
-import com.biu.cg.math3d.Vector;
+import java.util.ArrayList;
+
 import com.biu.cg.objects3d.Object3D;
 
-public class Dot implements BoundingShape {
+public class AABBSuit implements BoundingShape {
 	
-	private Vector pos;
-	
-	
-	public Vector getPos() {
-		return pos;
+	ArrayList<AABB> aabbs;
+
+	public AABBSuit(ArrayList<AABB> aabbs){
+		this.aabbs = aabbs;
 	}
-	
-	public Dot(Vector pos){
-		this.pos = pos;
-	}
-	
 	
 	@Override
 	public boolean intersect(AABB shape) {
-		// TODO Auto-generated method stub
+		for(AABB b : aabbs){
+			if(b.intersect(shape))
+				return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean intersect(BoundingSphere shape) {
-		// TODO Auto-generated method stubs
-		if(Math.sqrt(pos.sqrDistanceTo(shape.getCenter())) < shape.getRadius())
-			return true;
-		
+		for(AABB b : aabbs){
+			if(b.intersect(shape))
+				return true;
+		}
 		return false;
 	}
 
-
 	@Override
 	public boolean intersect(Dot shape) {
-		// TODO Auto-generated method stub
+		for(AABB b : aabbs){
+			if(b.intersect(shape))
+				return true;
+		}
 		return false;
 	}
 
@@ -48,7 +48,7 @@ public class Dot implements BoundingShape {
 	@Override
 	public boolean intersect(AABBSuit shape) {
 		// TODO Auto-generated method stub
-		return shape.intersect(this);
+		return false;
 	}
 
 }

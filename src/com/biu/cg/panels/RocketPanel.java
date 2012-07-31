@@ -24,7 +24,7 @@ public class RocketPanel extends ImagePanel {
 	
 	public void removeRocket(){
 		if(rocketCounter>0)
-		image = images[--rocketCounter];
+			image = images[--rocketCounter];
 	}
 	
 	public void restore(){

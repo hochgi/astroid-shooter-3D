@@ -115,4 +115,10 @@ public class BoundingSphere implements BoundingShape {
 		return null;
 	}
 
+	@Override
+	public boolean intersect(AABBSuit shape) {
+		// TODO Auto-generated method stub
+		return shape.intersect(this);
+	}
+
 }

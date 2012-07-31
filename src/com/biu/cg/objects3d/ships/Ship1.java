@@ -1,5 +1,6 @@
 package com.biu.cg.objects3d.ships;
 
+import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
@@ -30,7 +31,11 @@ public class Ship1 extends Ship implements Collidable {
 
 	@Override
 	public void collisionAction(Collidable collidable) {
-		
+		switch(collidable.getType()){
+		case MOTHERSHIP:
+			speed = 0;
+			break;
+		}
 	}
 
 	@Override

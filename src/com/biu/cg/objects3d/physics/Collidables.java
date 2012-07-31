@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.biu.cg.object3d.physics.boundingShapes.AABBSuit;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.physics.boundingShapes.Dot;
 
@@ -43,7 +44,7 @@ public class Collidables {
 							//System.out.println(collidables.get(i).getType() + " collided with " + collidables.get(j).getType());
 						}
 					} catch (Exception e) {
-						// TODO: handle exception
+								
 					}
 					try {
 						if(collidables.get(i).getBoundingShape().intersect((Dot)collidables.get(j).getBoundingShape())){
@@ -52,7 +53,16 @@ public class Collidables {
 							//System.out.println(collidables.get(i).getType() + " collided with " + collidables.get(j).getType());
 						}
 					} catch (Exception e) {
-						// TODO: handle exception
+						
+					}
+					try {
+						if(collidables.get(i).getBoundingShape().intersect((AABBSuit)collidables.get(j).getBoundingShape())){
+							collidables.get(i).collisionAction(collidables.get(j));
+							collidables.get(j).collisionAction(collidables.get(i));
+							//System.out.println(collidables.get(i).getType() + " collided with " + collidables.get(j).getType());
+						}
+					} catch (Exception e) {
+						
 					}
 				}
 			}

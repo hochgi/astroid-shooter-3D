@@ -23,7 +23,8 @@ public abstract class Ship extends Model3D {
 	private boolean moveLock = true;
 	private int fuel=600;
 	
-	private int speed=0;
+	protected boolean canMove=true;
+	protected int speed=0;
 	
 	private float perspective = 50f;
 	
@@ -190,8 +191,7 @@ public abstract class Ship extends Model3D {
 			Exercise4.speedPanel.repaint();
 			
 		}
-		else{
-			
+		else{	
 			Exercise4.speedPanel.setSpeed(5);
 			Exercise4.speedPanel.repaint();
 			fuel = Math.max(fuel-1, 0);
@@ -201,9 +201,7 @@ public abstract class Ship extends Model3D {
 			else
 				Exercise4.fuelPanel.setFuel(0);
 			Exercise4.fuelPanel.repaint();
-		}
-		
-		
+		}	
 	}
 	
 	private void innerUpdate() {

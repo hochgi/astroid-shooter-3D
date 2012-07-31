@@ -35,6 +35,7 @@ public class SmallAsteroid extends Asteroid {
 	public void collisionAction(Collidable collidable) {
 		switch(collidable.getType()){
 		case ROCKET:
+		case MOTHERSHIP:
 		case PHOTON:
 		case EARTH:
 			new Explosion(getPosition(),camera, false);

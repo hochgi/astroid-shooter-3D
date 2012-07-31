@@ -81,6 +81,7 @@ public class Photon extends Sprite implements Collidable {
 //			Collidables.unregisterObject(this);
 			
 			break;
+		case MOTHERSHIP:
 		case EARTH:
 			new Explosion(getPosition(),getCam(), false);
 			Collidables.unregisterObject(this);
