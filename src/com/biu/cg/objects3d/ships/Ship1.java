@@ -2,6 +2,7 @@ package com.biu.cg.objects3d.ships;
 
 import com.biu.cg.main.Exercise4;
 import com.biu.cg.math3d.Orientation;
+import com.biu.cg.math3d.Rotator;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
@@ -35,7 +36,22 @@ public class Ship1 extends Ship implements Collidable {
 	public void collisionAction(Collidable collidable) {
 		switch(collidable.getType()){
 		case MOTHERSHIP:
-			speed = 0;
+			MotherShip m = (MotherShip)collidable;
+			Vector n = m.getNormalPerpendicularToPlaneAt(this.getPosition());
+			//float angle = (float)Math.asin(n.dot(getOrientation().getAxis('z')));
+			Vector x = getOrientation().getAxis('x');
+			Vector y = getOrientation().getAxis('y');
+			Vector z = getOrientation().getAxis('z');
+			Vector tmp = new Vector();
+			Rotator.oneTimeRotatation(x, tmp, z, (float)Math.PI);
+			Rotator.oneTimeRotatation(tmp, x, n, (float)Math.PI);
+			
+			Rotator.oneTimeRotatation(y, tmp, z, (float)Math.PI);
+			Rotator.oneTimeRotatation(tmp, y, n, (float)Math.PI);
+			
+			Rotator.oneTimeRotatation(new Vector(z), z, n, (float)Math.PI);
+			z.negMutate();
+			speedDown();
 			break;
 		case RELOAD:
 			fuel=600;
