@@ -44,15 +44,20 @@ public class Ship1 extends Ship implements Collidable {
 			Vector z = getOrientation().getAxis('z');
 			Vector tmp = new Vector();
 			
-			Rotator.oneTimeRotatation(new Vector(z), z, y, (float)Math.PI);
-			
 			Rotator.oneTimeRotatation(x, tmp, z, (float)Math.PI);
 			Rotator.oneTimeRotatation(tmp, x, n, (float)Math.PI);
-			
-			Rotator.oneTimeRotatation(y, tmp, z, (float)Math.PI);
-			Rotator.oneTimeRotatation(tmp, y, n, (float)Math.PI);
-			
+
+//			Rotator.oneTimeRotatation(y, tmp, z, (float)Math.PI);
+//			Rotator.oneTimeRotatation(tmp, y, n, (float)Math.PI);
+//			
 			Rotator.oneTimeRotatation(new Vector(z), z, n, (float)Math.PI);
+//			Rotator.oneTimeRotatation(new Vector(z), z, y, (float)Math.PI);
+			z.negMutate();	
+			tmp = Vector.cross(x, z);
+			y.x = tmp.x;
+			y.y = tmp.y;
+			y.z = tmp.z;
+			x.negMutate();
 			
 			speedDown();
 			break;
