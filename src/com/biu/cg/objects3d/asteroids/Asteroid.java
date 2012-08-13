@@ -14,7 +14,7 @@ import com.biu.cg.objects3d.physics.Collidables;
 import com.owens.oobjloader.builder.Face;
 
 public abstract class Asteroid extends Model3D implements Collidable{
-
+	float speed;
 	boolean alive=true;
 	Vector direction;
 	Orientation camera;
@@ -33,6 +33,11 @@ public abstract class Asteroid extends Model3D implements Collidable{
 		this.camera = camera;
 		Collidables.registerObject(this);
 		direction = earth.getPosition().sub(pos, 1).normalize();
+		
+		Random rand = new Random();
+		
+		//speed = 1 + (float)rand.nextInt(11) / 10f;
+		speed = 2;
 	}
 
 
@@ -45,7 +50,7 @@ public abstract class Asteroid extends Model3D implements Collidable{
 	@Override
 	protected void update() {
 		// TODO Auto-generated method stub
-		orientation.getPosition().addMutate(direction, 2);
+		orientation.getPosition().addMutate(direction, speed);
 		
 		orientation.rotateHeading(0.1f);
 		orientation.rotatePitch(0.01f);

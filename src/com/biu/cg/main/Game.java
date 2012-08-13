@@ -247,7 +247,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glEnd();
 		
 		ship1.drawSpace(gLDrawable);
-		ship2.draw(gLDrawable);
+		//ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
 		earth.draw(gLDrawable);
 		ship1.draw(gLDrawable);
@@ -278,18 +278,19 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			e.printStackTrace();
 		}
 
-		ship1 = new Ship1(new Vector(0, 40 , 0));
+		ship1 = new Ship1(new Vector(0, 40-1000 , 0));
 		Object3D.registerObject(ship1);
 		ship1.setActive(true);
 		
 		Collidables.registerObject(ship1);
 		
-		ship2 = new Ship2(new Vector(50, 0 , 80));
+		ship2 = new Ship2(new Vector(-50, 0 , 80));
 		//Collidables.registerObject(ship2);
-		motherShip = new MotherShip(new Vector(0, -180 , 40) , 5);
+		motherShip = new MotherShip(new Vector(0, -180-1000 , 40) , 5);
 		Collidables.registerObject(motherShip);
 		
 		earth = new Earth(getCamera());
+		
 		Collidables.registerObject(earth);
 		Object3D.registerObject(earth);
 		//earth.setScale(1000);

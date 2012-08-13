@@ -8,6 +8,7 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
+import com.biu.cg.objects3d.particles.sprites.FlameEmitter;
 import com.biu.cg.objects3d.particles.sprites.Flare;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.physics.Collidable;
@@ -59,7 +60,7 @@ public class BigAsteroid extends Asteroid{
 		case ATMOSPHERE:
 			for (int i = 0; i < 16; i++)
 				Sprite.registerObject(new Flare(Game.particleTex, new Vector(getPosition()), 9f * ((float)Math.random()*0.9f + 0.9f), direction.neg().mulMutate(0.67f).noise(0.075f), camera, 50f));
-			
+			new FlameEmitter(getPosition(), camera, 3, 2f);
 			break;
 		
 		}

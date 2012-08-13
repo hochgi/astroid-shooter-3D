@@ -20,7 +20,7 @@ public class Atmosphere implements Collidable  {
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
 		//return new BoundingSphere(earth.getPosition(), 1500);
-		return new BoundingSphere(earth.getPosition(), 1500);
+		return new BoundingSphere(earth.getPosition(), ((BoundingSphere)earth.getBoundingShape()).getRadius() * 1.25f);
 	}
 
 	@Override
