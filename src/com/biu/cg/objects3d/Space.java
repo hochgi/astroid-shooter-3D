@@ -2,6 +2,8 @@ package com.biu.cg.objects3d;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+
+import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.owens.oobjloader.builder.Face;
 
@@ -12,8 +14,9 @@ public class Space extends Model3D  {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Space(String objFile, String texture) {
+	public Space(String objFile, String texture, Orientation orientation) {
 		super(objFile, texture);
+		this.orientation = orientation;
 		// TODO Auto-generated constructor stub
 	}
 

@@ -31,7 +31,7 @@ public abstract class Ship extends Model3D {
 	public Ship(Vector position ,String objFile, String texture) {
 		super(position, objFile , texture);
 		lookAt = new Vector(orientation.getAxis('z'));
-		space = new Space("models/space/space.wng" , "models/space/space.jpg");
+		space = new Space("models/space/space.wng" , "models/space/space.jpg", getOrientation());
 		space.setScale(4000);
 	}
 	
@@ -41,10 +41,10 @@ public abstract class Ship extends Model3D {
 							   0f,1f,0f,
 							   0f,0f,1f);
 		
-		space.getOrientation().reset(xf,yf,zf,
-									 1f,0f,0f,
-									 0f,1f,0f,
-									 0f,0f,1f);
+		//space.getOrientation().reset(xf,yf,zf,
+		//							 1f,0f,0f,
+		//							 0f,1f,0f,
+		//							 0f,0f,1f);
 	}
 	
 	public synchronized void disableRotateUpdate() {
@@ -67,7 +67,7 @@ public abstract class Ship extends Model3D {
 	
 	public Ship(String objFile, String texture) {
 		super(objFile, texture);
-		space = new Space("models/space/space.wng" , "models/space/space.jpg");
+		space = new Space("models/space/space.wng" , "models/space/space.jpg", getOrientation());
 		space.setScale(4000);
 	}
 
@@ -77,73 +77,73 @@ public abstract class Ship extends Model3D {
 	
 	public void rollRight(){
 		orientation.rotateRoll(nTheta);
-		space.getOrientation().rotateRoll(nTheta);
+		//space.getOrientation().rotateRoll(nTheta);
 	}
 	
 	public void rollLeft(){
 		orientation.rotateRoll(pTheta);
-		space.getOrientation().rotateRoll(pTheta);
+		//space.getOrientation().rotateRoll(pTheta);
 	}
 	
 	public void pitchUp(){
 		innerUpdate();
 		orientation.rotatePitch(pTheta);
-		space.getOrientation().rotatePitch(pTheta);
+		//space.getOrientation().rotatePitch(pTheta);
 	}
 	
 	public void pitchDown(){
 		innerUpdate();
 		orientation.rotatePitch(nTheta);
-		space.getOrientation().rotatePitch(nTheta);
+		//space.getOrientation().rotatePitch(nTheta);
 	}
 	
 	public void moveForward(){
 		orientation.translateForward(step*speed);
-		space.getOrientation().translateForward(step*speed);
+		//space.getOrientation().translateForward(step*speed);
 	}
 	
 	public void turboForward(){
 		if(fuel>0){	
 			perspective = Math.min(perspective+1, 80f);
 			orientation.translateForward(turboStep);
-			space.getOrientation().translateForward(turboStep);
+			//space.getOrientation().translateForward(turboStep);
 		}
 	}
 	public void moveBackward(){
 		orientation.translateBackward(step);
-		space.getOrientation().translateBackward(step);
+		//space.getOrientation().translateBackward(step);
 	}
 	
 	public void turnRight(){
 		innerUpdate();
 		orientation.rotateHeading(pTheta);
-		space.getOrientation().rotateHeading(pTheta);
+		//space.getOrientation().rotateHeading(pTheta);
 	}
 	
 	public void turnLeft(){
 		innerUpdate();
 		orientation.rotateHeading(nTheta);
-		space.getOrientation().rotateHeading(nTheta);
+		//space.getOrientation().rotateHeading(nTheta);
 	}
 	
 	public void moveRight(){
 		orientation.translateRightward(step);
-		space.getOrientation().translateRightward(step);
+		//space.getOrientation().translateRightward(step);
 	}
 	
 	public void moveLeft(){
 		orientation.translateLeftward(step);
-		space.getOrientation().translateLeftward(step);
+		//space.getOrientation().translateLeftward(step);
 	}
 	
 	public void moveUp(){
 		orientation.translateUpward(step);
-		space.getOrientation().translateUpward(step);
+		//space.getOrientation().translateUpward(step);
 	}
 	
 	public void moveDown(){
 		orientation.translateDownward(step);
-		space.getOrientation().translateDownward(step);
+		//space.getOrientation().translateDownward(step);
 	}
 	
 	public void speedUp(){
