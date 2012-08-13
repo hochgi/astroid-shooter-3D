@@ -24,7 +24,7 @@ public class Earth extends Model3D implements Collidable {
 	private static Texture tex;
 	static {
 		try {
-			tex = TextureIO.newTexture(new File( "textures/sparks_ring_256X256.png" ),false);
+			tex = TextureIO.newTexture(new File( "textures/atmosphere_256X256.png" ),false);
 		} catch (GLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -47,7 +47,7 @@ public class Earth extends Model3D implements Collidable {
 		gl.glEnable(GL.GL_BLEND);	
 		gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE);	
 	    tex.bind();
-	    gl.glColor4f(0.33f,0.67f,1,1);
+	    gl.glColor4f(0.8f,0.9f,1,0.6f);
 	    gl.glBegin(GL.GL_QUADS);
 	    gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3d(bb[0].x, bb[0].y, bb[0].z);
 	    gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3d(bb[1].x, bb[1].y, bb[1].z);
