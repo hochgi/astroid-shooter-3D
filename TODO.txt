@@ -4,7 +4,7 @@
 
 * GPanel: implement top for ship. not absolute
 
-* motherShip should be collidable... don't allow to fly through it...
+-DONE!- motherShip should be collidable... don't allow to fly through it...
 
 * try to replace the newlyBorn+graveyard+working Lists with concurent (blocking) lists implementation
 
@@ -21,9 +21,6 @@
 -DONE!- model and texture of the ships & the asteroids.
 
 -DONE!- implement particles engine, and use shooting with particles (random spray factor?)
-
-* think about michael's idea. to have a ground (city? several buildings?) we need to protect.
-  asteroids will only come from above. 
   
 -DONE!- convert all double calculations to float for efficiency.
 
@@ -46,10 +43,7 @@
 
 -DONE!- build the scene
 
-* implement help splash screen on F1 hits
-
-* build a nice looking status bar. minimap should show asteroid movement from top view, 
-  turning red as they getting near the ground.
+-DONE!- implement help splash screen on F1 hits
   
 -DONE!- LineSprites should return only the projection of the billboard, and not the billboard itself,
   		since it intersects with the orthogonal to camera point sprites.
@@ -59,7 +53,6 @@
 * Game Logic:
     - only allow to carry 3 rockets at a time.
     - flying through the hangar should reload rockets.
-    - hangar should allow docking and to change the ship being used while docked.
     - add points / score of destroyed asteroids.
     - end game when an asteroid hits earth.
     - add atmosphere to earth, preventing the ship to get too close to earth.

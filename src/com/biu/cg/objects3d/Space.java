@@ -22,7 +22,6 @@ public class Space extends Model3D  {
 
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
-		// TODO: implement.
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();
 		double z = orientation.getPosition().getZ();

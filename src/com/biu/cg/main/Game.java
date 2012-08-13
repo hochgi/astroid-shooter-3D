@@ -288,7 +288,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		motherShip = new MotherShip(new Vector(0, -180 , 40) , 5);
 		Collidables.registerObject(motherShip);
 		
-		earth = new Earth();
+		earth = new Earth(getCamera());
 		Collidables.registerObject(earth);
 		Object3D.registerObject(earth);
 		//earth.setScale(1000);
