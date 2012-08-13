@@ -1,6 +1,5 @@
 package com.biu.cg.panels;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +8,8 @@ import javax.imageio.ImageIO;
 
 public class SpeedPanel extends ImagePanel {
 	
+	private static final long serialVersionUID = 1L;
 	private BufferedImage[] images = new BufferedImage[8];
-	private int speed;
 	public SpeedPanel(){
 		try {                
 	          images[0] = ImageIO.read(new File("textures/cockpit/speed-2.png"));
@@ -21,7 +20,6 @@ public class SpeedPanel extends ImagePanel {
 	          images[5] = ImageIO.read(new File("textures/cockpit/speed3.png"));
 	          images[6] = ImageIO.read(new File("textures/cockpit/speed4.png"));
 	          images[7] = ImageIO.read(new File("textures/cockpit/speed5.png"));
-	          speed = 2;
 	       } catch (IOException ex) {
 	            // handle exception...
 	       }

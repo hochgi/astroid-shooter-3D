@@ -3,11 +3,8 @@ package com.biu.cg.object3d.physics.boundingShapes;
 import java.util.ArrayList;
 
 import com.biu.cg.math3d.Polygon;
-import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Object3D;
-import com.owens.oobjloader.builder.Face;
-import com.owens.oobjloader.builder.FaceVertex;
 
 public class Planes implements BoundingShape  {
 	

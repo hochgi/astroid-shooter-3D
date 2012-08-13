@@ -3,10 +3,11 @@ package com.biu.cg.panels;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 public class RocketPanel extends ImagePanel {
+
+	private static final long serialVersionUID = 1L;
 	private BufferedImage[] images = new BufferedImage[4];
 	private int rocketCounter=3;
 	public RocketPanel(){

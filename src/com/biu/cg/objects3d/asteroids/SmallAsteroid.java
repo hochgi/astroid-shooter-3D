@@ -1,26 +1,14 @@
 package com.biu.cg.objects3d.asteroids;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.media.opengl.GLException;
-
 import com.biu.cg.main.Explosion;
-import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
-import com.biu.cg.objects3d.particles.sprites.FlameEmitter;
-import com.biu.cg.objects3d.particles.sprites.Flare;
-import com.biu.cg.objects3d.particles.sprites.SmokeEmitter;
-import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
-import com.sun.opengl.util.texture.Texture;
-import com.sun.opengl.util.texture.TextureIO;
 
 public class SmallAsteroid extends Asteroid {
 

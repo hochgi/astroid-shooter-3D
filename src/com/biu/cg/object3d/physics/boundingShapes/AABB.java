@@ -1,17 +1,9 @@
 package com.biu.cg.object3d.physics.boundingShapes;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Object3D;
-import com.owens.oobjloader.builder.Build;
-import com.owens.oobjloader.parser.Parse;
-import com.sun.opengl.util.texture.TextureIO;
 
 public class AABB extends Model3D implements BoundingShape{
 	

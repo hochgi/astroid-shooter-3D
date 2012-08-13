@@ -4,13 +4,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class ImagePanel extends JPanel{
 
-    protected BufferedImage image;
+	private static final long serialVersionUID = 1L;
+	protected BufferedImage image;
 
     public ImagePanel(){}
     
