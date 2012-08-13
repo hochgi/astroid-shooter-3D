@@ -1,13 +1,11 @@
 package com.biu.cg.objects3d.ships;
 
 import com.biu.cg.main.Exercise4;
-import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Rotator;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.physics.Collidable;
-import com.biu.cg.panels.FuelPanel;
 
 public class Ship1 extends Ship implements Collidable {
 	

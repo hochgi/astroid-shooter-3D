@@ -151,7 +151,7 @@ public abstract class Ship extends Model3D {
 	}
 	
 	public void speedDown(){
-		speed = Math.max(speed-1, -2);
+		speed = Math.max(speed-1, 0);
 	}
 	
 	@Override

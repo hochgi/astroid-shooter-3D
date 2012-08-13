@@ -1,20 +1,13 @@
 package com.biu.cg.objects3d.ships;
 
 import java.util.ArrayList;
-
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-
-import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.AABB;
 import com.biu.cg.object3d.physics.boundingShapes.AABBSuit;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
-import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
-import com.owens.oobjloader.builder.Face;
 
 public class MotherShip extends Model3D implements Collidable {
 

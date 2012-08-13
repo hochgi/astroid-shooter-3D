@@ -1,14 +1,9 @@
 package com.biu.cg.main;
 
 import java.awt.Frame;
-
-import javax.imageio.ImageIO;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLCapabilities;
 import javax.swing.JButton;
-
-import sun.tools.jar.JarImageSource;
-
 import com.biu.cg.gui.ButtonEnum;
 import com.biu.cg.gui.GPanel;
 import com.biu.cg.gui.GameActionListener;
@@ -17,23 +12,11 @@ import com.biu.cg.panels.ImagePanel;
 import com.biu.cg.panels.RocketPanel;
 import com.biu.cg.panels.SpeedPanel;
 import com.sun.opengl.util.Animator;
-
-import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  * main class.
