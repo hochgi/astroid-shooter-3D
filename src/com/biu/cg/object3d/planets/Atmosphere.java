@@ -19,6 +19,7 @@ public class Atmosphere implements Collidable  {
 	@Override
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
+		//return new BoundingSphere(earth.getPosition(), 1500);
 		return new BoundingSphere(earth.getPosition(), 1500);
 	}
 

@@ -83,7 +83,7 @@ public class Photon extends Sprite implements Collidable {
 			break;
 		case MOTHERSHIP:
 		case EARTH:
-			new Explosion(getPosition(),getCam(), false);
+			new Explosion(getPosition(),getCam(), 0.25f, null);
 			Collidables.unregisterObject(this);
 			hasCollide = true;
 			break;

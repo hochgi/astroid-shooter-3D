@@ -90,7 +90,6 @@ public abstract class Asteroid extends Model3D implements Collidable{
 						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
 					}
 				}
-				gl.glEnd();
 				break;
 			}
 			case 3:
@@ -109,10 +108,10 @@ public abstract class Asteroid extends Model3D implements Collidable{
 						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
 					}
 				}	
-				gl.glEnd();
+				
 				break;
 			}
-			
+			gl.glEnd();
 		}
 	}
 

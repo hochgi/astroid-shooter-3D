@@ -21,10 +21,10 @@ public class Flame extends Sprite {
 	private float inflateFactor;
 	private Vector expander;
 
-	public Flame(Texture tex, Vector position, Orientation camera) {
+	public Flame(Texture tex, Vector position, Orientation camera, float size) {
 		super(position, camera);
 		texture = tex;
-		size = 0.5f;
+		this.size = size;
 		angle = 0.01f*(float)Math.random()+0.01f;
 		accumulatedAngle = 0;
 		stage = Phase.First;

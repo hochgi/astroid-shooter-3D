@@ -13,12 +13,9 @@ public class MotherShip extends Model3D implements Collidable {
 
 	AABBSuit aabbs;
 	ArrayList<AABB> aabbarray = new ArrayList<AABB>();
-	static final Vector xn = new Vector(-1, 0, 0);
-	static final Vector yn = new Vector(0, -1, 0);
-	static final Vector zn = new Vector(0, 0, -1);
-	static final Vector xp = new Vector(1, 0, 0);
-	static final Vector yp = new Vector(0, 1, 0);
-	static final Vector zp = new Vector(0, 0, 1);
+	static final Vector x = new Vector(1, 0, 0);
+	static final Vector y = new Vector(0, 1, 0);
+	static final Vector z = new Vector(0, 0, 1);
 	
 	public MotherShip(Vector position, float scale) {
 		super(position, "models/mothership/mothership.wng" , "models/mothership/mothership.jpg");
@@ -57,7 +54,7 @@ public class MotherShip extends Model3D implements Collidable {
 
 	public Vector getNormalPerpendicularToPlaneAt(Vector position) {
 		// TODO determine what normal to return according to collision position
-		return new Vector(xp);
+		return new Vector(x);
 	}
 	
 	

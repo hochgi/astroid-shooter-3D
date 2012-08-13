@@ -246,12 +246,13 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glVertex3f(0,0,0);
 		gl.glEnd();
 		
-		ship1.draw(gLDrawable);
+		ship1.drawSpace(gLDrawable);
 		ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
 		earth.draw(gLDrawable);
-		
+		ship1.draw(gLDrawable);
 		Asteroids.drawAsteroids(gLDrawable);
+		
 		Sprite.renderSprites(gLDrawable);
 		
 	}
@@ -407,7 +408,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 
 	public void testExplosionEffect() {
-		new Explosion(ship1.getPosition().add(ship1.getOrientation().getAxis('z'), 200),orientation, false);
+		new Explosion(ship1.getPosition().add(ship1.getOrientation().getAxis('z'), 200),orientation, 0.25f, null);
 	}
 
 

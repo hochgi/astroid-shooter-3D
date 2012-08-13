@@ -20,13 +20,13 @@ import com.sun.opengl.util.texture.TextureIO;
 public class Explosion {
 	private static Texture shockwaveTex;
 
-	public Explosion(Vector pos, Orientation camera, boolean withShockwave) {
-		if(withShockwave){
-			Sprite shockwave = new Shockwave(shockwaveTex, pos);
+	public Explosion(Vector pos, Orientation camera, float size, Vector shockwaveNormal) {
+		if(shockwaveNormal != null){
+			Sprite shockwave = new Shockwave(shockwaveTex, pos, shockwaveNormal, camera, size * 10);
 			Sprite.registerObject(shockwave);
 		}
-		new FlashEmitter(pos, camera, 10);
-		new FlameEmitter(pos, camera, 40);
+		new FlashEmitter(pos, camera, 10, size);
+		new FlameEmitter(pos, camera, 40, size);
 		new SmokeEmitter(pos, camera, 50);
 		new SparkEmitter(pos, camera, 100);
 		new GlintEmitter(pos, camera, 20); //round sparks

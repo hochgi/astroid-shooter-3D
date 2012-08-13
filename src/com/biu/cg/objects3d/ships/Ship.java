@@ -154,9 +154,7 @@ public abstract class Ship extends Model3D {
 		speed = Math.max(speed-1, 0);
 	}
 	
-	@Override
-	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
-		super.synchronizedDraw(gLDrawable);
+	public void drawSpace(GLAutoDrawable gLDrawable){
 		if(active){
 			space.draw(gLDrawable);
 		}

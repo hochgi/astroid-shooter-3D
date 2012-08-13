@@ -1,12 +1,15 @@
 package com.biu.cg.objects3d.asteroids;
 
 import com.biu.cg.main.Explosion;
+import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
+import com.biu.cg.objects3d.particles.sprites.Flare;
+import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 
@@ -46,13 +49,19 @@ public class BigAsteroid extends Asteroid{
 		case ROCKET:
 		case MOTHERSHIP:
 		case EARTH:
-			new Explosion(getPosition(),camera, false);
+			new Explosion(getPosition(),camera, 3f, direction.neg());
 			Collidables.unregisterObject(this);
 			Asteroids.unregisterAsteroid(this);
 			Object3D.unregisterAsteroid(this);
 			alive=false;
 			dismissLockedRockets();
 			break;
+		case ATMOSPHERE:
+			for (int i = 0; i < 16; i++)
+				Sprite.registerObject(new Flare(Game.particleTex, new Vector(getPosition()), 9f * ((float)Math.random()*0.9f + 0.9f), direction.neg().mulMutate(0.67f).noise(0.075f), camera, 50f));
+			
+			break;
+		
 		}
 		
 	}

@@ -20,10 +20,10 @@ public class Flash extends Sprite {
 	private Texture texture;
 	private float[] rgba;
 
-	public Flash(Texture tex, Vector position, Orientation camera) {
+	public Flash(Texture tex, Vector position, Orientation camera, float size) {
 		super(position, camera);
 		texture = tex;
-		size = 0.25f;
+		this.size = size;
 		stage = Phase.First;
 		angle = 0.01f*(float)Math.random()+0.01f;
 		accumulatedAngle = 0;

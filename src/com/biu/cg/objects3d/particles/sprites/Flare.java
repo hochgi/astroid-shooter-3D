@@ -27,6 +27,20 @@ public class Flare extends Sprite {
 		rgba[3] = 1f;
 		this.decay =  (float)Math.random() * 0.01f + 0.01f;
 	}
+	
+	public Flare(Texture texture, Vector position, float velocity, Vector direction, Orientation camera, float size) {
+		super(position, camera);
+		this.tex = texture;
+		this.vel = velocity;
+		this.dir = direction;
+		this.rgba = new float[4];
+		this.size = size;
+		rgba[0] = 1.0f;
+		rgba[1] = 0.9f;
+		rgba[2] = 0.8f;
+		rgba[3] = 1f;
+		this.decay =  (float)Math.random() * 0.01f + 0.01f;
+	}
 
 	@Override
 	public boolean isDead() {

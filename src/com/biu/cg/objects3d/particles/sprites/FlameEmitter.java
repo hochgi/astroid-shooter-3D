@@ -12,10 +12,10 @@ public class FlameEmitter extends SpriteEmitter {
 
 	private static Texture[] flameTex;
 
-	public FlameEmitter(Vector pos, Orientation camera, int flames) {
+	public FlameEmitter(Vector pos, Orientation camera, int flames, float size) {
 		super(pos, camera);
 		for (int i = 0; i < flames; i++) {
-			Sprite.registerObject(new Flame(flameTex[random.nextInt(4)], new Vector(pos).noise(2), camera));
+			Sprite.registerObject(new Flame(flameTex[random.nextInt(4)], new Vector(pos).noise(2), camera, size));
 		}
 	}
 

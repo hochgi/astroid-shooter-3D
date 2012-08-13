@@ -10,10 +10,10 @@ import com.sun.opengl.util.texture.TextureIO;
 
 public class FlashEmitter extends SpriteEmitter {
 
-	public FlashEmitter(Vector position, Orientation camera, int flashes) {
+	public FlashEmitter(Vector position, Orientation camera, int flashes, float size) {
 		super(position, camera);
 		for (int i = 0; i < flashes; i++) {
-			Sprite.registerObject(new Flash(flashTex[random.nextInt(4)], new Vector(position).noise(2), camera));
+			Sprite.registerObject(new Flash(flashTex[random.nextInt(4)], new Vector(position).noise(2), camera, size));
 		}
 	}
 
