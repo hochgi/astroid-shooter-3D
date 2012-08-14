@@ -40,7 +40,7 @@ public abstract class Asteroid extends Model3D implements Collidable{
 		Random rand = new Random();
 		
 		//speed = 1 + (float)rand.nextInt(11) / 10f;
-		speed = 5;
+		speed = 3;
 	}
 
 
