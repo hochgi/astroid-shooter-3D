@@ -91,6 +91,11 @@ public class Ship1 extends Ship implements Collidable {
 				Exercise4.exit("You are dead :(");
 			}
 			break;
+		case EARTH:
+			health=0;
+			new Explosion(newOrientation.getPosition(),orientation, 3f, null);
+			Exercise4.exit("You are dead :(");
+			break;
 //		case ASTEROID:
 //			health=0;
 //			new Explosion(newOrientation.getPosition(),orientation, 3f, null);
