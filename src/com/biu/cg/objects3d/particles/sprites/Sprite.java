@@ -116,14 +116,14 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	    getTexture().bind();
 	    float[] rgba = getRGBA();
 	    gl.glColor4f(rgba[0],rgba[1],rgba[2],rgba[3]);
-	    //gl.glDisable(GL.GL_LIGHTING);
+	    gl.glDisable(GL.GL_LIGHTING);
 	    gl.glBegin(GL.GL_QUADS);
 	    gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3d(bb[0].x, bb[0].y, bb[0].z);
 	    gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3d(bb[1].x, bb[1].y, bb[1].z);
 	    gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3d(bb[2].x, bb[2].y, bb[2].z);
 	    gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3d(bb[3].x, bb[3].y, bb[3].z);
 	    gl.glEnd();
-	    //gl.glEnable(GL.GL_LIGHTING);
+	    gl.glEnable(GL.GL_LIGHTING);
 	}
 	
 	//the idea of the implementation is explained nicely here: http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/

@@ -4,6 +4,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 
 import com.biu.cg.main.Exercise4;
+import com.biu.cg.main.Explosion;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
@@ -26,6 +27,9 @@ public abstract class Ship extends Model3D {
 	protected boolean canMove=true;
 	protected int speed=0;
 	
+	protected final float baseHealth=100;
+	protected float health=baseHealth;
+	
 	private float perspective = 50f;
 	
 	public Ship(Vector position ,String objFile, String texture) {
@@ -40,11 +44,6 @@ public abstract class Ship extends Model3D {
 							   1f,0f,0f,
 							   0f,1f,0f,
 							   0f,0f,1f);
-		
-		//space.getOrientation().reset(xf,yf,zf,
-		//							 1f,0f,0f,
-		//							 0f,1f,0f,
-		//							 0f,0f,1f);
 	}
 	
 	public synchronized void disableRotateUpdate() {
@@ -200,6 +199,8 @@ public abstract class Ship extends Model3D {
 				Exercise4.fuelPanel.setFuel(0);
 			Exercise4.fuelPanel.repaint();
 		}	
+		if(health>0)
+			health = (float) Math.min(health+0.5, 100);
 	}
 	
 	private void innerUpdate() {

@@ -13,6 +13,7 @@ import com.biu.cg.panels.RocketPanel;
 import com.biu.cg.panels.SpeedPanel;
 import com.sun.opengl.util.Animator;
 import java.awt.Dimension;
+import java.awt.Label;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -43,9 +44,24 @@ public class Exercise4 {
     static public SpeedPanel speedPanel;
     static public FuelPanel fuelPanel;
     static public RocketPanel rocketPanel;
+    static public int points=0;
+    static public int earthHealth=100;
+    static private Label pointsLabel = new Label("Points: 0");
+    static private Label earthHealthLabel = new Label("Earth health: " + earthHealth + "%");
     
     
     public static GPanel  miniMap;
+    
+    
+    public static void addPoints(int pointsToAdd){
+    	points+=pointsToAdd;
+    	pointsLabel.setText("Points: " + points);
+    }
+    
+    public static void reduceEarthHealth(int pointsToReduce){
+    	earthHealth-=pointsToReduce;
+    	earthHealthLabel.setText("Earth health: " + earthHealth + "%");
+    }
     
     
     public static void showInfo(){
@@ -99,7 +115,7 @@ public class Exercise4 {
 		
 		leftPanel.setLocation(0, (int)(screenSize.height - 222));
 		leftPanel.setSize(395,193);
-		
+		leftPanel.add(earthHealthLabel);
 		
 		rocketPanel = new RocketPanel();
 		rocketPanel.setSize(109, 109);
@@ -108,6 +124,9 @@ public class Exercise4 {
 		rightPanel.setLocation(screenSize.width - 395, (int)(screenSize.height - 222));
 		rightPanel.setSize(395,193);
 		
+		
+		
+		rightPanel.add(pointsLabel);
 		
 		//reverse cube rotation button setup
 		rButton.addActionListener(new GameActionListener(game, ButtonEnum.RCR));
@@ -179,5 +198,10 @@ public class Exercise4 {
 		animator.stop();
 		frame.dispose();
 		System.exit(0);
+    }
+	
+	public static void exit(String msg){
+		JOptionPane.showMessageDialog(frame, msg);
+		exit();
     }
 }

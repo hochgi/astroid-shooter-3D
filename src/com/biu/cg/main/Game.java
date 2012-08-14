@@ -25,6 +25,7 @@ import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
 import com.biu.cg.objects3d.ships.Ship2;
+import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -48,6 +49,13 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	private MotherShip motherShip;
 	private Earth earth;
 	public static Texture particleTex;
+	
+	
+	public final static float defaultAmbient[] = {1f,1f,1f,1f};
+	public final static float defaultDiffuse0[] = {1f,1f,1f,1.0f};
+	public final static float defaultDiffuse1[] = {1f,1f,1f,1.0f};
+	public final static float defaultColor[] = {1f,1f,0.0f,0.5f};
+	
 	//private Asteroid astroid;
 
 	/**
@@ -177,7 +185,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
  	} 
 	
 	private void shootRocket() {
-		Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 9f));
+		Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 15f));
 		Exercise4.rocketPanel.removeRocket();
 		Exercise4.rocketPanel.repaint();
 	}
@@ -217,13 +225,18 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
         
         
         //float m_color[] = {0.0f, 0.85f, 0.0f, 1.0f};
-        float s_color[] = {0.8f, 0.8f, 0.8f, 1.0f};
+        float s_color[] = {1f, 1f, 1f, 1.0f};
         float shininess[] = {120f};
 
-        gl.glNormal3f(0,0,-1);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE, material, 0);
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, s_color,0); 
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shininess,0);
+        //gl.glNormal3f(0,0,-1);
+//        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE, material, 0);
+//        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, s_color,0); 
+//        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shininess,0);
+        
+        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, defaultAmbient,0); 
+        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, defaultDiffuse1,0);
+        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, defaultColor,0); 
+        gl.glMateriali(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, 127);
 		
 		
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
@@ -247,6 +260,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glEnd();
 		
 		ship1.drawSpace(gLDrawable);
+		
 		//ship2.draw(gLDrawable);
 		motherShip.draw(gLDrawable);
 		earth.draw(gLDrawable);
@@ -254,6 +268,10 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Asteroids.drawAsteroids(gLDrawable);
 		
 		Sprite.renderSprites(gLDrawable);
+		
+		if(Exercise4.earthHealth<=0)
+			Exercise4.exit("What a shame... You didn't save earth :( \n" +
+					"but at least you earned " + Exercise4.points + " points :)");
 		
 	}
 
@@ -335,28 +353,35 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		
 		// Light
-    	float	ambient[] = {0.6f,0.8f,0.4f,1.0f};
-    	float	diffuse0[] = {0.8f,0.8f,0.8f,1.0f};
-    	float	diffuse1[] = {0.1f,0.1f,0.1f,1.0f};
-    	float	color[] = {0.5f,0.5f,0.5f,0.5f};
     	
 		gl.glShadeModel(GL.GL_SMOOTH); 
+		float SHINE_ALL_DIRECTIONS = 1;
+		float[] lightPos = {-30, 0, 0, SHINE_ALL_DIRECTIONS};
 		
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, ambient, 0);
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, diffuse0, 0);
-        gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, color, 0);
-        gl.glEnable(GL.GL_LIGHT0);
+		gl.glDisable(GL.GL_LIGHT0);
+		
+//		gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, lightPos, 0);
+//        gl.glLightfv(GL.GL_LIGHT1, GL.GL_AMBIENT, ambient, 0);
+//        gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, diffuse0, 0);
+//        gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, color, 0);
+//        gl.glEnable(GL.GL_LIGHT1);
         
-        gl.glLightfv(GL.GL_LIGHT1, GL.GL_AMBIENT, ambient, 0);
-        gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, diffuse1, 0);
-        gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, color, 0);
-        gl.glEnable(GL.GL_LIGHT1);
+        gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, lightPos, 0);
+        gl.glLightfv(GL.GL_LIGHT2, GL.GL_AMBIENT, defaultAmbient, 0);
+        gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, defaultDiffuse1, 0);
+        gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, defaultColor, 0);
+        gl.glEnable(GL.GL_LIGHT2);
+        
+        
+        
+        //gl.glMaterialfv(gl.GL_FRONT, gl.GL_SHININESS, 127); 
         //gl.glEnable(GL.GL_COLOR_MATERIAL);
         //float specReflection[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-        gl.glMateriali(GL.GL_FRONT, GL.GL_SHININESS, 127);
+       
         
-        //gl.glEnable(GL.GL_LIGHTING);
-		
+        gl.glEnable(GL.GL_LIGHTING);
+        gl.glEnable(GL.GL_NORMALIZE);
+
 		start();
 	}
 

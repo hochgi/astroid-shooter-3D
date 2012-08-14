@@ -29,7 +29,7 @@ public class Explosion {
 		new FlameEmitter(pos, camera, 40, size);
 		new SmokeEmitter(pos, camera, 50);
 		new SparkEmitter(pos, camera, 100);
-		new GlintEmitter(pos, camera, 20); //round sparks
+		//new GlintEmitter(pos, camera, 20); //round sparks
 		
 		SoundPlayer.explosion();
 	}

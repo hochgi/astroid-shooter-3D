@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.Random;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+
+import com.biu.cg.main.Exercise4;
+import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
@@ -21,7 +24,7 @@ public abstract class Asteroid extends Model3D implements Collidable{
 	Random rand = new Random();
 	protected Earth earth;
 	private LinkedList<Shot> rockets = new LinkedList<Shot>();
-	
+	protected float colorRatio=1;
 	
 	public boolean isAlive() {
 		return alive;
@@ -37,7 +40,7 @@ public abstract class Asteroid extends Model3D implements Collidable{
 		Random rand = new Random();
 		
 		//speed = 1 + (float)rand.nextInt(11) / 10f;
-		speed = 2;
+		speed = 5;
 	}
 
 
@@ -62,19 +65,18 @@ public abstract class Asteroid extends Model3D implements Collidable{
 		
 		if(!alive)
 			return;
-		
+		final GL gl = gLDrawable.getGL();
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();
 		double z = orientation.getPosition().getZ();
 		
+		float	ambient[] = {0f,0f,0f,1f};
+    	
+    	ambient[0] = 1-colorRatio;
+    	ambient[1] = colorRatio;
 		
-		
-		final GL gl = gLDrawable.getGL();
-		
-//		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
-//        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );   
-//		texture.bind();
-		
+		gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, ambient,0); 
+       
 		Orientation o = orientation;
 		//int counter=0;
 		for(Face f : builder.faces){
@@ -91,7 +93,8 @@ public abstract class Asteroid extends Model3D implements Collidable{
 					
 					if(f.vertices.get(i)!=null){	
 						//gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glColor3f(0f, 0f, 0f);
+						gl.glColor3f(1-colorRatio, colorRatio, 0f);
+						gl.glNormal3f(f.vertices.get(i).n.x, f.vertices.get(i).n.y, f.vertices.get(i).n.z);
 						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
 					}
 				}
@@ -109,7 +112,8 @@ public abstract class Asteroid extends Model3D implements Collidable{
 					
 					if(f.vertices.get(i)!=null){
 						//gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-						gl.glColor3f(0f, 0f, 0f);
+						gl.glColor3f(1-colorRatio, colorRatio, 0f);
+						gl.glNormal3f(f.vertices.get(i).n.x, f.vertices.get(i).n.y, f.vertices.get(i).n.z);
 						gl.glVertex3d((x + X.x + Y.x + Z.x)*scale , (y + X.y + Y.y + Z.y)*scale , (z + X.z + Y.z + Z.z)*scale);
 					}
 				}	
@@ -130,4 +134,14 @@ public abstract class Asteroid extends Model3D implements Collidable{
 			r.unlockRocket();
 		}
 	}
+	
+	protected void addPoints(int points){
+		Exercise4.addPoints(points);
+	}
+	
+	protected void reduceEarthHealth(int points){
+		Exercise4.reduceEarthHealth(points);
+	}
+	
+	protected abstract void onDestroy();
 }

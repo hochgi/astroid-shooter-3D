@@ -1,15 +1,24 @@
 package com.biu.cg.objects3d.ships;
 
+import javax.media.opengl.GL;
+import javax.media.opengl.GLAutoDrawable;
+
 import com.biu.cg.main.Exercise4;
+import com.biu.cg.main.Explosion;
+import com.biu.cg.main.Game;
+import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Rotator;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
+import com.biu.cg.objects3d.particles.sprites.GlintEmitter;
 import com.biu.cg.objects3d.physics.Collidable;
 
 public class Ship1 extends Ship implements Collidable {
 	
 	
+	private float colorRatio=0f;
+
 	public Ship1() {
 		
 		super("models/ship1/ship.obj" , "models/ship1/F02_512.jpg");
@@ -32,6 +41,9 @@ public class Ship1 extends Ship implements Collidable {
 
 	@Override
 	public void collisionAction(Collidable collidable) {
+		Orientation newOrientation = new Orientation(getPosition(), orientation.getAxis('x'), orientation.getAxis('y'), orientation.getAxis('z') );
+		newOrientation.translateForward(100);
+		
 		switch(collidable.getType()){
 		case MOTHERSHIP:
 			MotherShip m = (MotherShip)collidable;
@@ -63,8 +75,25 @@ public class Ship1 extends Ship implements Collidable {
 			fuel=600;
 			Exercise4.fuelPanel.setFuel(fuel);
 			Exercise4.fuelPanel.repaint();
+			health=baseHealth;
 			System.out.println("RELOAD");
 			break;
+		case ATMOSPHERE:
+			health=Math.max(health-1, 0);
+			
+			new GlintEmitter(newOrientation.getPosition(), orientation, 2);
+			
+			if(health<=0){
+				new Explosion(newOrientation.getPosition(),orientation, 3f, null);
+				Exercise4.exit("You are dead :(");
+			}
+			break;
+//		case ASTEROID:
+//			health=0;
+//			new Explosion(newOrientation.getPosition(),orientation, 3f, null);
+//			Exercise4.exit("You are dead :(");
+//			
+//			break;
 		default:
 			canMove=true;
 			break;
@@ -80,4 +109,24 @@ public class Ship1 extends Ship implements Collidable {
 	public Type getType() {
 		return Type.PLAYER_SHIP;
 	}
+	
+	@Override
+	protected void synchronizedDraw(GLAutoDrawable gLDrawable){
+		if(health==0)
+			return;
+		final GL gl = gLDrawable.getGL();
+		
+		float	ambient[] = {1f,1f,1f,1f};
+    	
+    	ambient[1] = (health/baseHealth);
+    	ambient[2] = (health/baseHealth);
+    	
+		
+		gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, ambient,0); 
+		
+		super.synchronizedDraw(gLDrawable);
+		
+		gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, Game.defaultAmbient,0); 
+	}
+	
 }

@@ -92,6 +92,8 @@ public abstract class Model3D extends Object3D {
 					
 					if(f.vertices.get(i).t!=null)
 						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
+					//f.vertices.get(i).n.
+					gl.glNormal3f(f.vertices.get(i).n.x, f.vertices.get(i).n.y, f.vertices.get(i).n.z);
 					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
 					
 				}	

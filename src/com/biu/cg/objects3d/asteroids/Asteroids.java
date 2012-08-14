@@ -25,7 +25,7 @@ public class Asteroids {
 	private static LinkedList<Asteroid> graveyard = new LinkedList<Asteroid>();
 	
 	private static int creationCounter=0;
-	private static final int CREATION_DELAY = 250;
+	private static final int CREATION_DELAY = 200; //250
 	
 	
 	public static void setEarth(Earth earth) {
