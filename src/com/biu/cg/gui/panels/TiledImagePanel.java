@@ -1,4 +1,4 @@
-package com.biu.cg.main;
+package com.biu.cg.gui.panels;
 
 import javax.swing.JPanel;
 import java.awt.*;   

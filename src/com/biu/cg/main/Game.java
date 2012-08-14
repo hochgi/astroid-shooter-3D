@@ -250,9 +250,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		earth.draw(gLDrawable);
 		ship1.draw(gLDrawable);
 		Asteroids.drawAsteroids(gLDrawable);
-		
+		gl.glDisable(GL.GL_LIGHTING);
 		Sprite.renderSprites(gLDrawable);
-		
+		gl.glEnable(GL.GL_LIGHTING);
 		if(Exercise4.earthHealth<=0)
 			Exercise4.exitWithMessage();
 		

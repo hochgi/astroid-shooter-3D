@@ -31,18 +31,36 @@ public abstract class Ship extends Model3D {
 	private float perspective = 50f;
 	protected int rocketCounter=3;
 
+	
+	/**
+	 * get the amount of rockets that the ship has.
+	 * @return
+	 */
 	public int getRocketCounter() {
 		return rocketCounter;
 	}
 	
+	/**
+	 * removes a rocket.
+	 */
 	public void removeRocket(){
 		rocketCounter--;
 	}
 	
+	/**
+	 * set the number of rockets.
+	 * @param rocketCounter
+	 */
 	public void setRocketCounter(int rocketCounter) {
 		this.rocketCounter = rocketCounter;
 	}
 	
+	/**
+	 * c'tor.
+	 * @param position
+	 * @param objFile
+	 * @param texture
+	 */
 	public Ship(Vector position ,String objFile, String texture) {
 		super(position, objFile , texture);
 		lookAt = new Vector(orientation.getAxis('z'));
@@ -50,6 +68,12 @@ public abstract class Ship extends Model3D {
 		space.setScale(4000);
 	}
 	
+	/**
+	 * reset location.
+	 * @param xf
+	 * @param yf
+	 * @param zf
+	 */
 	public void reset(float xf, float yf, float zf) {
 		getOrientation().reset(xf,yf,zf,
 							   1f,0f,0f,
@@ -57,124 +81,144 @@ public abstract class Ship extends Model3D {
 							   0f,0f,1f);
 	}
 	
+	
+	/**
+	 * disable smooth camera rotation.
+	 */
 	public synchronized void disableRotateUpdate() {
 		rotateLock  = false;
 	}
 	
-
+	/**
+	 * enable smooth camera rotation.
+	 */
 	public synchronized void enableRotateUpdate() {
 		rotateLock  = true;
 	}
 	
+	/**
+	 * disable smooth camera movement.
+	 */
 	public synchronized void disableMoveUpdate() {
 		moveLock  = false;
 	}
 	
-
+	/**
+	 * enable smooth camera movement.
+	 */
 	public synchronized void enableMoveUpdate() {
 		moveLock  = true;
 	}
 	
+	/**
+	 * c'tor.
+	 * @param objFile
+	 * @param texture
+	 */
 	public Ship(String objFile, String texture) {
 		super(objFile, texture);
 		space = new Space("models/space/space.wng" , "models/space/space.jpg", getOrientation());
 		space.setScale(4000);
 	}
 
+	/**
+	 * set if this ship is player's ship.
+	 * @param b
+	 */
 	public void setActive(boolean b) {
 		active = b;
 	}
 	
+	
+	//////////////////////////////////// Movement methods ///////////////////////////////////
 	public void rollRight(){
 		orientation.rotateRoll(nTheta);
-		//space.getOrientation().rotateRoll(nTheta);
 	}
 	
 	public void rollLeft(){
 		orientation.rotateRoll(pTheta);
-		//space.getOrientation().rotateRoll(pTheta);
 	}
 	
 	public void pitchUp(){
 		innerUpdate();
 		orientation.rotatePitch(pTheta);
-		//space.getOrientation().rotatePitch(pTheta);
 	}
 	
 	public void pitchDown(){
 		innerUpdate();
 		orientation.rotatePitch(nTheta);
-		//space.getOrientation().rotatePitch(nTheta);
 	}
 	
 	public void moveForward(){
 		orientation.translateForward(step*speed);
-		//space.getOrientation().translateForward(step*speed);
 	}
 	
 	public void turboForward(){
 		if(fuel>0){	
 			perspective = Math.min(perspective+1, 80f);
 			orientation.translateForward(turboStep);
-			//space.getOrientation().translateForward(turboStep);
 		}
 	}
 	public void moveBackward(){
 		orientation.translateBackward(step);
-		//space.getOrientation().translateBackward(step);
 	}
 	
 	public void turnRight(){
 		innerUpdate();
 		orientation.rotateHeading(pTheta);
-		//space.getOrientation().rotateHeading(pTheta);
 	}
 	
 	public void turnLeft(){
 		innerUpdate();
 		orientation.rotateHeading(nTheta);
-		//space.getOrientation().rotateHeading(nTheta);
 	}
 	
 	public void moveRight(){
 		orientation.translateRightward(step);
-		//space.getOrientation().translateRightward(step);
 	}
 	
 	public void moveLeft(){
 		orientation.translateLeftward(step);
-		//space.getOrientation().translateLeftward(step);
 	}
 	
 	public void moveUp(){
 		orientation.translateUpward(step);
-		//space.getOrientation().translateUpward(step);
 	}
 	
 	public void moveDown(){
 		orientation.translateDownward(step);
-		//space.getOrientation().translateDownward(step);
 	}
 	
+////////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * increase speed.
+ 	 */
 	public void speedUp(){
 		speed = Math.min(speed+1, 4);
 	}
 	
+	/**
+	 * decrease speed.
+	 */
 	public void speedDown(){
 		speed = Math.max(speed-1, 0);
 	}
 	
+	/**
+	 * draw the space sphere.
+	 * @param gLDrawable
+	 */
 	public void drawSpace(GLAutoDrawable gLDrawable){
 		if(active){
 			space.draw(gLDrawable);
 		}
 	}
 	
-	public void lookAtCameraAndDraw(GLAutoDrawable gLDrawable) {
-		lookAtCamera1(gLDrawable);
-		draw(gLDrawable);
-	}
-	
+	/**
+	 * get the wings position. (used to determine the location of the shot launch).
+	 * @return
+	 */
 	public Vector getWingPosition() {
 		float w = getWingWidth();
 		float h = getWingHeight();
@@ -184,12 +228,29 @@ public abstract class Ship extends Model3D {
 		return getPosition().add(x, wing*w).addMutate(y, h);
 	}
 	
+	/**
+	 * get wing height
+	 * @return
+	 */
 	public abstract float getWingHeight();
 
+	/**
+	 * get wing width
+	 * @return
+	 */
 	public abstract float getWingWidth();
 	
+	
+	/**
+	 * in case you want a sequential update
+	 * for your class at given intervals, 
+	 * implement the specific update as this method.
+	 * it will be invoked by a timer task that runs
+	 * every 40 ms.
+	 */
 	@Override
 	protected synchronized void update() {
+		// smooth camera movement and panel updates ///////
 		if(rotateLock){
 			innerUpdate();
 		}
@@ -210,15 +271,25 @@ public abstract class Ship extends Model3D {
 				Exercise4.fuelPanel.setFuel(0);
 			Exercise4.fuelPanel.repaint();
 		}	
+		///////////////////////////////////////////////////
+		
+		// auto health restore.
 		if(health>0)
 			health = (float) Math.min(health+0.5, 100);
 	}
 	
+	/**
+	 * smooth camera rotation.
+	 */
 	private void innerUpdate() {
 		Vector z = orientation.getAxis('z');
 		lookAt.addMutate(z, 0.25f).normalize();
 	}
 	
+	/**
+	 * sets the lookat for this ship.
+	 * @param gLDrawable
+	 */
 	public void lookAtCamera1(GLAutoDrawable gLDrawable){
 		final GL gl = gLDrawable.getGL();
 		

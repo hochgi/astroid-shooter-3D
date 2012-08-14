@@ -16,8 +16,6 @@ import com.biu.cg.math3d.Vector;
  * @author gilad
  *
  */
-//TODO: unregister objects:
-//		in case we would want to dispose stuff...
 public abstract class Object3D {
 	//static fields:
 	private static Timer timer;

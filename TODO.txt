@@ -50,12 +50,12 @@
   
 -DONE!- fix synchronization problems when rotating the ship.
   
-* Game Logic:
-    - only allow to carry 3 rockets at a time.
-    - flying through the hangar should reload rockets.
-    - add points / score of destroyed asteroids.
-    - end game when an asteroid hits earth.
-    - add atmosphere to earth, preventing the ship to get too close to earth.
-    - an asteroid should be vanquished when it's being hit by 1 rocket, or 10 regular shots.
+-DONE!- Game Logic:
+    -DONE!- only allow to carry 3 rockets at a time.
+    -DONE!- flying through the hangar should reload rockets.
+    -DONE!- add points / score of destroyed asteroids.
+    -DONE!- end game when an asteroid hits earth.
+    -DONE!- add atmosphere to earth, preventing the ship to get too close to earth.
+    -DONE!- an asteroid should be vanquished when it's being hit by 1 rocket, or 10 regular shots.
     -DONE!- use splines to iteratively get the rocket closer to an asteroid. (homing rocket - always hits the target)
     

@@ -4,6 +4,11 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.physics.Collidable;
 
+/**
+ * Atmosphere - implements Collidable.
+ * @author Irzh
+ *
+ */
 public class Atmosphere implements Collidable  {
 	private Earth earth;
 	
@@ -11,21 +16,23 @@ public class Atmosphere implements Collidable  {
 		this.earth = earth;
 	}
 	
+	
 	@Override
-	public void collisionAction(Collidable collidable) {
-		// TODO Auto-generated method stub	
-	}
+	public void collisionAction(Collidable collidable) {}
 
+	/**
+	 * gets object's bounding shape.
+	 */
 	@Override
 	public BoundingShape getBoundingShape() {
-		// TODO Auto-generated method stub
-		//return new BoundingSphere(earth.getPosition(), 1500);
 		return new BoundingSphere(earth.getPosition(), ((BoundingSphere)earth.getBoundingShape()).getRadius() * 1.5f);
 	}
-
+	
+	/**
+	 * gets the type of the object.
+	 */
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
 		return Type.ATMOSPHERE;
 	}
 

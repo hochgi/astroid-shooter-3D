@@ -8,6 +8,7 @@ import com.biu.cg.gui.GPanel;
 import com.biu.cg.gui.panels.FuelPanel;
 import com.biu.cg.gui.panels.RocketPanel;
 import com.biu.cg.gui.panels.SpeedPanel;
+import com.biu.cg.gui.panels.TiledImagePanel;
 import com.sun.opengl.util.Animator;
 import java.awt.*;   
 import java.awt.image.BufferedImage;   

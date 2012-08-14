@@ -10,6 +10,11 @@ import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
 
+/**
+ * MotherShip.
+ * @author Irzh
+ *
+ */
 public class MotherShip extends Model3D implements Collidable {
 
 	AABBSuit aabbs;
@@ -18,10 +23,18 @@ public class MotherShip extends Model3D implements Collidable {
 	static final Vector y = new Vector(0, 1, 0);
 	static final Vector z = new Vector(0, 0, 1);
 	
+	/**
+	 * c'tor.
+	 * @param position
+	 * @param scale
+	 */
 	public MotherShip(Vector position, float scale) {
 		super(position, "models/mothership/mothership.wng" , "models/mothership/mothership.jpg");
+		
+		//set the scale.
 		this.scale = scale;
 		
+		// load AABBSuit.
 		aabbarray.add(new AABB(position, "models/mothership/BoundingBoxs/b1.wng" , scale));
 		aabbarray.add(new AABB(position, "models/mothership/BoundingBoxs/b2.wng" , scale));
 		aabbarray.add(new AABB(position, "models/mothership/BoundingBoxs/b3.wng" , scale));
@@ -32,8 +45,10 @@ public class MotherShip extends Model3D implements Collidable {
 		aabbs = new AABBSuit(aabbarray);
 		
 		Vector v = new Vector(position);
-		v.y+=150;
 		
+		
+		// register ReloadPoint as collidable.
+		v.y+=150;
 		Collidables.registerObject(new ReloadPoint(v));
 	}
 
@@ -43,18 +58,29 @@ public class MotherShip extends Model3D implements Collidable {
 	@Override
 	public void collisionAction(Collidable collidable) {}
 
+	/**
+	 * gets object's bounding shape.
+	 */
 	@Override
 	public BoundingShape getBoundingShape() {
 		return aabbs;
 	}
 
+	/**
+	 * gets the type of the object.
+	 */
 	@Override
 	public Type getType() {
 		return Type.MOTHERSHIP;
 	}
 
+	/**
+	 * return the Normal Perpendicular To Plane. (used to react on collision between player's ship and mothership.)
+	 * @param position
+	 * @param shape
+	 * @return
+	 */
 	public Vector getNormalPerpendicularToPlaneAt(Vector position, BoundingSphere shape) {
-		// TODO determine what normal to return according to collision position
 		AABB col=null;
 		
 		for(AABB b : aabbs.getAabbs()){
@@ -79,82 +105,4 @@ public class MotherShip extends Model3D implements Collidable {
 		
 		return new Vector(x.add(y, 1).normalize().add(z, 1).normalize());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Override
-//	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
-//		// TODO: implement.
-//		
-//		
-//		for(AABB a : aabbarray){
-//			a.draw(gLDrawable);
-//		}
-//		
-//		
-//		double x = orientation.getPosition().getX();
-//		double y = orientation.getPosition().getY();
-//		double z = orientation.getPosition().getZ();
-//		
-//		
-//		
-//		final GL gl = gLDrawable.getGL();
-//		
-//		gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT );
-//        gl.glTexParameteri( GL.GL_TEXTURE_2D,GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT );   
-//		texture.bind();
-//		
-//		Orientation o = orientation;
-//		//int counter=0;
-//		for(Face f : builder.faces){
-//			//Random rand = new Random();
-//			switch(f.vertices.size()){
-//			case 4:
-//			{
-//				gl.glBegin(GL.GL_QUADS);
-//				for(int i=0 ; i<4 ; i++){
-//					
-//					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
-//					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
-//					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
-//					
-//					if(f.vertices.get(i).t!=null)	
-//						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-//					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
-//					
-//				}
-//				gl.glEnd();
-//				break;
-//			}
-//			case 3:
-//				gl.glBegin(GL.GL_TRIANGLES);
-//	//			gl.glColor3f(0.5f, 0.25f, 0.25f);
-//				for(int i=0 ; i<3 ; i++){
-//					
-//					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
-//					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
-//					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
-//					
-//					
-//					if(f.vertices.get(i).t!=null)
-//						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-//					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
-//					
-//				}	
-//				gl.glEnd();
-//				break;
-//			}
-//			
-//		}
-//	}
-
 }

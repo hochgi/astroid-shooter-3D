@@ -60,7 +60,6 @@ public class Record implements Serializable {
 			myOutWriter.close();
 			fOut.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

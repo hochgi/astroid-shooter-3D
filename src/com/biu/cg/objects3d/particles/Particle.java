@@ -60,5 +60,10 @@ public abstract class Particle extends Object3D {
 		super(position);
 	}
 
+	/**
+	 * method is meant for external updaters to know if particle is updateable,
+	 * or should it be dumped...
+	 * @return
+	 */
 	public abstract boolean isDead();
 }

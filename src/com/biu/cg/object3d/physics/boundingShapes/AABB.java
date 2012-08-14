@@ -5,9 +5,14 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.Object3D;
 
+/**
+ * AABB - implementation of BoundingShape and an extension of Model3D (for debug purposes).
+ * @author Irzh
+ *
+ */
 public class AABB extends Model3D implements BoundingShape{
 	
-
+	//in and max values.
 	public float minX;
 	public float minY;
 	public float minZ;
@@ -22,6 +27,10 @@ public class AABB extends Model3D implements BoundingShape{
 	
 	Vector center;
 	
+	/**
+	 * gets the center of the AABB.
+	 * @return
+	 */
 	public Vector getCenter() {
 		return center;
 	}
@@ -38,6 +47,12 @@ public class AABB extends Model3D implements BoundingShape{
 		return distZ;
 	}
 
+	/**
+	 * AABB c'tor.
+	 * @param position - the position of the AABB.
+	 * @param objFile - the obj file from where we are taking the box.
+	 * @param scale - the scale of the box.
+	 */
 	public AABB(Vector position, String objFile, float scale) {
 		super(position , objFile, null);
 
@@ -45,6 +60,7 @@ public class AABB extends Model3D implements BoundingShape{
 		
 		ArrayList<Vector> vertices = getVertices();
 		
+		// calculate the mins and maxs. 
 		maxX = minX = vertices.get(0).x;
 		maxY = minY = vertices.get(0).y;
 		maxZ = minZ = vertices.get(0).z;
@@ -78,10 +94,11 @@ public class AABB extends Model3D implements BoundingShape{
 		center = new Vector(distX/2, distZ/2, distY/2);
 	}
 
+	/**
+	 * intersection with AABB shape - according to the algorithm learned in class.
+	 */
 	@Override
-	public boolean intersect(AABB shape) {
-		// TODO Auto-generated method stub
-		
+	public boolean intersect(AABB shape) {		
 		float dist = center.sqrDistanceTo(shape.getCenter());
 		dist = (float) Math.sqrt((double)dist);
 		
@@ -91,10 +108,12 @@ public class AABB extends Model3D implements BoundingShape{
 		return false;
 	}
 
+	
+	/**
+	 * intersection with BoundingSphere shape - according to the algorithm learned in class.
+	 */
 	@Override
 	public boolean intersect(BoundingSphere shape) {
-		// TODO Auto-generated method stub
-		
 		float  dmin=0;
 		
 		if( shape.getCenter().x < minX ) 
@@ -119,9 +138,11 @@ public class AABB extends Model3D implements BoundingShape{
 		return false;
 	}
 
+	/**
+	 * intersection with Dot shape - according to the algorithm learned in class.
+	 */
 	@Override
 	public boolean intersect(Dot shape) {
-		// TODO Auto-generated method stub
 		float  dmin=0;
 		
 		if( shape.getPos().x < minX ) 
@@ -158,6 +179,9 @@ public class AABB extends Model3D implements BoundingShape{
 		
 	}
 
+	/**
+	 * intersection with AABBSuit shape (no need to implement).
+	 */
 	@Override
 	public boolean intersect(AABBSuit shape) {
 		// TODO Auto-generated method stub

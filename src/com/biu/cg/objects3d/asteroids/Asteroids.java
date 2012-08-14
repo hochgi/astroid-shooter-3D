@@ -10,6 +10,11 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
 
+/**
+ * Asteroids - manages the asteroids.
+ * @author Irzh
+ *
+ */
 public class Asteroids {
 	
 	private static Random rand = new Random();
@@ -27,15 +32,26 @@ public class Asteroids {
 	private static int creationCounter=0;
 	private static final int CREATION_DELAY = 200; //250
 	
-	
+	/**
+	 * set Earth.
+	 * @param earth
+	 */
 	public static void setEarth(Earth earth) {
 		Asteroids.earth = earth;
 	}
 	
+	/**
+	 * set the camera.
+	 * @param camera
+	 */
 	public static void setCamera(Orientation camera) {
 		Asteroids.camera = camera;
 	}
 	
+	/**
+	 * get active asteroids.
+	 * @return
+	 */
 	public static LinkedList<Asteroid> getAsteroids() {
 		return asteroids;
 	}
@@ -67,13 +83,16 @@ public class Asteroids {
 		
 		@Override
 		public void run() {
-//			System.out.println(newlyBorn.size());
+			
+			// remove all the asteroids from the grave yard (the asteroids that were destroyed).
 			synchronized (gLock) {
 				synchronized (aLock) {
 					asteroids.removeAll(graveyard);
 					graveyard.clear();
 				}
 			}
+			
+			// add all newly born asteroids the the asteroid list. 
 			synchronized (nLock) {
 				synchronized (aLock) {
 					asteroids.addAll(newlyBorn);
@@ -82,15 +101,16 @@ public class Asteroids {
 				}
 			}
 			
+			
 			if(earth==null || camera==null) {
 				return;
 			}
 			
-			
+			// create a new asteroid according to the creation counter.
 			creationCounter = (creationCounter + 1) % CREATION_DELAY;
 			if(creationCounter==0){
 				Asteroid a=null;
-				if(rand.nextInt(5)==0)
+				if(rand.nextInt(5)==0) // will create either a small asteroid or a big one.
 					a = new BigAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
 				else
 					a = new SmallAsteroid(earth, camera , new Vector(-800f , (rand.nextInt(1000) - 500) , (rand.nextInt(1000) - 500)));
@@ -107,6 +127,10 @@ public class Asteroids {
 		timer.scheduleAtFixedRate(task, 0, 40);
 	}
 
+	/**
+	 * draws the asteroids.
+	 * @param gLDrawable
+	 */
 	public static void drawAsteroids(GLAutoDrawable gLDrawable) {
 		synchronized (aLock) {
 			for (Asteroid a : asteroids) {

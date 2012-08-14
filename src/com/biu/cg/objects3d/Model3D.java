@@ -24,32 +24,51 @@ public abstract class Model3D extends Object3D {
 	protected Texture texture=null;
 	protected float scale=1;
 	
+	/**
+	 * sets the scale factor of the object.
+	 * @param scale
+	 */
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
 	
+	/**
+	 * gets the scale factor of the object.
+	 * @return
+	 */
 	public float getScale() {
 		return scale;
 	}
 	
+	/**
+	 * c'tor - create a new 3D object.
+	 * @param objFile - obj file.
+	 * @param texture - texture file.
+	 */
 	public Model3D(String objFile, String texture) {
 		super();
 		generateModelFromFile(objFile, texture);
 	}
 
+	/**
+	 * c'tor - create a new 3D object at position.
+	 * @param position - position.
+	 * @param objFile - obj file.
+	 * @param texture - texture file.
+	 */
 	public Model3D(Vector position, String objFile, String texture) {
 		super(position);
 		generateModelFromFile(objFile, texture);
 	}
 
+	/**
+	 * draws the object.
+	 */
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
-		// TODO: implement.
 		double x = orientation.getPosition().getX();
 		double y = orientation.getPosition().getY();
 		double z = orientation.getPosition().getZ();
-		
-		
 		
 		final GL gl = gLDrawable.getGL();
 		
@@ -59,58 +78,44 @@ public abstract class Model3D extends Object3D {
 			texture.bind();
 		}
 		Orientation o = orientation;
-		//int counter=0;
+		// check for each face of the object if it is a quad or a triangle.
 		for(Face f : builder.faces){
-			//Random rand = new Random();
 			switch(f.vertices.size()){
-			case 4:
+			case 4:	// quad.
 			{
 				gl.glBegin(GL.GL_QUADS);
-				for(int i=0 ; i<4 ; i++){
-					
-					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
-					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
-					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
-					
-					if(f.vertices.get(i).t!=null)	
-						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
-					
-				}
-				gl.glEnd();
+				
 				break;
 			}
-			case 3:
+			case 3:	// triangle.
 				gl.glBegin(GL.GL_TRIANGLES);
-	//			gl.glColor3f(0.5f, 0.25f, 0.25f);
-				for(int i=0 ; i<3 ; i++){
-					
-					Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
-					Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
-					Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
-					
-					
-					if(f.vertices.get(i).t!=null)
-						gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);
-					//f.vertices.get(i).n.
-					gl.glNormal3f(f.vertices.get(i).n.x, f.vertices.get(i).n.y, f.vertices.get(i).n.z);
-					gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale);
-					
-				}	
-				gl.glEnd();
+				
 				break;
 			}
+			for(int i=0 ; i<f.vertices.size() ; i++){
+				// draw the vertices.
+				Vector X = o.getAxis('x').mul(f.vertices.get(i).v.x);
+				Vector Y = o.getAxis('y').mul(f.vertices.get(i).v.y);
+				Vector Z = o.getAxis('z').mul(f.vertices.get(i).v.z);
+				
+				if(f.vertices.get(i).t!=null)	// check if the object has a texture.
+					gl.glTexCoord2f(f.vertices.get(i).t.u, f.vertices.get(i).t.v);	// draw the texture.
+				gl.glNormal3f(f.vertices.get(i).n.x, f.vertices.get(i).n.y, f.vertices.get(i).n.z); // set the normals
+				gl.glVertex3d(x + (X.x + Y.x + Z.x)*scale , y + (X.y + Y.y + Z.y)*scale , z + (X.z + Y.z + Z.z)*scale); // set the vertex geometry.
+				
+			}
+			gl.glEnd();
 			
 		}
 	}
 	
-
-	
-
-	
-	
+	/**
+	 * gets object's vertices.
+	 * @return
+	 */
 	public ArrayList<Vector> getVertices(){
 		ArrayList<Vector> res = new ArrayList<Vector>();
+		// get all polygons.
 		ArrayList<Polygon> polygons = getPolygons();
 		
 		for(Polygon p : polygons){
@@ -122,7 +127,10 @@ public abstract class Model3D extends Object3D {
 	}
 	
 	
-	
+	/**
+	 * gets object's polygons. (each polygon is a collection of vertices.)
+	 * @return
+	 */
 	public ArrayList<Polygon> getPolygons(){
 		ArrayList<Polygon> res = new ArrayList<Polygon>();	
 		double x = orientation.getPosition().getX();
@@ -143,7 +151,9 @@ public abstract class Model3D extends Object3D {
 		return res;
 	}
 	
-	
+	/*
+	 * loads obj file.
+	 */
 	private void generateModelFromFile(String objFile, String texturePath) {
 		// TODO: remove String texture.
 		builder = new Build();

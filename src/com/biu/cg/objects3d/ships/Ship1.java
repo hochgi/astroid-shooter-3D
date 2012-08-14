@@ -15,9 +15,6 @@ import com.biu.cg.objects3d.particles.sprites.GlintEmitter;
 import com.biu.cg.objects3d.physics.Collidable;
 
 public class Ship1 extends Ship implements Collidable {
-	
-	
-//	private float colorRatio=0f;
 
 	public Ship1() {
 		
@@ -29,11 +26,19 @@ public class Ship1 extends Ship implements Collidable {
 		
 	}
 
+	/**
+	* get wing height
+	* @return
+	*/
 	@Override
 	public float getWingHeight() {
 		return -1.25f;
 	}
 
+	/**
+	 * get wing width
+	 * @return
+	 */
 	@Override
 	public float getWingWidth() {
 		return 2.5f;
@@ -45,7 +50,8 @@ public class Ship1 extends Ship implements Collidable {
 		newOrientation.translateForward(100);
 		
 		switch(collidable.getType()){
-		case MOTHERSHIP:
+		case MOTHERSHIP:	// collision with MOTHERSHIP.
+			// calculate deflection.
 			MotherShip m = (MotherShip)collidable;
 			Vector n = m.getNormalPerpendicularToPlaneAt(this.getPosition(), (BoundingSphere)getBoundingShape());
 			//float angle = (float)Math.asin(n.dot(getOrientation().getAxis('z')));
@@ -71,21 +77,26 @@ public class Ship1 extends Ship implements Collidable {
 			
 			speedDown();
 			break;
-		case RELOAD:
+		case RELOAD:	// collision with RELOAD.
+			// refill fuel.
 			fuel=600;
+			// reset rocket counter.
 			rocketCounter=3;
+			// update panels.
 			Exercise4.rocketPanel.restore();
 			Exercise4.fuelPanel.setFuel(fuel);
 			Exercise4.fuelPanel.repaint();
+			// restore health.
 			health=baseHealth;
 			
 			System.out.println("RELOAD");
 			break;
-		case ATMOSPHERE:
+		case ATMOSPHERE:	// collision with atmosphere.
+			// decrease health.
 			health=Math.max(health-1, 0);
-			
+			// create burning effect.
 			new GlintEmitter(newOrientation.getPosition(), orientation, 2);
-			
+			// if the health is 0 then the ship is destroyed and game over.
 			if(health<=0){
 				new Explosion(newOrientation.getPosition(),orientation, 3f, null);
 				Exercise4.exitWithMessage();
@@ -93,6 +104,7 @@ public class Ship1 extends Ship implements Collidable {
 			break;
 		case EARTH:
 			health=0;
+			// ship is destroyed and game over.
 			new Explosion(newOrientation.getPosition(),orientation, 3f, null);
 			Exercise4.exitWithMessage();
 			break;
@@ -108,16 +120,25 @@ public class Ship1 extends Ship implements Collidable {
 		}
 	}
 
+	/**
+	 * gets object's bounding shape.
+	 */
 	@Override
 	public BoundingShape getBoundingShape() {
 		return new BoundingSphere(getVertices());
 	}
 
+	/**
+	 * gets the type of the object.
+	 */
 	@Override
 	public Type getType() {
 		return Type.PLAYER_SHIP;
 	}
 	
+	/**
+	 * draws the object.
+	 */
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable){
 		if(health==0)

@@ -17,11 +17,18 @@ import com.biu.cg.objects3d.physics.Collidables;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
+/**
+ * Earth - implementation of Collidable and an extension of Model3D
+ * @author Irzh
+ *
+ */
 public class Earth extends Model3D implements Collidable {
 
 	private BoundingSphere bs;
 	private Orientation camera;
 	private static Texture tex;
+	
+	// load the Halo's (atmosphere) texture.
 	static {
 		try {
 			tex = TextureIO.newTexture(new File( "textures/atmosphere_256X256.png" ),false);
@@ -32,6 +39,10 @@ public class Earth extends Model3D implements Collidable {
 		}
 	} 
 
+	/**
+	 * c'tor.
+	 * @param camera
+	 */
 	public Earth(Orientation camera) {
 		super(new Vector(3000, 0 , 0),"models/earth/earth.wng" , "models/earth/earth.jpg");
 		Collidables.registerObject(new Atmosphere(this));
@@ -39,8 +50,13 @@ public class Earth extends Model3D implements Collidable {
 		this.camera = camera;
 	}
 
+	/**
+	 * draws the object.
+	 */
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
+		
+		// draws the atmosphere.
 		float size = bs.getRadius() * 1.75f;
 		Vector[] bb = camera.getOrthogonalQuadAtPosition(getPosition(), size);
 		GL gl = gLDrawable.getGL();
@@ -56,6 +72,7 @@ public class Earth extends Model3D implements Collidable {
 	    gl.glEnd();
 	    gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);	
 	    gl.glDisable(GL.GL_BLEND);	
+	    // draws earth.
 		super.synchronizedDraw(gLDrawable);
 	}
 	
@@ -64,16 +81,25 @@ public class Earth extends Model3D implements Collidable {
 		
 	}
 
+	/**
+	 * gets object's bounding shape.
+	 */
 	@Override
 	public BoundingShape getBoundingShape() {
 		return bs;
 	}
 	
+	/**
+	 * gets the type of the object.
+	 */
 	@Override
 	public Type getType() {
 		return Type.EARTH;
 	}
 
+	/*
+	 * object's update. rotation of the earth.
+	 */
 	@Override
 	protected void update() {
 		orientation.rotateHeading(0.001f);
