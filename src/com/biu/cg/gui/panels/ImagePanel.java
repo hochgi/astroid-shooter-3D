@@ -1,4 +1,4 @@
-package com.biu.cg.panels;
+package com.biu.cg.gui.panels;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

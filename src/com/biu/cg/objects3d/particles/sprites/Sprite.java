@@ -109,6 +109,9 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
+		if(outOfView()){
+			return;
+		}
 		changeBlendingFunc(gLDrawable);
 		Vector[] bb = convertToOrthogonalToCameraPlane(getQuadBillboard());
 		GL gl = gLDrawable.getGL();
@@ -126,6 +129,13 @@ public abstract class Sprite extends Particle implements Comparable<Sprite> {
 	    gl.glEnable(GL.GL_LIGHTING);
 	}
 	
+	private boolean outOfView() {
+		Vector dir1 = getPosition().sub(cam.getPosition(),1).normalize();
+		Vector dir2 = dir1.sub(dir1.projectionOnPlane(cam.getAxis('z')),1).normalize();
+
+		return dir1.subMutate(dir2, 1).sqrDistanceTo(new Vector(0,0,0)) > 0.5f;
+	}
+
 	//the idea of the implementation is explained nicely here: http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
 	private Vector[] convertToOrthogonalToCameraPlane(Vector[] qbb) {
 		if(qbb.length < 4){

@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -24,8 +23,6 @@ import com.biu.cg.objects3d.particles.sprites.Sprite;
 import com.biu.cg.objects3d.physics.Collidables;
 import com.biu.cg.objects3d.ships.MotherShip;
 import com.biu.cg.objects3d.ships.Ship1;
-import com.biu.cg.objects3d.ships.Ship2;
-import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.texture.Texture;
 import com.sun.opengl.util.texture.TextureIO;
 
@@ -45,7 +42,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
     private Orientation orientation;
 
 	private Ship1 ship1;
-	private Ship2 ship2;
 	private MotherShip motherShip;
 	private Earth earth;
 	public static Texture particleTex;
@@ -103,9 +99,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	}
 	
 	private void help() {
-		// TODO Auto-generated method stub
 		Exercise4.showInfo();
-		
 	}
 
 
@@ -208,12 +202,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 * here we make all the magic happen. i.e. drawing
 	 * of the various elements on the scene.
 	 */
-	//TODO: Consider making another class for the "room"
-	//		instead of putting all the boilerplate code 
-	//		in here.class game is big enough as it is...
 	@Override
 	public synchronized void display(GLAutoDrawable gLDrawable) {
-		float	material[] = {0.4f,0.4f,0.4f,1.0f};
+//		float	material[] = {0.4f,0.4f,0.4f,1.0f};
     	float	position0[] = {1000f,0f,0f,1.0f};		// red light on the right side (light 0)
     	float	position1[] = {1000f,0f,0f,1.0f};	// blue light on the left side (light 1)
 		
@@ -227,21 +218,10 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
         gl.glPushMatrix();
         gl.glTranslatef(0.0f, 0.0f, -5.0f);
         
-        
-        //float m_color[] = {0.0f, 0.85f, 0.0f, 1.0f};
-        float s_color[] = {1f, 1f, 1f, 1.0f};
-        float shininess[] = {120f};
-
-        //gl.glNormal3f(0,0,-1);
-//        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT_AND_DIFFUSE, material, 0);
-//        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, s_color,0); 
-//        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shininess,0);
-        
         gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, defaultAmbient,0); 
         gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, defaultDiffuse1,0);
         gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, defaultColor,0); 
         gl.glMateriali(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, 127);
-		
 		
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
@@ -305,7 +285,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		Collidables.registerObject(ship1);
 		
-		ship2 = new Ship2(new Vector(-50, 0 , 80));
+//		ship2 = new Ship2(new Vector(-50, 0 , 80));
 		//Collidables.registerObject(ship2);
 		motherShip = new MotherShip(new Vector(0, -180-1000 , 40) , 5);
 		Collidables.registerObject(motherShip);
@@ -345,43 +325,19 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glDepthFunc(GL.GL_LEQUAL);
 		gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
 		gl.glEnable(GL.GL_TEXTURE_2D);
-		
-		//TODO:
-		//UNCOMMENT THE FOLLOWING LINE OF CODE
-		//FOR REALISTIC COLORS. NOTE THAT ICC
-		//BUTTON WON'T CHANGE THE COLORS ANYMORE.
-
-		//gl.glEnable(GL.GL_LIGHTING);
-
-		
-		
-		// Light
     	
 		gl.glShadeModel(GL.GL_SMOOTH); 
 		float SHINE_ALL_DIRECTIONS = 1;
 		float[] lightPos = {-30, 0, 0, SHINE_ALL_DIRECTIONS};
 		
 		gl.glDisable(GL.GL_LIGHT0);
-		
-//		gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, lightPos, 0);
-//        gl.glLightfv(GL.GL_LIGHT1, GL.GL_AMBIENT, ambient, 0);
-//        gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, diffuse0, 0);
-//        gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, color, 0);
-//        gl.glEnable(GL.GL_LIGHT1);
         
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, lightPos, 0);
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_AMBIENT, defaultAmbient, 0);
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, defaultDiffuse1, 0);
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, defaultColor, 0);
         gl.glEnable(GL.GL_LIGHT2);
-        
-        
-        
-        //gl.glMaterialfv(gl.GL_FRONT, gl.GL_SHININESS, 127); 
-        //gl.glEnable(GL.GL_COLOR_MATERIAL);
-        //float specReflection[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-       
-        
+
         gl.glEnable(GL.GL_LIGHTING);
         gl.glEnable(GL.GL_NORMALIZE);
 
@@ -400,18 +356,6 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		}
 		gl.glMatrixMode(GL.GL_PROJECTION);
 		gl.glLoadIdentity();
-	}
-
-	public void reverseCubesRotation() {
-		//TODO: change method
-	}
-
-	public void inverseCubesColors() {
-		//TODO: change method
-	}
-
-	public void changeTetrahedronSpeed() {
-		//TODO: change method
 	}
 
 	/**

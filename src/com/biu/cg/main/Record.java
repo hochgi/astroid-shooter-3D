@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
 public class Record implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	int record;
 	
 	public Record(int newRec){

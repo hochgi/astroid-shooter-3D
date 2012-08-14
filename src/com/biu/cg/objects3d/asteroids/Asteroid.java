@@ -4,9 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
-
 import com.biu.cg.main.Exercise4;
-import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.planets.Earth;
@@ -37,7 +35,7 @@ public abstract class Asteroid extends Model3D implements Collidable{
 		Collidables.registerObject(this);
 		direction = earth.getPosition().sub(pos, 1).normalize();
 		
-		Random rand = new Random();
+//		Random rand = new Random();
 		
 		//speed = 1 + (float)rand.nextInt(11) / 10f;
 		speed = 3;
@@ -46,15 +44,12 @@ public abstract class Asteroid extends Model3D implements Collidable{
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
 		return Type.ASTEROID;
 	}
 
 	@Override
 	protected void update() {
-		// TODO Auto-generated method stub
 		orientation.getPosition().addMutate(direction, speed);
-		
 		orientation.rotateHeading(0.1f);
 		orientation.rotatePitch(0.01f);
 		orientation.rotateRoll(0.02f);

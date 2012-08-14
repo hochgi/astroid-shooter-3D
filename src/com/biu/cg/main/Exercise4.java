@@ -1,24 +1,18 @@
 package com.biu.cg.main;
 
-import java.awt.Frame;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLCapabilities;
-import javax.swing.JButton;
-import com.biu.cg.gui.ButtonEnum;
+import javax.imageio.ImageIO;   
+import javax.swing.*; 
 import com.biu.cg.gui.GPanel;
-import com.biu.cg.gui.GameActionListener;
-import com.biu.cg.panels.FuelPanel;
-import com.biu.cg.panels.ImagePanel;
-import com.biu.cg.panels.RocketPanel;
-import com.biu.cg.panels.SpeedPanel;
+import com.biu.cg.gui.panels.FuelPanel;
+import com.biu.cg.gui.panels.RocketPanel;
+import com.biu.cg.gui.panels.SpeedPanel;
 import com.sun.opengl.util.Animator;
-import java.awt.Dimension;
-import java.awt.Label;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.*;   
+import java.awt.image.BufferedImage;   
+import java.io.*;   
+ 
 /**
  * main class.
  * GUI handling is done here.
@@ -48,7 +42,6 @@ public class Exercise4 {
     static public int earthHealth=100;
     static private Label pointsLabel = new Label("Points: 0");
     static private Label earthHealthLabel = new Label("Earth health: " + earthHealth + "%");
-    static private Record rec;
     
     public static GPanel  miniMap;
     
@@ -74,6 +67,8 @@ public class Exercise4 {
     public static void showInfo(){
     	JOptionPane.showMessageDialog(frame, "SAVE PLANET EARTH FROM THE EVIL ASTEROIDS!!\n" +
     			"Don't let asteroids hit earth.\n" +
+    			"Stay away from Earth's atmosphere - it realy burns!\n" +
+    			"You can refill at any time at your mothership.\n" +
     			"============== BUTTON DESCRIPTION ==============\n" +
     			"I - look up\n" +
     			"K - look down\n" +
@@ -93,9 +88,22 @@ public class Exercise4 {
 	public static void main(String[] args) {
 		Game game = new Game();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = screenSize.width;
+		int h = screenSize.height;
+		TiledImagePanel tilePanel = null;
+		try {
+			BufferedImage image = ImageIO.read(new File("textures/cockpit/panel_all_tile_80X200.jpg"));
+			tilePanel = new TiledImagePanel(image, 80, 200, w, h, h - 200);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}  
+		
 		//canvas initialization
 		canvas.addGLEventListener(game);
 		canvas.addKeyListener(game);
+		canvas.setBounds(0,0, w, h - 200);
+//		canvas.doLayout();
 		
 		//minimap setup
 		miniMap = new GPanel(game);
@@ -103,88 +111,44 @@ public class Exercise4 {
 		miniMap.setSize(128, 128);
 		miniMap.setLocation(0, 0);
 		miniMap.addKeyListener(game);
+
+		pointsLabel.setBounds((w / 2) - 55, h - 110, 100, 20);
+		pointsLabel.doLayout();
+		earthHealthLabel.setBounds((w / 2) + 55, h - 110, 130, 20);
+		earthHealthLabel.doLayout();
 		
-		
-		
-		ImagePanel leftPanel = new ImagePanel("textures/cockpit/panel1.png");
-		ImagePanel rightPanel = new ImagePanel("textures/cockpit/panel1.png");
 		speedPanel = new SpeedPanel();
-		
 		speedPanel.setSize(109,109);
-		speedPanel.setLocation(40, (int)(screenSize.height - 222+40));
+		speedPanel.setLocation(45, h - 154);
+		speedPanel.doLayout();
 		
 		fuelPanel = new FuelPanel();
 		fuelPanel.setSize(209,109);
-		fuelPanel.setLocation(180, (int)(screenSize.height - 222+40));
-		
-		
-		
-		
-		
-		
-		leftPanel.setLocation(0, (int)(screenSize.height - 222));
-		leftPanel.setSize(395,193);
-		leftPanel.add(earthHealthLabel);
-		
+		fuelPanel.setLocation(180, h - 154);
+		fuelPanel.doLayout();
+
 		rocketPanel = new RocketPanel();
 		rocketPanel.setSize(109, 109);
-		rocketPanel.setLocation(screenSize.width - 395 + 260, (int)(screenSize.height - 222 + 40));
+		rocketPanel.setLocation(w - 154,h - 154);
+		rocketPanel.doLayout();
 		
-		rightPanel.setLocation(screenSize.width - 395, (int)(screenSize.height - 222));
-		rightPanel.setSize(395,193);
+		tilePanel.setBounds(0,h - 200, w, 200);
+		tilePanel.doLayout();
 		
-		
-		
-		rightPanel.add(pointsLabel);
-		
-		//reverse cube rotation button setup
-		rButton.addActionListener(new GameActionListener(game, ButtonEnum.RCR));
-		rButton.setLocation(0, 128);
-		rButton.setSize(64, 64);
-		rButton.setToolTipText("Reverse Cubes Rotation");
-		
-		//inverse cubes color button setup
-		cButton.addActionListener(new GameActionListener(game, ButtonEnum.ICC));
-		cButton.setLocation(64, 128);
-		cButton.setSize(64, 64);
-		cButton.setToolTipText("Inverse Cubes Color");
-
-		//change tetrahedron speed button setup
-		tButton.addActionListener(new GameActionListener(game, ButtonEnum.CTS));
-		tButton.setLocation(0, 192);
-		tButton.setSize(64, 64);
-		tButton.setToolTipText("Change Tetrahedron Speed");
-		
-		//reset camera orientation button setup
-		pButton.addActionListener(new GameActionListener(game, ButtonEnum.RCO));
-		pButton.setLocation(64, 192);
-		pButton.setSize(64, 64);
-		pButton.setToolTipText("Reset Camera Orientation");
-		
-		//test explosion effect
-		eButton.addActionListener(new GameActionListener(game, ButtonEnum.EXP));
-		eButton.setLocation(0, 256);
-		eButton.setSize(128, 64);
-		eButton.setToolTipText("Test Explosion Effect");
+		frame.add(canvas);
+		frame.add(pointsLabel);
+		frame.add(earthHealthLabel);
 		frame.add(speedPanel);
 		frame.add(fuelPanel);
 		frame.add(rocketPanel);
-		frame.add(leftPanel);
-		frame.add(rightPanel);
-		
-		//add components to the frame
+		frame.add(tilePanel);		
 //		frame.add(miniMap);
-//		frame.add(rButton);
-//		frame.add(cButton);
-//		frame.add(tButton);
-//		frame.add(pButton);
-//		frame.add(eButton);
-		frame.add(canvas);
 		
 		frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 		
+		frame.invalidate();
 		
 		animator.start();
 		//make sure that the canvas gets the focus
@@ -213,7 +177,7 @@ public class Exercise4 {
 	public static void exitWithMessage(){
 		if(points>getRec().getRecord()){
 			setRec(points);
-			JOptionPane.showMessageDialog(frame, "NEW RECORD: " + points);
+			JOptionPane.showMessageDialog(frame, "Game over!!\n" + "NEW RECORD: " + points);
 		}else{
 			JOptionPane.showMessageDialog(frame, "What a shame... You didn't save earth :( \n" +
 					"but at least you earned " + Exercise4.points + " points :)");

@@ -2,9 +2,7 @@ package com.biu.cg.objects3d.ships;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
-
 import com.biu.cg.main.Exercise4;
-import com.biu.cg.main.Explosion;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.objects3d.Model3D;

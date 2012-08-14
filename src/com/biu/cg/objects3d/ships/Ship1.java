@@ -17,7 +17,7 @@ import com.biu.cg.objects3d.physics.Collidable;
 public class Ship1 extends Ship implements Collidable {
 	
 	
-	private float colorRatio=0f;
+//	private float colorRatio=0f;
 
 	public Ship1() {
 		

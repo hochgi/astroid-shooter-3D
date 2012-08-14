@@ -8,9 +8,7 @@ import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.object3d.planets.Earth;
 import com.biu.cg.objects3d.Object3D;
-import com.biu.cg.objects3d.particles.sprites.FlameEmitter;
 import com.biu.cg.objects3d.particles.sprites.Flare;
-import com.biu.cg.objects3d.particles.sprites.GlintEmitter;
 import com.biu.cg.objects3d.particles.sprites.SmokeEmitter;
 import com.biu.cg.objects3d.particles.sprites.SparkEmitter;
 import com.biu.cg.objects3d.particles.sprites.Sprite;
@@ -31,7 +29,7 @@ public class SmallAsteroid extends Asteroid {
 	
 	@Override
 	public void collisionAction(Collidable collidable) {
-		Vector dir = direction.neg();
+//		Vector dir = direction.neg();
 		int damage=0;
 		switch(collidable.getType()){
 		case MOTHERSHIP:
