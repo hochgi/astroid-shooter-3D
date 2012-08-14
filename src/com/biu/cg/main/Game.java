@@ -274,8 +274,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Sprite.renderSprites(gLDrawable);
 		
 		if(Exercise4.earthHealth<=0)
-			Exercise4.exit("What a shame... You didn't save earth :( \n" +
-					"but at least you earned " + Exercise4.points + " points :)");
+			Exercise4.exitWithMessage();
 		
 	}
 

@@ -88,13 +88,13 @@ public class Ship1 extends Ship implements Collidable {
 			
 			if(health<=0){
 				new Explosion(newOrientation.getPosition(),orientation, 3f, null);
-				Exercise4.exit("You are dead :(");
+				Exercise4.exitWithMessage();
 			}
 			break;
 		case EARTH:
 			health=0;
 			new Explosion(newOrientation.getPosition(),orientation, 3f, null);
-			Exercise4.exit("You are dead :(");
+			Exercise4.exitWithMessage();
 			break;
 //		case ASTEROID:
 //			health=0;

@@ -48,10 +48,17 @@ public class Exercise4 {
     static public int earthHealth=100;
     static private Label pointsLabel = new Label("Points: 0");
     static private Label earthHealthLabel = new Label("Earth health: " + earthHealth + "%");
-    
+    static private Record rec;
     
     public static GPanel  miniMap;
     
+    public static Record getRec() {
+		return Record.readFile();
+	}
+    
+    public static void setRec(int rec) {
+		Record.writeFile(new Record(rec));
+	}
     
     public static void addPoints(int pointsToAdd){
     	points+=pointsToAdd;
@@ -78,7 +85,9 @@ public class Exercise4 {
     			"9 - speed down\n" +
     			"W - turbo speed\n" +
     			"Space - shoot photon\n" +
-    			"R - shoot rocket\n");
+    			"R - shoot rocket\n" +
+    			"================================================\n" +
+    			"Current record: " + getRec().getRecord());
     }
     		
 	public static void main(String[] args) {
@@ -176,6 +185,7 @@ public class Exercise4 {
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 		
+		
 		animator.start();
 		//make sure that the canvas gets the focus
 		//so the keys will be responsive at once.
@@ -200,8 +210,14 @@ public class Exercise4 {
 		System.exit(0);
     }
 	
-	public static void exit(String msg){
-		JOptionPane.showMessageDialog(frame, msg);
+	public static void exitWithMessage(){
+		if(points>getRec().getRecord()){
+			setRec(points);
+			JOptionPane.showMessageDialog(frame, "NEW RECORD: " + points);
+		}else{
+			JOptionPane.showMessageDialog(frame, "What a shame... You didn't save earth :( \n" +
+					"but at least you earned " + Exercise4.points + " points :)");
+		}
 		exit();
     }
 }
