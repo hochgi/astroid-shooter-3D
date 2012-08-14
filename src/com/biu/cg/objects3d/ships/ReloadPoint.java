@@ -22,7 +22,7 @@ public class ReloadPoint implements Collidable {
 	@Override
 	public BoundingShape getBoundingShape() {
 		// TODO Auto-generated method stub
-		return new BoundingSphere(position, 50);
+		return new BoundingSphere(position, 100);
 	}
 
 	@Override

@@ -8,17 +8,17 @@ import com.biu.cg.objects3d.Object3D;
 public class AABB extends Model3D implements BoundingShape{
 	
 
-	float minX;
-	float minY;
-	float minZ;
+	public float minX;
+	public float minY;
+	public float minZ;
 	
-	float maxX;
-	float maxY;
-	float maxZ;
+	public float maxX;
+	public float maxY;
+	public float maxZ;
 	
-	float distX;
-	float distY;
-	float distZ;
+	public float distX;
+	public float distY;
+	public float distZ;
 	
 	Vector center;
 	

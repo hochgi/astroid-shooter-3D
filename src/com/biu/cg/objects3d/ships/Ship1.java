@@ -47,7 +47,7 @@ public class Ship1 extends Ship implements Collidable {
 		switch(collidable.getType()){
 		case MOTHERSHIP:
 			MotherShip m = (MotherShip)collidable;
-			Vector n = m.getNormalPerpendicularToPlaneAt(this.getPosition());
+			Vector n = m.getNormalPerpendicularToPlaneAt(this.getPosition(), (BoundingSphere)getBoundingShape());
 			//float angle = (float)Math.asin(n.dot(getOrientation().getAxis('z')));
 			Vector x = getOrientation().getAxis('x');
 			Vector y = getOrientation().getAxis('y');
@@ -73,9 +73,12 @@ public class Ship1 extends Ship implements Collidable {
 			break;
 		case RELOAD:
 			fuel=600;
+			rocketCounter=3;
+			Exercise4.rocketPanel.restore();
 			Exercise4.fuelPanel.setFuel(fuel);
 			Exercise4.fuelPanel.repaint();
 			health=baseHealth;
+			
 			System.out.println("RELOAD");
 			break;
 		case ATMOSPHERE:

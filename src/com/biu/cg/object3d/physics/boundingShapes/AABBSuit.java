@@ -8,6 +8,10 @@ public class AABBSuit implements BoundingShape {
 	
 	ArrayList<AABB> aabbs;
 
+	public ArrayList<AABB> getAabbs() {
+		return aabbs;
+	}
+	
 	public AABBSuit(ArrayList<AABB> aabbs){
 		this.aabbs = aabbs;
 	}

@@ -185,9 +185,13 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
  	} 
 	
 	private void shootRocket() {
-		Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 15f));
-		Exercise4.rocketPanel.removeRocket();
-		Exercise4.rocketPanel.repaint();
+		if(ship1.getRocketCounter()>0){
+			Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 15f));
+			Exercise4.rocketPanel.removeRocket();
+			Exercise4.rocketPanel.repaint();
+			ship1.removeRocket();
+			
+		}
 	}
 	
 	private void speedUp(){
@@ -383,6 +387,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
         gl.glEnable(GL.GL_NORMALIZE);
 
 		start();
+		help();
 	}
 
 	/**

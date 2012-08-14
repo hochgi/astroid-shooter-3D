@@ -5,6 +5,7 @@ import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.AABB;
 import com.biu.cg.object3d.physics.boundingShapes.AABBSuit;
 import com.biu.cg.object3d.physics.boundingShapes.BoundingShape;
+import com.biu.cg.object3d.physics.boundingShapes.BoundingSphere;
 import com.biu.cg.objects3d.Model3D;
 import com.biu.cg.objects3d.physics.Collidable;
 import com.biu.cg.objects3d.physics.Collidables;
@@ -52,9 +53,31 @@ public class MotherShip extends Model3D implements Collidable {
 		return Type.MOTHERSHIP;
 	}
 
-	public Vector getNormalPerpendicularToPlaneAt(Vector position) {
+	public Vector getNormalPerpendicularToPlaneAt(Vector position, BoundingSphere shape) {
 		// TODO determine what normal to return according to collision position
-		return new Vector(x);
+		AABB col=null;
+		
+		for(AABB b : aabbs.getAabbs()){
+			if(b.intersect(shape)){
+				col=b;
+				break;
+			}
+		}
+		
+		if(position.y < col.maxY && position.y > col.minY && position.z < col.maxZ && position.z > col.minZ) 
+			return new Vector(x);
+		if(position.x < col.maxX && position.x > col.minX && position.z < col.maxZ && position.z > col.minZ) 
+			return new Vector(y);
+		if(position.y < col.maxY && position.y > col.minY && position.x < col.maxX && position.x > col.minX) 
+			return new Vector(z);
+		if(position.y < col.maxY && position.y > col.minY) 
+			return new Vector(x.add(z, 1).normalize());
+		if(position.x < col.maxX && position.x > col.minX) 
+			return new Vector(y.add(z, 1).normalize());
+		if(position.y < col.maxY && position.y > col.minY) 
+			return new Vector(z.add(x, 1).normalize());
+		
+		return new Vector(x.add(y, 1).normalize().add(z, 1).normalize());
 	}
 	
 	

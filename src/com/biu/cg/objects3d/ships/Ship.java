@@ -31,6 +31,19 @@ public abstract class Ship extends Model3D {
 	protected float health=baseHealth;
 	
 	private float perspective = 50f;
+	protected int rocketCounter=3;
+
+	public int getRocketCounter() {
+		return rocketCounter;
+	}
+	
+	public void removeRocket(){
+		rocketCounter--;
+	}
+	
+	public void setRocketCounter(int rocketCounter) {
+		this.rocketCounter = rocketCounter;
+	}
 	
 	public Ship(Vector position ,String objFile, String texture) {
 		super(position, objFile , texture);

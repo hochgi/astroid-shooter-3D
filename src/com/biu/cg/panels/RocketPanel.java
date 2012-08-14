@@ -31,6 +31,7 @@ public class RocketPanel extends ImagePanel {
 	public void restore(){
 		rocketCounter = 3;
 		image = images[rocketCounter];
+		this.repaint();
 	}
 	
 }
