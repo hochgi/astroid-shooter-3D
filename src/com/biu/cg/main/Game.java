@@ -89,12 +89,15 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		case KeyEvent.VK_9:
 			speedDown();
 			break;
+		case KeyEvent.VK_M:
+			Exercise4.miniMap.setLocation(-1000, -1000);
+			
 		default:
 				//do nothing
 		}
 
 		//update the minimap
-		Exercise4.miniMap.repaint();
+//		Exercise4.miniMap.repaint();
 		Exercise4.canvas.requestFocus();
 	}
 	
@@ -174,10 +177,16 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		}
 	}
 
+	/** 
+	 * shoot photon.
+	 */
 	private void shootPhoton() { 
  		Sprite.registerObject(new Photon(ship1.getWingPosition(),orientation,new Vector(orientation.getAxis('z')),36f));
  	} 
 	
+	/**
+	 * shoot rocket.
+	 */
 	private void shootRocket() {
 		if(ship1.getRocketCounter()>0){
 			Particle.registerObject(new Shot(ship1.getWingPosition(), orientation, new Vector(orientation.getAxis('z')), 15f));
@@ -188,10 +197,16 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		}
 	}
 	
+	/**
+	 * increase ship's speed
+	 */
 	private void speedUp(){
 		ship1.speedUp();
 	}
 	
+	/**
+	 * decrease ship's speed
+	 */
 	private void speedDown(){
 		ship1.speedDown();
 	}
@@ -204,6 +219,8 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 	 */
 	@Override
 	public synchronized void display(GLAutoDrawable gLDrawable) {
+		
+		
 //		float	material[] = {0.4f,0.4f,0.4f,1.0f};
     	float	position0[] = {1000f,0f,0f,1.0f};		// red light on the right side (light 0)
     	float	position1[] = {1000f,0f,0f,1.0f};	// blue light on the left side (light 1)
@@ -211,13 +228,14 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		final GL gl = gLDrawable.getGL();
 		
-		// Light
+		// set light position
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, position0, 0);
         gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, position1, 0);
         
         gl.glPushMatrix();
         gl.glTranslatef(0.0f, 0.0f, -5.0f);
         
+        // set material properties. 
         gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, defaultAmbient,0); 
         gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, defaultDiffuse1,0);
         gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, defaultColor,0); 
@@ -228,6 +246,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 		gl.glMatrixMode(GL.GL_PROJECTION);
 		gl.glLoadIdentity();
+		// set look at camera.
 		ship1.lookAtCamera1(gLDrawable);
 		
 		//the following piece of code is useless!!!
@@ -243,18 +262,24 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		gl.glVertex3f(0,0,0);
 		gl.glEnd();
 		
+		// draws the space sphere.
 		ship1.drawSpace(gLDrawable);
 		
-		//ship2.draw(gLDrawable);
+		// draws the mothership.
 		motherShip.draw(gLDrawable);
+		// draws earth.
 		earth.draw(gLDrawable);
+		// draws players ship.
 		ship1.draw(gLDrawable);
+		// draws asteroids.
 		Asteroids.drawAsteroids(gLDrawable);
 		gl.glDisable(GL.GL_LIGHTING);
+		// draws sprites.
 		Sprite.renderSprites(gLDrawable);
 		gl.glEnable(GL.GL_LIGHTING);
 		if(Exercise4.earthHealth<=0)
 			Exercise4.exitWithMessage();
+		
 		
 	}
 
@@ -289,7 +314,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		//Collidables.registerObject(ship2);
 		motherShip = new MotherShip(new Vector(0, -180-1000 , 40) , 5);
 		Collidables.registerObject(motherShip);
-		
+		Object3D.registerObject(motherShip);
 		earth = new Earth(getCamera());
 		
 		Collidables.registerObject(earth);

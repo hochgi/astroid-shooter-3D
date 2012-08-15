@@ -1,6 +1,10 @@
 package com.biu.cg.objects3d.ships;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
+
+import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
 import com.biu.cg.object3d.physics.boundingShapes.AABB;
 import com.biu.cg.object3d.physics.boundingShapes.AABBSuit;
@@ -104,5 +108,13 @@ public class MotherShip extends Model3D implements Collidable {
 			return new Vector(z.add(x, 1).normalize());
 		
 		return new Vector(x.add(y, 1).normalize().add(z, 1).normalize());
+	}
+	
+	@Override
+	public void paintOnMinimap(Graphics g) {
+		Vector v = getPositionOnMinimap();
+		g.setColor(Color.black);
+		g.drawRect((int)v.x - 8, (int)v.y - 15, 16, 30);
+		
 	}
 }

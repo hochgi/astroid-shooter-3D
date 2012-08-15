@@ -1,5 +1,6 @@
 package com.biu.cg.objects3d;
 
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -167,4 +168,6 @@ public abstract class Model3D extends Object3D {
 			e.printStackTrace();
 		}        
 	}
+	
+	
 }

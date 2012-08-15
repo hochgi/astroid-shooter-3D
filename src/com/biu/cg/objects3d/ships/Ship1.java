@@ -1,5 +1,8 @@
 package com.biu.cg.objects3d.ships;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 
@@ -156,6 +159,16 @@ public class Ship1 extends Ship implements Collidable {
 		super.synchronizedDraw(gLDrawable);
 		
 		gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, Game.defaultAmbient,0); 
+	}
+
+	@Override
+	public void paintOnMinimap(Graphics g) {
+		Vector v = getPositionOnMinimap();
+		g.setColor(Color.red);
+		g.drawOval((int)v.x, (int)v.y, 6, 6);
+		Orientation o = orientation;
+		Vector dir = o.getAxis('z');
+		g.drawLine((int)v.x+3, (int)v.y+3, (int)v.x+(int)(dir.x*10), (int)v.y+(int)(dir.z*10));
 	}
 	
 }

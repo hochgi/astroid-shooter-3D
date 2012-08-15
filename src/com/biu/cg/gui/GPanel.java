@@ -3,9 +3,15 @@ package com.biu.cg.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JPanel;
+
+import com.biu.cg.main.Exercise4;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Vector;
+import com.biu.cg.objects3d.Object3D;
 
 /**
  * this class is for the minimap.
@@ -30,9 +36,30 @@ import com.biu.cg.math3d.Vector;
 //			synchronized with locks, and should notify() on exit, etc'...
 public class GPanel extends JPanel {
 
+	private static Timer timer;
 	private static final long serialVersionUID = 1L;
 	private Game game;
-
+	int num=0;
+	
+	private static TimerTask task = new TimerTask() {
+		@Override
+		public void run() {
+			try {
+				Exercise4.miniMap.repaint();
+			} catch (Exception e) {
+			}
+			
+		}
+		
+	};
+	//static initialization that executes only once
+	static {
+		timer = new Timer("Timer-Minimap");
+		timer.scheduleAtFixedRate(task, 0, 100);
+	}
+	
+	
+	
 	/**
 	 * simple setter constructor
 	 * @param game
@@ -92,10 +119,16 @@ public class GPanel extends JPanel {
 		
 		x = (int)(this.getSize().width / 2) -3;
 		y = (int)(this.getSize().height / 2) -3;
-
-		g.setColor(Color.red);
-		g.drawOval(x, y, 6, 6);
-		g.drawLine(x, y+3, x+5, y+3);
-		g.drawLine(x+3, y, x+3, y+5);
+		
+//		num++;
+//		x+=num;
+		
+		LinkedList<Object3D> objects = Object3D.getObjects();
+		
+		for(Object3D obj : objects){
+			obj.paintOnMinimap(g);
+		}
+		
+		
 	}
 }

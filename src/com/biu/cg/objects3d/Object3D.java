@@ -1,5 +1,6 @@
 package com.biu.cg.objects3d;
 
+import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -7,6 +8,7 @@ import javax.media.opengl.GLAutoDrawable;
 
 import com.biu.cg.math3d.Orientation;
 import com.biu.cg.math3d.Vector;
+import com.biu.cg.math3d.Vector2Tuple;
 
 /**
  * this abstract class should be the root class
@@ -70,6 +72,10 @@ public abstract class Object3D {
 		synchronized (gLock) {
 			graveyard.add(obj);
 		}
+	}
+	
+	public static LinkedList<Object3D> getObjects() {
+		return objects;
 	}
 	
 	//////////////////////////////////////
@@ -144,4 +150,13 @@ public abstract class Object3D {
 	 * every 40 ms.
 	 */
 	protected abstract void update();
+	
+	public void paintOnMinimap(Graphics g){}
+	
+	public Vector getPositionOnMinimap(){
+		Vector v = new Vector();
+		v.x = getPosition().x / 10+10;
+		v.y = getPosition().z / 10 + 50;
+		return v;
+	}
 }

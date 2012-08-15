@@ -1,5 +1,8 @@
 package com.biu.cg.objects3d.asteroids;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import com.biu.cg.main.Explosion;
 import com.biu.cg.main.Game;
 import com.biu.cg.math3d.Orientation;
@@ -48,7 +51,7 @@ public class SmallAsteroid extends Asteroid {
 			// destroy the asteroid.
 			onDestroy();
 			//reduce Earth Health.
-			reduceEarthHealth(8);
+			reduceEarthHealth(2);
 			break;
 		case ROCKET:	// collision with ROCKET.
 			// destroy the asteroid.
@@ -101,6 +104,14 @@ public class SmallAsteroid extends Asteroid {
 		Object3D.unregisterAsteroid(this);
 		alive=false;
 		dismissLockedRockets();
+		
+	}
+	
+	@Override
+	public void paintOnMinimap(Graphics g){
+		Vector v = getPositionOnMinimap();
+		g.setColor(Color.black);
+		g.drawOval((int)v.x, (int)v.y, 5, 5);
 		
 	}
 

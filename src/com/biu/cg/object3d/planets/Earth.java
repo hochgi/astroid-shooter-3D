@@ -1,5 +1,7 @@
 package com.biu.cg.object3d.planets;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
@@ -55,7 +57,6 @@ public class Earth extends Model3D implements Collidable {
 	 */
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable) {
-		
 		// draws the atmosphere.
 		float size = bs.getRadius() * 1.75f;
 		Vector[] bb = camera.getOrthogonalQuadAtPosition(getPosition(), size);
@@ -105,6 +106,13 @@ public class Earth extends Model3D implements Collidable {
 		orientation.rotateHeading(0.001f);
 	}
 	
-	
+	@Override
+	public void paintOnMinimap(Graphics g){
+		Vector v = getPositionOnMinimap();
+		g.setColor(Color.blue);
+		g.drawOval(200, 30, 210, 210);
+		
+		
+	}
 
 }

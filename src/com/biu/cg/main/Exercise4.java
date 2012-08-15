@@ -21,12 +21,8 @@ import java.io.*;
  *
  */
 public class Exercise4 {
-	
-
-	
-
     public static GLCanvas canvas = new GLCanvas(getCapabilities());
-    static Frame frame = new Frame("Astroid Shooter - 0.1 Beta");
+    static public Frame frame = new Frame("Astroid Shooter - 0.1 Beta");
     static Animator animator = new Animator(canvas); 
     static JButton rButton = new JButton("RCR");
     static JButton cButton = new JButton("ICC");
@@ -109,10 +105,12 @@ public class Exercise4 {
 		//minimap setup
 		miniMap = new GPanel(game);
 		//miniMap.initialize(); //should we initialize it?
-		miniMap.setSize(128, 128);
+		miniMap.setSize(256, 256);
 		miniMap.setLocation(0, 0);
 		miniMap.addKeyListener(game);
 
+		//miniMap.setVisible(false);
+		
 		pointsLabel.setBounds((w / 2) - 55, h - 110, 100, 20);
 		pointsLabel.doLayout();
 		earthHealthLabel.setBounds((w / 2) + 55, h - 110, 130, 20);
@@ -133,9 +131,10 @@ public class Exercise4 {
 		rocketPanel.setLocation(w - 154,h - 154);
 		rocketPanel.doLayout();
 		
+		//tilePanel.add(miniMap);
 		tilePanel.setBounds(0,h - 200, w, 200);
 		tilePanel.doLayout();
-		
+		frame.add(miniMap);
 		frame.add(canvas);
 		frame.add(pointsLabel);
 		frame.add(earthHealthLabel);
@@ -143,7 +142,7 @@ public class Exercise4 {
 		frame.add(fuelPanel);
 		frame.add(rocketPanel);
 		frame.add(tilePanel);		
-//		frame.add(miniMap);
+		
 		
 		frame.setUndecorated(true);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
