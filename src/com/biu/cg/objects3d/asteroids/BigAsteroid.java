@@ -122,7 +122,11 @@ public class BigAsteroid extends Asteroid{
 	@Override
 	public void paintOnMinimap(Graphics g){
 		Vector v = getPositionOnMinimap();
-		g.setColor(Color.black);
+		// set the color to orange if the asteroid's y coordinate is higher then ship's and green otherwise.
+		if(getPosition().y > Game.getShipPosition().y)
+			g.setColor(Color.ORANGE);
+		else
+			g.setColor(Color.GREEN);
 		g.drawOval((int)v.x, (int)v.y, 10, 10);
 		
 	}

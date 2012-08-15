@@ -105,8 +105,8 @@ public class Exercise4 {
 		//minimap setup
 		miniMap = new GPanel(game);
 		//miniMap.initialize(); //should we initialize it?
-		miniMap.setSize(256, 256);
-		miniMap.setLocation(0, 0);
+		miniMap.setSize(256, 160);
+		miniMap.setLocation(400, h - 180);
 		miniMap.addKeyListener(game);
 
 		//miniMap.setVisible(false);

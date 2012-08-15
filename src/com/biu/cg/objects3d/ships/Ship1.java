@@ -144,6 +144,7 @@ public class Ship1 extends Ship implements Collidable {
 	 */
 	@Override
 	protected void synchronizedDraw(GLAutoDrawable gLDrawable){
+		// changes ship's color to red if it is damaged.
 		if(health==0)
 			return;
 		final GL gl = gLDrawable.getGL();

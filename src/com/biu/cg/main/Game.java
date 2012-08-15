@@ -41,7 +41,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
     private Orientation orientation;
 
-	private Ship1 ship1;
+	private static Ship1 ship1;
 	private MotherShip motherShip;
 	private Earth earth;
 	public static Texture particleTex;
@@ -296,6 +296,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		Photon.init();
 		Shot.init();
 		
+		// get particle texxture.
 		try {
 			particleTex = TextureIO.newTexture(new File( "textures/round_particle_16X16.png" ),false);
 		} catch (GLException e) {
@@ -304,14 +305,13 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 			e.printStackTrace();
 		}
 
+		// instantiate various objects.
 		ship1 = new Ship1(new Vector(0, 40-1000 , 0));
 		Object3D.registerObject(ship1);
 		ship1.setActive(true);
 		
 		Collidables.registerObject(ship1);
-		
-//		ship2 = new Ship2(new Vector(-50, 0 , 80));
-		//Collidables.registerObject(ship2);
+
 		motherShip = new MotherShip(new Vector(0, -180-1000 , 40) , 5);
 		Collidables.registerObject(motherShip);
 		Object3D.registerObject(motherShip);
@@ -319,14 +319,12 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		
 		Collidables.registerObject(earth);
 		Object3D.registerObject(earth);
-		//earth.setScale(1000);
+
 		
 		Asteroids.setCamera(ship1.getOrientation());
 		Asteroids.setEarth(earth);
 		
-		//astroid = new Asteroid(earth , ship1.getOrientation());
-		//Object3D.registerObject(astroid);
-		
+
 		orientation = ship1.getOrientation();
 		GL gl = gLDrawable.getGL();
 		
@@ -355,8 +353,7 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 		float SHINE_ALL_DIRECTIONS = 1;
 		float[] lightPos = {-30, 0, 0, SHINE_ALL_DIRECTIONS};
 		
-		gl.glDisable(GL.GL_LIGHT0);
-        
+        // set lights.
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, lightPos, 0);
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_AMBIENT, defaultAmbient, 0);
         gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, defaultDiffuse1, 0);
@@ -431,5 +428,9 @@ public class Game extends MultiKeysAdapter implements GLEventListener {
 
 	public Orientation getCamera() {
 		return ship1.getOrientation();
+	}
+	
+	public static Vector getShipPosition(){
+		return ship1.getPosition();
 	}
 }
