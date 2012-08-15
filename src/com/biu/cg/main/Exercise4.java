@@ -106,14 +106,14 @@ public class Exercise4 {
 		miniMap = new GPanel(game);
 		//miniMap.initialize(); //should we initialize it?
 		miniMap.setSize(256, 160);
-		miniMap.setLocation(400, h - 180);
+		miniMap.setLocation(410, h - 180);
 		miniMap.addKeyListener(game);
 
 		//miniMap.setVisible(false);
 		
-		pointsLabel.setBounds((w / 2) - 55, h - 110, 100, 20);
+		pointsLabel.setBounds(686, h - 121, 120, 20);
 		pointsLabel.doLayout();
-		earthHealthLabel.setBounds((w / 2) + 55, h - 110, 130, 20);
+		earthHealthLabel.setBounds(686, h - 99, 120, 20);
 		earthHealthLabel.doLayout();
 		
 		speedPanel = new SpeedPanel();
